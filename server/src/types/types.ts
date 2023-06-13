@@ -23,26 +23,26 @@ export interface Staff {
 }
 
 
-  export interface Event {
-    id: string;
-    type: string;
-    severity: number;
-    effectOnMorale: number;
+    export interface GameEvent {
+      id: string;
+      type: string;
+      severity: number;
+      effectOnMorale: number;
+    }
+
+    export interface Game {
+      id: string;
+      budget: number;
+      morale: number;
+      businessImpact: number; // New field for overall business impact
+      staff: Array<Staff>;
+      tasks: Array<Task>;
+      events: Array<GameEvent>;
+      timeRemaining: number;
   }
 
-  export interface Game {
-    id: string;
-    budget: number;
-    morale: number;
-    businessImpact: number; // New field for overall business impact
-    staff: Array<Staff>;
-    tasks: Array<Task>;
-    events: Array<Event>;
-    timeRemaining: number;
-}
-
 //Enums
-enum Role {
+export enum Role {
   FRONTEND_DEV = "Frontend Developer",
   BACKEND_DEV = "Backend Developer",
   QA = "Quality Assurance",
@@ -51,30 +51,30 @@ enum Role {
   SECURITY_SPECIALIST = "Security Specialist",
 }
 
-enum TaskType {
+export enum TaskType {
   BUG_FIX = "Bug Fix",
   NEW_FEATURE = "New Feature",
   SECURITY_PATCH = "Security Patch",
 }
 
-enum EventType {
+export enum EventType {
   SERVER_CRASH = "Server Crash",
   SECURITY_BREACH = "Security Breach",
   JOB_OFFER = "Job Offer",
   BUDGET_CUT = "Budget Cut",
 }
 
-const STARTING_BUDGET: number = 1000000;
-const TIME_PERIOD: number = 180; // 6 months
+export const STARTING_BUDGET: number = 1000000;
+export const TIME_PERIOD: number = 180; // 6 months
 
-const MIN_SKILL_LEVEL: number = 1;
-const MAX_SKILL_LEVEL: number = 10;
+export const MIN_SKILL_LEVEL: number = 1;
+export const MAX_SKILL_LEVEL: number = 10;
 
-const MIN_MORALE: number = 0;
-const MAX_MORALE: number = 100;
+export const MIN_MORALE: number = 0;
+export const MAX_MORALE: number = 100;
 
-const MIN_COMPLEXITY: number = 1;
-const MAX_COMPLEXITY: number = 10;
+export const MIN_COMPLEXITY: number = 1;
+export const MAX_COMPLEXITY: number = 10;
 
-const MIN_TIME_TO_COMPLETE: number = 1;
-const MAX_TIME_TO_COMPLETE: number = 30; // assuming in days
+export const MIN_TIME_TO_COMPLETE: number = 1;
+export const MAX_TIME_TO_COMPLETE: number = 30; // assuming in days

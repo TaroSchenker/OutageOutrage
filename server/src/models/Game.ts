@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Staff as StaffSchema } from './Staff';
 import { Task as TaskSchema} from './Task';
-import { Event as EventSchema } from './Event';
+import { Event as EventSchema } from './GameEvent';
 
 const GameSchema = new mongoose.Schema({
     id: String,

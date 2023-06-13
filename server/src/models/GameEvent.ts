@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-const EventSchema = new mongoose.Schema({
+const GameEventSchema = new mongoose.Schema({
     id: String,
     type: String,
     severity: Number,
     effectOnMorale: Number,
 });
 
-export const Event = mongoose.model('Event', EventSchema);
+export const GameEvent = mongoose.model('Event', GameEventSchema);
