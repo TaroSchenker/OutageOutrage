@@ -53,5 +53,9 @@ describe("StaffService", () => {
     expect(result).toEqual(staffMembers);
   });
 
-  // Continue with similar tests for each method in your service
+  test.todo("should create a new staff member")
+  test.todo("should update a staff member")
+  test.todo("should delete a staff member")
+  test.todo("assign a task to a staff member")
+  test.todo("should update staff morale")
 });

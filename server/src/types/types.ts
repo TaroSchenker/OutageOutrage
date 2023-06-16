@@ -1,4 +1,4 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document } from "mongoose";
 
 export interface IStaff extends Document {
   name: string;
@@ -13,34 +13,33 @@ export interface IStaff extends Document {
   currentTask: string | null;
 }
 
-  export interface ITask extends Document {
-    id: string;
-    type: string;
-    complexity: number;
-    timeToComplete: number;
-    assignedTo: string | null;
-    expertiseRequired: string; // New field for required expertise
-    criticality: number; // New field for task criticality
+export interface ITask extends Document {
+  id: string;
+  type: TaskType;
+  complexity: number;
+  timeToComplete: number;
+  assignedTo: string | null;
+  expertiseRequired: string;
+  criticality: number;
 }
 
+export interface IGameEvent extends Document {
+  id: string;
+  type: string;
+  severity: number;
+  effectOnMorale: number;
+}
 
-    export interface IGameEvent extends Document {
-      id: string;
-      type: string;
-      severity: number;
-      effectOnMorale: number;
-    }
-
-    export interface IGame extends Document {
-      id: string;
-      budget: number;
-      morale: number;
-      businessImpact: number; // New field for overall business impact
-      staff: Array<IStaff>;
-      tasks: Array<ITask>;
-      events: Array<IGameEvent>;
-      timeRemaining: number;
-  }
+export interface IGame extends Document {
+  id: string;
+  budget: number;
+  morale: number;
+  businessImpact: number; // New field for overall business impact
+  staff: Array<IStaff>;
+  tasks: Array<ITask>;
+  events: Array<IGameEvent>;
+  timeRemaining: number;
+}
 
 //Enums
 export enum Role {
