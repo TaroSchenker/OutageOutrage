@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 
 const StaffSchema = new mongoose.Schema({
-    id: String,
     name: String,
     role: String,
-    expertise: String, // Added field
+    expertise: String, 
     ambition: Number,
     loyalty: Number,
     skillLevel: Number,
@@ -14,4 +13,4 @@ const StaffSchema = new mongoose.Schema({
     currentTask: { type: String, default: null },
 });
 
-export const Staff = mongoose.model('Staff', StaffSchema);
+export const StaffModel = mongoose.model('Staff', StaffSchema);

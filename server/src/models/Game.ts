@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
-import { Staff as StaffSchema } from './Staff';
-import { Task as TaskSchema} from './Task';
-import { Event as EventSchema } from './GameEvent';
+import { StaffModel } from './Staff';
+import { TaskModel} from './Task';
+import { GameEventModel  } from './GameEvent';
 
 const GameSchema = new mongoose.Schema({
     id: String,
     budget: Number,
     morale: Number,
-    businessImpact: Number, // Added field
-    staff: [StaffSchema],
-    tasks: [TaskSchema],
-    events: [EventSchema],
+    businessImpact: Number,
+    staff: [StaffModel],
+    tasks: [TaskModel],
+    events: [GameEventModel],
     timeRemaining: Number,
 });
 
-export const Game = mongoose.model('Game', GameSchema);
+export const GameModel = mongoose.model('Game', GameSchema);

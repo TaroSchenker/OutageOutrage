@@ -1,8 +1,7 @@
-export interface Staff {
-  id: string;
+export interface IStaff {
   name: string;
   role: string;
-  expertise: string; // New field for staff's expertise
+  expertise: string;
   ambition: number;
   loyalty: number;
   skillLevel: number;
@@ -12,7 +11,7 @@ export interface Staff {
   currentTask: string | null;
 }
 
-  export interface Task {
+  export interface ITask {
     id: string;
     type: string;
     complexity: number;
@@ -23,21 +22,21 @@ export interface Staff {
 }
 
 
-    export interface GameEvent {
+    export interface IGameEvent {
       id: string;
       type: string;
       severity: number;
       effectOnMorale: number;
     }
 
-    export interface Game {
+    export interface IGame {
       id: string;
       budget: number;
       morale: number;
       businessImpact: number; // New field for overall business impact
-      staff: Array<Staff>;
-      tasks: Array<Task>;
-      events: Array<GameEvent>;
+      staff: Array<IStaff>;
+      tasks: Array<ITask>;
+      events: Array<IGameEvent>;
       timeRemaining: number;
   }
 

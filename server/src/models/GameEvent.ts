@@ -7,4 +7,4 @@ const GameEventSchema = new mongoose.Schema({
     effectOnMorale: Number,
 });
 
-export const GameEvent = mongoose.model('Event', GameEventSchema);
+export const GameEventModel = mongoose.model('Event', GameEventSchema);
