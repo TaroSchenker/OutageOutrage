@@ -1,4 +1,4 @@
-import GameEventModel  from '../models/GameEvent';
+import GameEventModel from '../models/GameEvent';
 import { IGameEvent } from '../types/types';
 
 export class GameEventService {
@@ -19,8 +19,13 @@ export class GameEventService {
   }
 
   // Update a game event
-  updateEvent(id: string, eventData: Partial<IGameEvent>): Promise<IGameEvent | null> {
-    return GameEventModel.findByIdAndUpdate(id, eventData, { new: true }).exec();
+  updateEvent(
+    id: string,
+    eventData: Partial<IGameEvent>,
+  ): Promise<IGameEvent | null> {
+    return GameEventModel.findByIdAndUpdate(id, eventData, {
+      new: true,
+    }).exec();
   }
 
   // Delete a game event

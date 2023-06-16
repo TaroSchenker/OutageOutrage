@@ -9,7 +9,7 @@ export class GameService {
 
   // Retrieve a game by ID
   getGameById(id: string): Promise<IGame | null> {
-    return GameModel.findById(id)
+    return GameModel.findById(id);
   }
 
   // Create a new game
@@ -30,31 +30,55 @@ export class GameService {
 
   // Add a staff member to a game
   addStaffToGame(gameId: string, staffId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $push: { staff: staffId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { staff: staffId } },
+      { new: true },
+    ).exec();
   }
 
   // Remove a staff member from a game
   removeStaffFromGame(gameId: string, staffId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $pull: { staff: staffId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { staff: staffId } },
+      { new: true },
+    ).exec();
   }
 
   // Add a task to a game
   addTaskToGame(gameId: string, taskId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $push: { tasks: taskId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { tasks: taskId } },
+      { new: true },
+    ).exec();
   }
 
   // Remove a task from a game
   removeTaskFromGame(gameId: string, taskId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $pull: { tasks: taskId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { tasks: taskId } },
+      { new: true },
+    ).exec();
   }
 
   // Add an event to a game
   addEventToGame(gameId: string, eventId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $push: { events: eventId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { events: eventId } },
+      { new: true },
+    ).exec();
   }
 
   // Remove an event from a game
   removeEventFromGame(gameId: string, eventId: string): Promise<IGame | null> {
-    return GameModel.findByIdAndUpdate(gameId, { $pull: { events: eventId } }, { new: true }).exec();
+    return GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { events: eventId } },
+      { new: true },
+    ).exec();
   }
 }
