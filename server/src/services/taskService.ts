@@ -9,7 +9,7 @@ export class TaskService {
 
   // Retrieve a task by ID
   getTaskById(id: string): Promise<ITask | null> {
-    return TaskModel.findById(id).exec();
+    return TaskModel.findById(id)
   }
 
   // Create a new task
