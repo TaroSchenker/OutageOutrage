@@ -1,5 +1,5 @@
 import express from "express";
-import connectDb from "./src/config/db";
+import connectDb from "./config/db";
 import { config as dotenvConfig } from "dotenv";
 dotenvConfig();
 

@@ -6,6 +6,8 @@ const TaskSchema = new mongoose.Schema({
     complexity: Number,
     timeToComplete: Number,
     assignedTo: { type: String, default: null },
+    expertiseRequired: String, 
+    criticality: Number,
 });
 
-export const Task = mongoose.model('Task', TaskSchema);
+export const TaskModel = mongoose.model('Task', TaskSchema);
