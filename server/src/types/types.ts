@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 
 export interface IStaff extends Document {
   name: string;
-  role: string;
+  role: Role;
   expertise: string;
   ambition: number;
   loyalty: number;
@@ -25,7 +25,7 @@ export interface ITask extends Document {
 
 export interface IGameEvent extends Document {
   id: string;
-  type: string;
+  type: EventType;
   severity: number;
   effectOnMorale: number;
 }

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { IStaff, MIN_SKILL_LEVEL, MAX_SKILL_LEVEL, MIN_MORALE, MAX_MORALE } from '../types/types';
+import { IStaff, MIN_SKILL_LEVEL, MAX_SKILL_LEVEL, MIN_MORALE, MAX_MORALE, Role } from '../types/types';
 
 const StaffSchema = new mongoose.Schema({
     name: String,
-    role: String,
+    role: {type: String, enum: Object.values(Role)},
     expertise: String, 
     ambition: { type: Number, min: MIN_MORALE, max: MAX_MORALE },
     loyalty: { type: Number, min: MIN_MORALE, max: MAX_MORALE },
