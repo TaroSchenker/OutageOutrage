@@ -1,6 +1,8 @@
-export interface IStaff {
+import mongoose, { Document } from "mongoose";
+
+export interface IStaff extends Document {
   name: string;
-  role: string;
+  role: Role;
   expertise: string;
   ambition: number;
   loyalty: number;
@@ -11,34 +13,33 @@ export interface IStaff {
   currentTask: string | null;
 }
 
-  export interface ITask {
-    id: string;
-    type: string;
-    complexity: number;
-    timeToComplete: number;
-    assignedTo: string | null;
-    expertiseRequired: string; // New field for required expertise
-    criticality: number; // New field for task criticality
+export interface ITask extends Document {
+  id: string;
+  type: TaskType;
+  complexity: number;
+  timeToComplete: number;
+  assignedTo: string | null;
+  expertiseRequired: string;
+  criticality: number;
 }
 
+export interface IGameEvent extends Document {
+  id: string;
+  type: EventType;
+  severity: number;
+  effectOnMorale: number;
+}
 
-    export interface IGameEvent {
-      id: string;
-      type: string;
-      severity: number;
-      effectOnMorale: number;
-    }
-
-    export interface IGame {
-      id: string;
-      budget: number;
-      morale: number;
-      businessImpact: number; // New field for overall business impact
-      staff: Array<IStaff>;
-      tasks: Array<ITask>;
-      events: Array<IGameEvent>;
-      timeRemaining: number;
-  }
+export interface IGame extends Document {
+  id: string;
+  budget: number;
+  morale: number;
+  businessImpact: number; // New field for overall business impact
+  staff: Array<IStaff>;
+  tasks: Array<ITask>;
+  events: Array<IGameEvent>;
+  timeRemaining: number;
+}
 
 //Enums
 export enum Role {
@@ -62,6 +63,31 @@ export enum EventType {
   JOB_OFFER = "Job Offer",
   BUDGET_CUT = "Budget Cut",
 }
+
+export enum Expertise {
+  JAVASCRIPT = "JavaScript",
+  PYTHON = "Python",
+  JAVA = "Java",
+  CYBER_SECURITY = "Cyber Security",
+  SOFTWARE_TESTING = "Software Testing",
+  PROJECT_MANAGEMENT = "Project Management",
+  UX_DESIGN = "UX Design",
+}
+
+export enum BusinessImpact {
+  LOW = "Low",
+  MEDIUM = "Medium",
+  HIGH = "High",
+  CRITICAL = "Critical",
+}
+
+export enum TaskStatus {
+  NOT_STARTED = "Not Started",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Completed",
+  BLOCKED = "Blocked",
+}
+
 
 export const STARTING_BUDGET: number = 1000000;
 export const TIME_PERIOD: number = 180; // 6 months
