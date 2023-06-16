@@ -1,5 +1,6 @@
 import { Document } from 'mongoose';
 
+//Types
 export interface IStaff extends Document {
   name: string;
   role: Role;
