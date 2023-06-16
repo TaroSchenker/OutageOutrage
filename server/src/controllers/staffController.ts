@@ -9,7 +9,7 @@ export const getAllStaff = async (req: Request, res: Response) => {
 };
 
 export const getStaffById = async (req: Request, res: Response) => {
-  const staff = await staffService.getStaffById(req.params.id);
+  const staff = await staffService.getStaffById(req.params.staffId);
   if (!staff) {
     return res.status(404).json({ message: "Staff member not found" });
   }
@@ -22,17 +22,29 @@ export const createStaff = async (req: Request, res: Response) => {
 };
 
 export const updateStaff = async (req: Request, res: Response) => {
-  const staff = await staffService.updateStaff(req.params.id, req.body);
+  const staff = await staffService.updateStaff(req.params.staffId, req.body);
+    if (!staff) {
+    return res.status(404).json({ message: "Staff member not found" });
+    }
+    return res.json(staff);
+};
+
+export const deleteStaff = async (req: Request, res: Response) => {
+    const staff = await staffService.deleteStaff(req.params.staffId);
+    if (!staff) {
+    return res.status(404).json({ message: "Staff member not found" });
+    }
+    return res.json(staff);
 };
 
 export const assignTask = async (req: Request, res: Response) => {
-  const staff = await staffService.assignTask(req.params.id, req.params.taskId);
+  const staff = await staffService.assignTask(req.params.staffId, req.params.taskId);
   return res.status(201).json(staff);
 };
 
 export const updateMorale = async (req: Request, res: Response) => {
   const staff = await staffService.updateMorale(
-    req.params.id,
+    req.params.staffId,
     req.body.newMorale
   );
   return res.status(201).json(staff);
