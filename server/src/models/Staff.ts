@@ -4,6 +4,7 @@ const StaffSchema = new mongoose.Schema({
     id: String,
     name: String,
     role: String,
+    expertise: String, // Added field
     ambition: Number,
     loyalty: Number,
     skillLevel: Number,

@@ -7,6 +7,7 @@ const GameSchema = new mongoose.Schema({
     id: String,
     budget: Number,
     morale: Number,
+    businessImpact: Number, // Added field
     staff: [StaffSchema],
     tasks: [TaskSchema],
     events: [EventSchema],
