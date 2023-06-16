@@ -1,4 +1,4 @@
-import { GameEventModel } from '../models/GameEvent';
+import GameEventModel  from '../models/GameEvent';
 import { IGameEvent } from '../types/types';
 
 export class GameEventService {

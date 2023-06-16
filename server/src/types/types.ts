@@ -34,7 +34,7 @@ export interface IGame extends Document {
   id: string;
   budget: number;
   morale: number;
-  businessImpact: number; // New field for overall business impact
+  businessImpact: BusinessImpact; 
   staff: Array<IStaff>;
   tasks: Array<ITask>;
   events: Array<IGameEvent>;

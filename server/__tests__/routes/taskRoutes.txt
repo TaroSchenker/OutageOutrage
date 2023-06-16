@@ -1,0 +1,35 @@
+import request from "supertest";
+import express from "express";
+import router from "../../src/routes/taskRoutes"; 
+
+const app = express();
+app.use(express.json());
+app.use("/api/tasks", router);
+
+describe("Task API Endpoints", () => {
+  let taskId: string;
+
+  it("should create a new task", async () => {
+    const res = await request(app).post("/api/tasks").send({
+      type: "Bug Fix",
+      complexity: 10,
+      timeToComplete: 100,
+      assignedTo: null,
+      expertiseRequired: "Expertise",
+      criticality: 2,
+    });
+
+    expect(res.statusCode).toEqual(201);
+    expect(res.body).toHaveProperty("Bug Fix");
+    taskId = res.body.task._id; // Store this task ID to use in later tests
+  }, 10000);
+
+  it("should fetch a task", async () => {
+    const res = await request(app).get(`/api/tasks/${taskId}`);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty("task");
+  }, 10000);
+
+  // Add more tests for update, delete, etc.
+});

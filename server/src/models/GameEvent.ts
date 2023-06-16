@@ -1,3 +1,4 @@
+// models/GameEvent.ts
 import mongoose from 'mongoose';
 import { EventType, IGameEvent } from '../types/types';
 
@@ -7,4 +8,4 @@ const GameEventSchema = new mongoose.Schema({
     effectOnMorale: Number, // Add min and max if applicable
 });
 
-export const GameEventModel = mongoose.model<IGameEvent>('Event', GameEventSchema);
+export default mongoose.models.GameEvent || mongoose.model<IGameEvent>('GameEvent', GameEventSchema);

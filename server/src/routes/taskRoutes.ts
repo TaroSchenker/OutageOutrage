@@ -3,14 +3,14 @@ import * as taskController from "../controllers/taskController";
 
 const router = express.Router();
 
-router.get("/tasks", taskController.getAllTasks);
+router.get("/", taskController.getAllTasks);
 
-router.get("/tasks/:id", taskController.getTaskById);
+router.get("/:id", taskController.getTaskById);
 
-router.post("/tasks", taskController.createTask);
+router.post("/", taskController.createTask);
 
-router.put("/tasks/:id", taskController.updateTask);
+router.put("/:id", taskController.updateTask);
 
-router.delete("/tasks/:id", taskController.deleteTask);
+router.delete("/:id", taskController.deleteTask);
 
 export default router;
