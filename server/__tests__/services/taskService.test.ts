@@ -15,17 +15,17 @@ const tasks: Array<Partial<ITask>> = [
 ];
 
 describe("TaskService", () => {
-  // let taskService: TaskService;
   let mockSave: jest.Mock;
 
   beforeEach(() => {
     mockSave = jest.fn();
     jest.spyOn(TaskModel.prototype, "save").mockImplementation(mockSave);
   });
-  
+
   afterEach(() => {
     jest.restoreAllMocks();
   });
+
 
   test("should get all tasks", async () => {
     jest.spyOn(TaskModel, "find").mockReturnValueOnce({
@@ -47,6 +47,7 @@ describe("TaskService", () => {
 
     const { TaskService } = require("../../src/services/taskService");
     const taskService = new TaskService();
+    
     const result = await taskService.getTaskById(mockId);
 
     expect(result).toEqual(tasks[0]);

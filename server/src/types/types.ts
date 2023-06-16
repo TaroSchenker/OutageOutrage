@@ -64,6 +64,31 @@ export enum EventType {
   BUDGET_CUT = "Budget Cut",
 }
 
+export enum Expertise {
+  JAVASCRIPT = "JavaScript",
+  PYTHON = "Python",
+  JAVA = "Java",
+  CYBER_SECURITY = "Cyber Security",
+  SOFTWARE_TESTING = "Software Testing",
+  PROJECT_MANAGEMENT = "Project Management",
+  UX_DESIGN = "UX Design",
+}
+
+export enum BusinessImpact {
+  LOW = "Low",
+  MEDIUM = "Medium",
+  HIGH = "High",
+  CRITICAL = "Critical",
+}
+
+export enum TaskStatus {
+  NOT_STARTED = "Not Started",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Completed",
+  BLOCKED = "Blocked",
+}
+
+
 export const STARTING_BUDGET: number = 1000000;
 export const TIME_PERIOD: number = 180; // 6 months
 

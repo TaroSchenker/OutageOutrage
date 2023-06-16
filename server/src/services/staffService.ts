@@ -9,7 +9,7 @@ export class StaffService {
 
   // Retrieve a staff member by ID
   getStaffById(id: string): Promise<IStaff | null> {
-    return StaffModel.findById(id).exec();
+    return StaffModel.findById(id)
   }
 
   // Create a new staff member

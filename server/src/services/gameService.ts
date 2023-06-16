@@ -9,7 +9,7 @@ export class GameService {
 
   // Retrieve a game by ID
   getGameById(id: string): Promise<IGame | null> {
-    return GameModel.findById(id).exec();
+    return GameModel.findById(id)
   }
 
   // Create a new game
