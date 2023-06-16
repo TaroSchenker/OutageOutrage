@@ -1,6 +1,6 @@
-import { TaskModel } from "../../src/models/Task";
-import { ITask, TaskType } from "../../src/types/types";
-import mongoose from "mongoose";
+import { TaskModel } from '../../src/models/Task';
+import { ITask, TaskType } from '../../src/types/types';
+import mongoose from 'mongoose';
 
 const tasks: Array<Partial<ITask>> = [
   {
@@ -8,31 +8,30 @@ const tasks: Array<Partial<ITask>> = [
     type: TaskType.NEW_FEATURE,
     complexity: 5,
     timeToComplete: 5,
-    assignedTo: "staffMemberAssignment",
-    expertiseRequired: "need expertise",
+    assignedTo: 'staffMemberAssignment',
+    expertiseRequired: 'need expertise',
     criticality: 5,
   },
 ];
 
-describe("TaskService", () => {
+describe('TaskService', () => {
   let mockSave: jest.Mock;
 
   beforeEach(() => {
     mockSave = jest.fn();
-    jest.spyOn(TaskModel.prototype, "save").mockImplementation(mockSave);
+    jest.spyOn(TaskModel.prototype, 'save').mockImplementation(mockSave);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
   });
 
-
-  test("should get all tasks", async () => {
-    jest.spyOn(TaskModel, "find").mockReturnValueOnce({
+  test('should get all tasks', async () => {
+    jest.spyOn(TaskModel, 'find').mockReturnValueOnce({
       exec: jest.fn().mockResolvedValueOnce(tasks),
     } as any);
 
-    const { TaskService } = require("../../src/services/taskService");
+    const { TaskService } = require('../../src/services/taskService');
     const taskService = new TaskService();
 
     const result = await taskService.getAllTasks();
@@ -40,28 +39,28 @@ describe("TaskService", () => {
     expect(result).toEqual(tasks);
   });
 
-  test("should get a task by ID", async () => {
+  test('should get a task by ID', async () => {
     const mockId = tasks[0]._id;
 
-    jest.spyOn(TaskModel, "findById").mockResolvedValueOnce(tasks[0] as any);
+    jest.spyOn(TaskModel, 'findById').mockResolvedValueOnce(tasks[0] as any);
 
-    const { TaskService } = require("../../src/services/taskService");
+    const { TaskService } = require('../../src/services/taskService');
     const taskService = new TaskService();
-    
+
     const result = await taskService.getTaskById(mockId);
 
     expect(result).toEqual(tasks[0]);
   });
 
-  test("should create a new task", async () => {
+  test('should create a new task', async () => {
     // Arrange: Set the mock save method to resolve to the task.
     mockSave.mockImplementation(() => {
-      console.log("save called");
+      console.log('save called');
       return Promise.resolve(tasks[0]);
     });
 
     // Act: Call the method under test.
-    const { TaskService } = require("../../src/services/taskService");
+    const { TaskService } = require('../../src/services/taskService');
     const taskService = new TaskService();
     await taskService.createTask(tasks[0]);
 

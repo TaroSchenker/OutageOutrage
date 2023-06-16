@@ -9,7 +9,7 @@ export class StaffService {
 
   // Retrieve a staff member by ID
   getStaffById(id: string): Promise<IStaff | null> {
-    return StaffModel.findById(id)
+    return StaffModel.findById(id);
   }
 
   // Create a new staff member
@@ -30,11 +30,19 @@ export class StaffService {
 
   // Assign a task to a staff member
   assignTask(staffId: string, taskId: string): Promise<IStaff | null> {
-    return StaffModel.findByIdAndUpdate(staffId, { currentTask: taskId }, { new: true }).exec();
+    return StaffModel.findByIdAndUpdate(
+      staffId,
+      { currentTask: taskId },
+      { new: true },
+    ).exec();
   }
 
   // Update staff morale
   updateMorale(id: string, newMorale: number): Promise<IStaff | null> {
-    return StaffModel.findByIdAndUpdate(id, { morale: newMorale }, { new: true }).exec();
+    return StaffModel.findByIdAndUpdate(
+      id,
+      { morale: newMorale },
+      { new: true },
+    ).exec();
   }
 }

@@ -1,5 +1,5 @@
-import { TaskModel } from "../models/Task";
-import { ITask } from "../types/types";
+import { TaskModel } from '../models/Task';
+import { ITask } from '../types/types';
 
 export class TaskService {
   // Retrieve all tasks
@@ -9,10 +9,10 @@ export class TaskService {
 
   // Retrieve a task by ID
   getTaskById(id: string): Promise<ITask | null> {
-    //Remove .exec() as it breaks the tests. 
+    //Remove .exec() as it breaks the tests.
     //Do we need to remove from all or not?
     // return TaskModel.findById(id).exec()
-    return TaskModel.findById(id)
+    return TaskModel.findById(id);
   }
 
   // Create a new task
@@ -36,7 +36,7 @@ export class TaskService {
     return TaskModel.findByIdAndUpdate(
       taskId,
       { assignedTo: staffId },
-      { new: true }
+      { new: true },
     ).exec();
   }
 }
