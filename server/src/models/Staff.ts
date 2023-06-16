@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { IStaff } from '../types/types';
 
 const StaffSchema = new mongoose.Schema({
     name: String,
@@ -13,4 +14,4 @@ const StaffSchema = new mongoose.Schema({
     currentTask: { type: String, default: null },
 });
 
-export const StaffModel = mongoose.model('Staff', StaffSchema);
+export const StaffModel = mongoose.model<IStaff>('Staff', StaffSchema);

@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { StaffModel } from './Staff';
 import { TaskModel} from './Task';
 import { GameEventModel  } from './GameEvent';
+import { IGame } from '../types/types';
 
 const GameSchema = new mongoose.Schema({
     id: String,
@@ -14,4 +15,4 @@ const GameSchema = new mongoose.Schema({
     timeRemaining: Number,
 });
 
-export const GameModel = mongoose.model('Game', GameSchema);
+export const GameModel = mongoose.model<IGame>('Game', GameSchema);
