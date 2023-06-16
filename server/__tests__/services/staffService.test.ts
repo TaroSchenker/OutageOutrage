@@ -24,7 +24,6 @@ describe("StaffService", () => {
 
   beforeEach(() => {
     staffService = new StaffService();
-   
   });
 
   afterEach(() => {
@@ -45,7 +44,7 @@ describe("StaffService", () => {
 
   test("should get a staff member by ID", async () => {
     jest.spyOn(StaffModel, "findById").mockReturnValueOnce({
-      exec: jest.fn().mockResolvedValueOnce(staffMembers),
+      // exec: jest.fn().mockResolvedValueOnce(staffMembers),
     } as any);
 
     const result = await staffService.getStaffById("some-id");

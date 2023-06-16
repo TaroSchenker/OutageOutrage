@@ -9,6 +9,9 @@ export class TaskService {
 
   // Retrieve a task by ID
   getTaskById(id: string): Promise<ITask | null> {
+    //Remove .exec() as it breaks the tests. 
+    //Do we need to remove from all or not?
+    // return TaskModel.findById(id).exec()
     return TaskModel.findById(id)
   }
 
