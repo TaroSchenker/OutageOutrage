@@ -1,4 +1,12 @@
-import { EventType } from '../../types/types';
+import {
+  BusinessImpact,
+  EventType,
+  Expertise,
+  IGameData,
+  Role,
+  TaskStatus,
+  TaskType,
+} from '../../types/types';
 
 export const events = [
   {
@@ -82,3 +90,47 @@ export const events = [
     effectOnTasks: null,
   },
 ];
+
+//postman json body for create a new game
+export const initGameData: IGameData = {
+  budget: 1000000,
+  morale: 100,
+  businessImpact: BusinessImpact.LOW,
+  staff: [
+    {
+      name: 'John Doe',
+      role: Role.FRONTEND_DEV,
+      expertise: 'Java',
+      ambition: 10,
+      loyalty: 100,
+      skillLevel: 10,
+      resilience: 10,
+      adaptability: 10,
+      morale: 100,
+      currentTask: null,
+    },
+  ],
+  tasks: [
+    {
+      type: TaskType.BUG_FIX,
+      complexity: 1,
+      timeToComplete: 1,
+      assignedTo: null,
+      expertiseRequired: Expertise.JAVA,
+      criticality: 1,
+      status: TaskStatus.NOT_STARTED,
+    },
+  ],
+  events: [
+    {
+      type: EventType.SERVER_CRASH,
+      severity: 1,
+      effectOnMorale: 0,
+      effectOnBudget: 0,
+      effectOnTasks: null,
+    },
+  ],
+  timeRemaining: 10,
+  startingBudget: 1000000,
+  timePeriod: 180,
+};

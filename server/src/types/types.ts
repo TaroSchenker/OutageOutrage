@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
-//Types
-export interface IStaff extends Document {
+//Types for non mongoose models
+export interface IStaffData {
   name: string;
   role: Role;
   expertise: string;
@@ -14,8 +14,7 @@ export interface IStaff extends Document {
   currentTask: string | null;
 }
 
-export interface ITask extends Document {
-  id: string;
+export interface ITaskData {
   type: TaskType;
   complexity: number;
   timeToComplete: number;
@@ -25,27 +24,34 @@ export interface ITask extends Document {
   status: TaskStatus;
 }
 
-export interface IGameEvent extends Document {
-  id: string;
+export interface IGameEventData {
   type: EventType;
   severity: number;
   effectOnMorale: number;
   effectOnBudget: number;
-  effectOnTasks: Partial<ITask> | null;
+  effectOnTasks: Partial<ITaskData> | null;
 }
 
-export interface IGame extends Document {
-  id: string;
+export interface IGameData {
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
-  staff: Array<IStaff>;
-  tasks: Array<ITask>;
-  events: Array<IGameEvent>;
-  timeRemaining: number;
+  staff: Array<IStaffData>;
+  tasks: Array<ITaskData>;
+  events: Array<IGameEventData>;
+  timeRemaining: number; // decreases by 1 each day
   startingBudget: number;
-  timePeriod: number;
+  timePeriod: number; //game length in days (180 days = 6 months)
 }
+
+//Types for Mongoose Models
+export interface IStaff extends Document, IStaffData {}
+
+export interface ITask extends Document, ITaskData {}
+
+export interface IGameEvent extends Document, IGameEventData {}
+
+export interface IGame extends Document, IGameData {}
 
 //Enums
 export enum Role {

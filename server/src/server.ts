@@ -8,6 +8,7 @@ import staffRouter from './routes/staffRoutes';
 import taskRouter from './routes/taskRoutes';
 import gameEventRouter from './routes/gameEventRoutes';
 import gameRouter from './routes/gameRoutes';
+import gameStateRouter from './routes/gameStateRoutes';
 import mongoose, { Error } from 'mongoose';
 
 dotenvConfig();
@@ -38,8 +39,9 @@ app.use('/api/staff', staffRouter);
 app.use('/api/tasks', taskRouter);
 app.use('/api/gameEvents', gameEventRouter);
 app.use('/api/game', gameRouter);
-
+app.use('/api/gameState', gameStateRouter);
 // Error handling middleware
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong!');
