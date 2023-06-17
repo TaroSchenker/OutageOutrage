@@ -20,8 +20,9 @@ export interface ITask extends Document {
   complexity: number;
   timeToComplete: number;
   assignedTo: string | null;
-  expertiseRequired: string;
+  expertiseRequired: Expertise;
   criticality: number;
+  status: TaskStatus;
 }
 
 export interface IGameEvent extends Document {
@@ -29,6 +30,8 @@ export interface IGameEvent extends Document {
   type: EventType;
   severity: number;
   effectOnMorale: number;
+  effectOnBudget: number;
+  effectOnTasks: Partial<ITask> | null;
 }
 
 export interface IGame extends Document {
@@ -40,6 +43,8 @@ export interface IGame extends Document {
   tasks: Array<ITask>;
   events: Array<IGameEvent>;
   timeRemaining: number;
+  startingBudget: number;
+  timePeriod: number;
 }
 
 //Enums

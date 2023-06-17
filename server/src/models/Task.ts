@@ -1,9 +1,11 @@
 import {
+  Expertise,
   ITask,
   MAX_COMPLEXITY,
   MAX_TIME_TO_COMPLETE,
   MIN_COMPLEXITY,
   MIN_TIME_TO_COMPLETE,
+  TaskStatus,
   TaskType,
 } from '../types/types';
 import mongoose from 'mongoose';
@@ -17,8 +19,9 @@ const TaskSchema = new mongoose.Schema({
     max: MAX_TIME_TO_COMPLETE,
   },
   assignedTo: { type: String, default: null },
-  expertiseRequired: String,
+  expertiseRequired: { type: String, enum: Object.values(Expertise) },
   criticality: Number,
+  status: { type: String, enum: Object.values(TaskStatus) },
 });
 
 export const TaskModel = mongoose.model<ITask>('Event', TaskSchema);

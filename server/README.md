@@ -80,3 +80,21 @@ Suggested Files and Functions:
 
 /src/app.ts: Imports and uses all routes, sets up middleware, and exports the Express application.
 
+
+This API collection consists of four APIs: Game Management, Staff, Game Event, and Task, which manage games, staff, tasks, and game events respectively.
+
+Game Management API:
+- Retrieve, create, update, and delete games
+
+Staff API:
+- Retrieve, create, update, and delete staff members
+- Assign tasks to staff members
+- Update staff member's morale
+
+Game Event API:
+- Retrieve, create, update, and delete game events
+
+Task API:
+- Retrieve, create, update, and delete tasks
+
+Each API has its own set of paths and methods for interacting with the respective data types. The APIs provide functionality such as managing games, staff, tasks, and game events, assigning tasks to staff members, and managing the staff morale.
