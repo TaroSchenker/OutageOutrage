@@ -6,6 +6,8 @@ const GameEventSchema = new mongoose.Schema({
   type: { type: String, enum: Object.values(EventType) },
   severity: Number, // Add min and max if applicable
   effectOnMorale: Number, // Add min and max if applicable
+  effectOnBudget: Number, // Add min and max if applicable
+  // effectOnTasks: { type: mongoose.Schema.Types.Mixed, default: null },
 });
 
 export default mongoose.models.GameEvent ||
