@@ -21,6 +21,8 @@ const GameSchema = new mongoose.Schema({
     min: MIN_TIME_TO_COMPLETE,
     max: MAX_TIME_TO_COMPLETE,
   },
+  startingBudget: Number,
+  timePeriod: Number,
 });
 
 export const GameModel = mongoose.model<IGame>('Game', GameSchema);
