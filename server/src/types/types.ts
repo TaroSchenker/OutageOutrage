@@ -1,6 +1,18 @@
 import { Document } from 'mongoose';
 
 //Types for non mongoose models
+export interface IGameData {
+  budget: number;
+  morale: number;
+  businessImpact: BusinessImpact;
+  staff: Array<IStaff>;
+  tasks: Array<ITask>;
+  events: Array<IGameEvent>;
+  timeRemaining: number; // decreases by 1 each day
+  startingBudget: number;
+  timePeriod: number; //game length in days (180 days = 6 months)
+}
+
 export interface IStaffData {
   name: string;
   role: Role;
@@ -29,19 +41,7 @@ export interface IGameEventData {
   severity: number;
   effectOnMorale: number;
   effectOnBudget: number;
-  effectOnTasks: Partial<ITaskData> | null;
-}
-
-export interface IGameData {
-  budget: number;
-  morale: number;
-  businessImpact: BusinessImpact;
-  staff: Array<IStaffData>;
-  tasks: Array<ITaskData>;
-  events: Array<IGameEventData>;
-  timeRemaining: number; // decreases by 1 each day
-  startingBudget: number;
-  timePeriod: number; //game length in days (180 days = 6 months)
+  effectOnTasks: ITaskData | null;
 }
 
 //Types for Mongoose Models

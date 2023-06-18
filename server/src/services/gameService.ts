@@ -1,5 +1,5 @@
 import { GameModel } from '../models/Game';
-import { IGame } from '../types/types';
+import { IGame, IGameData } from '../types/types';
 
 export class GameService {
   // Retrieve all games
@@ -13,7 +13,7 @@ export class GameService {
   }
 
   // Create a new game
-  createGame(gameData: Partial<IGame>): Promise<IGame> {
+  createGame(gameData: IGameData): Promise<IGame> {
     const game = new GameModel(gameData);
     return game.save();
   }

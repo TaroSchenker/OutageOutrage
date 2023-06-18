@@ -1,5 +1,5 @@
 import GameEventModel from '../models/GameEvent';
-import { IGameEvent } from '../types/types';
+import { IGameEvent, IGameEventData } from '../types/types';
 
 export class GameEventService {
   // Retrieve all game events
@@ -13,7 +13,7 @@ export class GameEventService {
   }
 
   // Create a new game event
-  createEvent(eventData: Partial<IGameEvent>): Promise<IGameEvent> {
+  createEvent(eventData: IGameEventData): Promise<IGameEvent> {
     const gameEvent = new GameEventModel(eventData);
     return gameEvent.save();
   }
