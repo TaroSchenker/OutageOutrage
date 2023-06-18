@@ -1,5 +1,5 @@
 import { TaskModel } from '../models/Task';
-import { ITask } from '../types/types';
+import { ITask, ITaskData } from '../types/types';
 
 export class TaskService {
   // Retrieve all tasks
@@ -16,13 +16,15 @@ export class TaskService {
   }
 
   // Create a new task
-  createTask(taskData: Partial<ITask>): Promise<ITask> {
+  createTask(taskData: ITaskData): Promise<ITask> {
+    console.log('*TASK SERVICE*: taskData: ', taskData);
     const task = new TaskModel(taskData);
+    console.log('*TASK SERVICE*: new task model: ', task);
     return task.save();
   }
 
   // Update a task
-  updateTask(id: string, taskData: Partial<ITask>): Promise<ITask | null> {
+  updateTask(id: string, taskData: ITask): Promise<ITask | null> {
     return TaskModel.findByIdAndUpdate(id, taskData, { new: true }).exec();
   }
 

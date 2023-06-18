@@ -1,5 +1,5 @@
 import { StaffModel } from '../models/Staff';
-import { IStaff } from '../types/types';
+import { IStaff, IStaffData } from '../types/types';
 
 export class StaffService {
   // Retrieve all staff members
@@ -13,8 +13,9 @@ export class StaffService {
   }
 
   // Create a new staff member
-  createStaff(staffData: Partial<IStaff>): Promise<IStaff> {
+  createStaff(staffData: IStaffData): Promise<IStaff> {
     const staff = new StaffModel(staffData);
+    console.log('*STAFF SERVICE*: <Created>staffData: ', staffData);
     return staff.save();
   }
 

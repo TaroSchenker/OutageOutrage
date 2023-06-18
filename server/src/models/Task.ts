@@ -24,4 +24,4 @@ const TaskSchema = new mongoose.Schema({
   status: { type: String, enum: Object.values(TaskStatus) },
 });
 
-export const TaskModel = mongoose.model<ITask>('Event', TaskSchema);
+export const TaskModel = mongoose.model<ITask>('Task', TaskSchema);

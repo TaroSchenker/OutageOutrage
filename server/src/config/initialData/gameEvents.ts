@@ -93,7 +93,7 @@ export const events = [
 
 //postman json body for create a new game
 export const initGameData: IGameData = {
-  budget: 1000000,
+  budget: 100000,
   morale: 100,
   businessImpact: BusinessImpact.LOW,
   staff: [
@@ -123,14 +123,14 @@ export const initGameData: IGameData = {
   ],
   events: [
     {
-      type: EventType.SERVER_CRASH,
-      severity: 1,
-      effectOnMorale: 0,
-      effectOnBudget: 0,
+      type: EventType.BUDGET_CUT,
+      severity: 10,
+      effectOnMorale: 10,
+      effectOnBudget: 10,
       effectOnTasks: null,
     },
   ],
-  timeRemaining: 10,
+  timeRemaining: 180,
   startingBudget: 1000000,
   timePeriod: 180,
 };
