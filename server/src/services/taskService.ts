@@ -1,5 +1,6 @@
 import { TaskModel } from '../models/Task';
 import { ITask, ITaskData } from '../types/types';
+import AppError from '../utils/AppError';
 
 export class TaskService {
   // Retrieve all tasks
@@ -35,10 +36,16 @@ export class TaskService {
 
   // Assign a task to a staff member
   assignTaskToStaff(taskId: string, staffId: string): Promise<ITask | null> {
-    return TaskModel.findByIdAndUpdate(
-      taskId,
-      { assignedTo: staffId },
-      { new: true },
-    ).exec();
+    console.log('TASK SERVICE -->  staffId', staffId);
+    try {
+      return TaskModel.findByIdAndUpdate(
+        taskId,
+        { assignedTo: staffId },
+        { new: true },
+      );
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw new AppError('An error occurred while updating the task', 500);
+    }
   }
 }

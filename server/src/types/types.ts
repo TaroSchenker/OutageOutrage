@@ -5,9 +5,9 @@ export interface IGameData {
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
-  staff: Array<IStaffData>;
-  tasks: Array<ITaskData>;
-  events: Array<IGameEventData>;
+  staff: Array<IStaff>;
+  tasks: Array<ITask>;
+  events: Array<IGameEvent>;
   timeRemaining: number; // decreases by 1 each day
   startingBudget: number;
   timePeriod: number; //game length in days (180 days = 6 months)

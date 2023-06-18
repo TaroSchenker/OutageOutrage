@@ -5,8 +5,8 @@ import { TaskModel } from './Task';
 import GameEventModel from './GameEvent';
 
 const GameSchema = new mongoose.Schema({
-  budget: Number, 
-  morale: Number, 
+  budget: Number,
+  morale: Number,
   businessImpact: { type: String, enum: Object.values(BusinessImpact) },
   staff: [StaffModel.schema],
   tasks: [TaskModel.schema],
