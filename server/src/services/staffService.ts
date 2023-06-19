@@ -31,6 +31,7 @@ export class StaffService {
 
   // Assign a task to a staff member
   assignTask(staffId: string, taskId: string): Promise<IStaff | null> {
+    console.log('staff service, assign task', staffId, taskId);
     return StaffModel.findByIdAndUpdate(
       staffId,
       { currentTask: taskId },

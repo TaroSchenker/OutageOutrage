@@ -5,14 +5,11 @@ import AppError from '../utils/AppError';
 export class TaskService {
   // Retrieve all tasks
   getAllTasks(): Promise<ITask[]> {
-    return TaskModel.find({}).exec();
+    return TaskModel.find({});
   }
 
   // Retrieve a task by ID
   getTaskById(id: string): Promise<ITask | null> {
-    //Remove .exec() as it breaks the tests.
-    //Do we need to remove from all or not?
-    // return TaskModel.findById(id).exec()
     return TaskModel.findById(id);
   }
 
@@ -26,17 +23,16 @@ export class TaskService {
 
   // Update a task
   updateTask(id: string, taskData: ITask): Promise<ITask | null> {
-    return TaskModel.findByIdAndUpdate(id, taskData, { new: true }).exec();
+    return TaskModel.findByIdAndUpdate(id, taskData, { new: true });
   }
 
   // Delete a task
   deleteTask(id: string): Promise<ITask | null> {
-    return TaskModel.findByIdAndDelete(id).exec();
+    return TaskModel.findByIdAndDelete(id);
   }
 
   // Assign a task to a staff member
   assignTaskToStaff(taskId: string, staffId: string): Promise<ITask | null> {
-    console.log('TASK SERVICE -->  staffId', staffId);
     try {
       return TaskModel.findByIdAndUpdate(
         taskId,

@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { TaskService } from '../services/taskService';
 import AppError from '../utils/AppError';
-import { StaffService } from '../services/staffService';
 
 const taskService = new TaskService();
-const staffService = new StaffService();
 
 export const getAllTasks = async (
   req: Request,
@@ -88,21 +86,13 @@ export const assignTaskToStaff = async (
   next: NextFunction,
 ) => {
   try {
-    const assignedTo: string = req.body.assignedTo;
-    const staff = await staffService.getStaffById(assignedTo);
-    if (!staff) {
-      throw new AppError('Staff not found.', 404);
-    }
-
     const task = await taskService.assignTaskToStaff(
       req.params.taskId,
-      assignedTo,
+      req.body.assignedTo,
     );
-
     if (!task) {
       throw new AppError('Task not found.', 404);
     }
-
     return res.json(task);
   } catch (error) {
     next(error);
