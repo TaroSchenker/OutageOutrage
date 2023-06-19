@@ -30,87 +30,103 @@ export class GameService {
   deleteGame(id: string): Promise<IGame | null> {
     return GameModel.findByIdAndDelete(id);
   }
+
+  // Add a staff to a game
+  async addStaffToGame(gameId: string, staffId: string): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { staff: staffId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
+
   // Remove a staff member from a game
-  // async removeStaffFromGame(
-  //   gameId: string,
-  //   staffId: string,
-  // ): Promise<IGame | null> {
-  //   const game = await GameModel.findByIdAndUpdate(
-  //     gameId,
-  //     { $pull: { staff: staffId } },
-  //     { new: true },
-  //   );
-  //   return game
-  //     ? await GameModel.findById(game.id)
-  //         .populate('staff')
-  //         .populate('tasks')
-  //         .populate('events')
-  //     : null;
-  // }
+  async removeStaffFromGame(
+    gameId: string,
+    staffId: string,
+  ): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { staff: staffId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
 
   // Add a task to a game
-  // async addTaskToGame(gameId: string, taskId: string): Promise<IGame | null> {
-  //   const game = await GameModel.findByIdAndUpdate(
-  //     gameId,
-  //     { $push: { tasks: taskId } },
-  //     { new: true },
-  //   );
-  //   return game
-  //     ? await GameModel.findById(game.id)
-  //         .populate('staff')
-  //         .populate('tasks')
-  //         .populate('events')
-  //     : null;
-  // }
+  async addTaskToGame(gameId: string, taskId: string): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { tasks: taskId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
 
-  // // Remove a task from a game
-  // async removeTaskFromGame(
-  //   gameId: string,
-  //   taskId: string,
-  // ): Promise<IGame | null> {
-  //   const game = await GameModel.findByIdAndUpdate(
-  //     gameId,
-  //     { $pull: { tasks: taskId } },
-  //     { new: true },
-  //   );
-  //   return game
-  //     ? await GameModel.findById(game.id)
-  //         .populate('staff')
-  //         .populate('tasks')
-  //         .populate('events')
-  //     : null;
-  // }
+  // Remove a task from a game
+  async removeTaskFromGame(
+    gameId: string,
+    taskId: string,
+  ): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { tasks: taskId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
 
-  // // Add an event to a game
-  // async addEventToGame(gameId: string, eventId: string): Promise<IGame | null> {
-  //   const game = await GameModel.findByIdAndUpdate(
-  //     gameId,
-  //     { $push: { events: eventId } },
-  //     { new: true },
-  //   );
-  //   return game
-  //     ? await GameModel.findById(game.id)
-  //         .populate('staff')
-  //         .populate('tasks')
-  //         .populate('events')
-  //     : null;
-  // }
+  // Add an event to a game
+  async addEventToGame(gameId: string, eventId: string): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $push: { events: eventId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
 
   // Remove an event from a game
-  //   async removeEventFromGame(
-  //     gameId: string,
-  //     eventId: string,
-  //   ): Promise<IGame | null> {
-  //     const game = await GameModel.findByIdAndUpdate(
-  //       gameId,
-  //       { $pull: { events: eventId } },
-  //       { new: true },
-  //     );
-  //     return game
-  //       ? await GameModel.findById(game.id)
-  //           .populate('staff')
-  //           .populate('tasks')
-  //           .populate('events')
-  //       : null;
-  //   }
+  async removeEventFromGame(
+    gameId: string,
+    eventId: string,
+  ): Promise<IGame | null> {
+    const game = await GameModel.findByIdAndUpdate(
+      gameId,
+      { $pull: { events: eventId } },
+      { new: true },
+    );
+    return game
+      ? await GameModel.findById(game.id)
+          .populate('staff')
+          .populate('tasks')
+          .populate('events')
+      : null;
+  }
 }

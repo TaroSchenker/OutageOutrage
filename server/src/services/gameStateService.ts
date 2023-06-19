@@ -1,9 +1,19 @@
-import { BusinessImpact, IGame } from '../types/types';
+import {
+  BusinessImpact,
+  IGame,
+  IGameEvent,
+  IStaff,
+  ITask,
+  TaskStatus,
+} from '../types/types';
 import { GameService } from '../services/gameService';
 import { StaffService } from '../services/staffService';
 import { TaskService } from '../services/taskService';
 import { GameEventService } from '../services/gameEventService';
 // import { initGameData } from '../config/initialData/gameEvents';
+import { tasks as preCreatedTasks } from '../config/initialData/tasks';
+import { staffMembersInitialData as preCreatedStaff } from '../config/initialData/staff';
+import { events as preCreatedEvents } from '../config/initialData/gameEvents';
 
 export class GameStateService {
   private gameService: GameService;
@@ -19,44 +29,40 @@ export class GameStateService {
   }
 
   async initializeGame(): Promise<IGame> {
-    // 1. Initialize the IGame object with the provided gameData.
+    const initialTasks = await Promise.all(
+      preCreatedTasks.map(async (task): Promise<ITask> => {
+        const createdTask = await this.taskService.createTask(task);
+        return createdTask;
+      }),
+    );
+    const initialStaff = await Promise.all(
+      preCreatedStaff.map(async (staff): Promise<IStaff> => {
+        return await this.staffService.createStaff(staff);
+      }),
+    );
+
+    const initialEvents = await Promise.all(
+      preCreatedEvents.map(async (event): Promise<IGameEvent> => {
+        return await this.gameEventService.createEvent(event);
+      }),
+    );
+
+    // 1. Initialize the IGame object
     // 2. Set the initial game state, including budget, staff list, tasks list, events list etc.
     // 3. Store the game state with the provided id in the database or in-memory storage.
     try {
-      //Create entries for staff, task, gameEvents
-      const staff = await this.staffService.getAllStaff();
-      const tasks = await this.taskService.getAllTasks();
-      const events = await this.gameEventService.getAllEvents();
-
-      let game = await this.gameService.createGame({
+      //init game data
+      const game = await this.gameService.createGame({
         budget: 9999900,
         morale: 100,
         businessImpact: BusinessImpact.LOW,
-        staff: staff.map((staff) => staff.id),
-        tasks: tasks.map((task) => task.id),
-        events: events.map((event) => event.id),
+        staff: initialStaff.map((staff) => staff.id),
+        tasks: initialTasks.map((task) => task.id),
+        events: initialEvents.map((event) => event.id),
         timeRemaining: 180,
-        startingBudget: 1000000,
+        startingBudget: 100,
         timePeriod: 180,
       });
-
-      // // Create staff, tasks, and game events
-      // const createdStaffPromises = staff.map((staffMember) =>
-      //   this.staffService.createStaff(staffMember),
-      // );
-      // const createdTasksPromises = tasks.map((task) =>
-      //   this.taskService.createTask(task),
-      // );
-      // const createdGameEventsPromises = gameEvents.map((gameEvent) =>
-      //   this.gameEventService.createEvent(gameEvent),
-      // );
-
-      // Wait for the promises to resolve
-      // const createdStaff = await Promise.all(createdStaffPromises);
-      // const createdTasks = await Promise.all(createdTasksPromises);
-      // const createdGameEvents = await Promise.all(createdGameEventsPromises);
-      // console.log('create staff', createdStaff);
-      // Create the game with the created staff, tasks, and game events
 
       return game;
     } catch (err) {
@@ -69,25 +75,31 @@ export class GameStateService {
     // 1. Update the game turn state (you could be tracking turns with a simple counter).
     // 2. Refresh the available tasks and events (according to the game logic).
     // 3. Update the budget based on any recurring expenses (like staff salaries).
-    // 4. Save the new game state in the database or in-memory storage.
+    // 4. Save the new game state in the database.
     try {
-      const game = await this.gameService.getGameById(gameId);
+      let game = await this.gameService.getGameById(gameId);
       if (!game) {
         throw new Error('Game not found');
       }
       console.log('***************************');
       console.log('***************************');
-      console.log('<---STARTING GAME DATA>----');
+      console.log('<--- STARTING NEW TURN DATA ---->');
       //decrease time remaining by 1 day;
       game.timeRemaining--;
+      game = await this.gameService.updateGame(gameId, game);
 
-      console.log('i am the  game state', game.timeRemaining);
-      // // Update task assignments
-      // game = await this.processTaskAssignments(game);
-      // console.log('Processed Tasks in gameState', game);
-      // // Check win/loss conditions
-      // const result = this.checkWinLossConditions(game);
-      // console.log('Win / Loss conditions result:', result);
+      if (!game) {
+        throw new Error('Game not found');
+      }
+
+      game = await this.processTaskAssignments(game);
+
+      if (!game) {
+        throw new Error('Game not found');
+      }
+      // Check win/loss conditions
+      const result = this.checkWinLossConditions(game);
+      console.log('Win / Loss conditions result:', result);
 
       // // Save game state
       // await this.gameService.updateGame(gameId, game);
@@ -98,42 +110,45 @@ export class GameStateService {
       throw err;
     }
   }
-  // async processTaskAssignments(game: IGame): Promise<IGame> {
-  // TODO:
-  // 1. Process the assignments made by the player during the turn.
-  // 2. Update the status of the tasks (e.g., completed, in-progress, not-started).
-  // 3. Update the workload of the staff based on the assigned tasks.
-  // 4. Save these changes to the game state in the database or in-memory storage.
+  async processTaskAssignments(game: IGame): Promise<IGame> {
+    // TODO:
+    // 1. Process the assignments made by the player during the turn.
+    // 2. Update the status of the tasks (e.g., completed, in-progress, not-started).
+    // 3. Update the workload of the staff based on the assigned tasks.
+    // 4. Save these changes to the game state in the database or in-memory storage.
+    console.log('Process task assignments');
+    game.tasks.forEach(async (task) => {
+      const retrievedTask = await this.taskService.getTaskById(String(task));
+      if (!retrievedTask) {
+        throw new Error('Game not found');
+      }
+      // If the task is assigned to a staff member and not completed
+      if (
+        retrievedTask.assignedTo &&
+        retrievedTask.status !== TaskStatus.COMPLETED
+      ) {
+        const assignedStaffId = game.staff.find(
+          (staff) => String(staff) === retrievedTask.assignedTo,
+        );
+        const staff = await this.staffService.getStaffById(
+          String(assignedStaffId),
+        );
+        if (staff) {
+          retrievedTask.timeToComplete -= 2;
+        }
+        // If the task is now complete, mark it as such
+        if (retrievedTask.timeToComplete <= 0) {
+          retrievedTask.status = TaskStatus.COMPLETED;
+        }
+        void (await this.taskService.updateTask(
+          retrievedTask._id,
+          retrievedTask,
+        ));
+      }
+    });
 
-  //   console.log('Process task assignments');
-
-  //   // Iterate over all tasks
-
-  //   const tasks = this.taskService.;
-  //   if (tasks) {
-  //     tasks.forEach((task) => {
-  //       console.log('for each task', task);
-  //       // If the task is assigned to a staff member and not completed
-  //       if (task.assignedTo && task.status !== TaskStatus.COMPLETED) {
-  //         const staff = game.staff.find(
-  //           (staff) => staff._id === task.assignedTo,
-  //         );
-  //         if (staff) {
-  //           // Reduce timeToComplete based on staff's skill level
-  //           task.timeToComplete -= staff.skillLevel;
-  //           console.log('task time remaining', task.timeToComplete);
-  //         }
-
-  //         // If the task is now complete, mark it as such
-  //         if (task.timeToComplete <= 0) {
-  //           task.status = TaskStatus.COMPLETED;
-  //         }
-  //       }
-  //     });
-  //   }
-
-  //   return game;
-  // }
+    return game;
+  }
 
   async handleStaffReduction(game: IGame): Promise<IGame> {
     // TODO: Add your code here
@@ -153,7 +168,7 @@ export class GameStateService {
     //     TODO:
     // 1. Update the morale of each staff member based on the events and decisions made during the game (e.g., staff reductions, successful task completion).
     // 2. Apply any effects of changes in morale (e.g., staff productivity changes, staff might leave if morale gets too low).
-    // 3. Save these changes to the game state in the database or in-memory storage.
+    // 3. Save these changes to the game state in the database
     return game;
   }
 
@@ -167,10 +182,6 @@ export class GameStateService {
   }
 
   checkWinLossConditions(game: IGame): 'WIN' | 'LOSS' | 'ONGOING' {
-    // TODO:
-    // 1. Check if the current game state matches any of the win or loss conditions (e.g., budget runs out, all tasks are completed, staff morale drops to zero).
-    // 2. If a win or loss condition is met, update the game status and trigger the appropriate game over sequence.
-    // 3. Save any changes to the game state in the database or in-memory storage.
     if (game.budget <= 0) {
       return 'LOSS';
     } else if (game.morale <= 0) {
@@ -178,7 +189,6 @@ export class GameStateService {
     } else if (game.timeRemaining <= 0) {
       return 'WIN';
     }
-
     return 'ONGOING';
   }
 }
