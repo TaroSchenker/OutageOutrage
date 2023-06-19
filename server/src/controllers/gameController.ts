@@ -47,7 +47,7 @@ export const addStaffToGame = async (req: Request, res: Response) => {
   if (!game) {
     return res.status(404).json({ message: 'Game not found' });
   }
-  return res.status(200).json(game);
+  return res.status(200).json('game');
 };
 
 export const removeStaffFromGame = async (req: Request, res: Response) => {
@@ -58,7 +58,7 @@ export const removeStaffFromGame = async (req: Request, res: Response) => {
   if (!game) {
     return res.status(404).json({ message: 'Game not found' });
   }
-  return res.status(200).json(game);
+  return res.status(200).json('game');
 };
 
 export const addTaskToGame = async (req: Request, res: Response) => {
@@ -102,5 +102,5 @@ export const removeEventFromGame = async (req: Request, res: Response) => {
   if (!game) {
     return res.status(404).json({ message: 'Game not found' });
   }
-  return res.status(200).json(game);
+  return res.status(200).json('game');
 };

@@ -1,16 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 import { BusinessImpact, IGame } from '../types/types';
-import { StaffModel } from './Staff';
-import { TaskModel } from './Task';
-import GameEventModel from './GameEvent';
 
-const GameSchema = new mongoose.Schema({
+const GameSchema = new mongoose.Schema<IGame>({
   budget: Number,
   morale: Number,
   businessImpact: { type: String, enum: Object.values(BusinessImpact) },
-  staff: [StaffModel.schema],
-  tasks: [TaskModel.schema],
-  events: [GameEventModel.schema],
+  staff: [{ type: Schema.Types.ObjectId, ref: 'Staff' }],
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  events: [{ type: Schema.Types.ObjectId, ref: 'GameEvent' }],
   timeRemaining: {
     type: Number,
   },
@@ -18,4 +15,4 @@ const GameSchema = new mongoose.Schema({
   timePeriod: Number,
 });
 
-export const GameModel = mongoose.model<IGame>('Game', GameSchema);
+export const GameModel = mongoose.model<IGame & Document>('Game', GameSchema);

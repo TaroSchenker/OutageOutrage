@@ -19,4 +19,9 @@ export const newTurn = async (req: Request, res: Response) => {
   res.status(200).json(game);
 };
 
+export const processTaskAssignments = (req: Request, res: Response) => {
+  console.log('process task assignments');
+  // const game = await gameStateService.processTaskAssignments
+};
+
 export { router as gameStateController };
