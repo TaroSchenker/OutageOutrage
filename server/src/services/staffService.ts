@@ -4,7 +4,7 @@ import { IStaff, IStaffData } from '../types/types';
 export class StaffService {
   // Retrieve all staff members
   getAllStaff(): Promise<IStaff[]> {
-    return StaffModel.find({});
+    return StaffModel.find({})
   }
 
   // Retrieve a staff member by ID

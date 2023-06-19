@@ -1,13 +1,13 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 //Types for non mongoose models
 export interface IGameData {
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
-  staff: Array<IStaff>;
-  tasks: Array<ITask>;
-  events: Array<IGameEvent>;
+  staff: Array<ObjectId>;
+  tasks: Array<ObjectId>;
+  events: Array<ObjectId>;
   timeRemaining: number; // decreases by 1 each day
   startingBudget: number;
   timePeriod: number; //game length in days (180 days = 6 months)
