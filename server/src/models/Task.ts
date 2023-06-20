@@ -1,4 +1,5 @@
 import {
+  BusinessImpact,
   Expertise,
   ITask,
   MAX_COMPLEXITY,
@@ -8,7 +9,7 @@ import {
   TaskStatus,
   TaskType,
 } from '../types/types';
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const TaskSchema = new mongoose.Schema({
   type: { type: String, enum: Object.values(TaskType) },
@@ -22,6 +23,8 @@ const TaskSchema = new mongoose.Schema({
   expertiseRequired: { type: String, enum: Object.values(Expertise) },
   criticality: Number,
   status: { type: String, enum: Object.values(TaskStatus) },
+  dependencies: [{ type: Schema.Types.ObjectId, ref: 'Task' }], // tasks that must be completed before this task can be started
+  businessImpact: { type: String, enum: Object.values(BusinessImpact) },
 });
 
 export const TaskModel = mongoose.model<ITask>('Task', TaskSchema);

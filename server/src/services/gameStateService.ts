@@ -12,7 +12,7 @@ import { TaskService } from '../services/taskService';
 import { GameEventService } from '../services/gameEventService';
 // import { initGameData } from '../config/initialData/gameEvents';
 import { tasks as preCreatedTasks } from '../config/initialData/tasks';
-import { staffMembersInitialData as preCreatedStaff } from '../config/initialData/staff';
+import { staff as preCreatedStaff } from '../config/initialData/staff';
 import { events as preCreatedEvents } from '../config/initialData/gameEvents';
 
 export class GameStateService {

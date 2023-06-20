@@ -19,6 +19,9 @@ const StaffSchema = new mongoose.Schema({
   adaptability: { type: Number, min: MIN_MORALE, max: MAX_MORALE },
   morale: { type: Number, min: MIN_MORALE, max: MAX_MORALE },
   currentTask: { type: String, default: null },
+  availability: Boolean,
+  salary: Number,
+  satisfaction: Number,
 });
 
 export const StaffModel = mongoose.model<IStaff>('Staff', StaffSchema);
