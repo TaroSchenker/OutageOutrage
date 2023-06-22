@@ -1,100 +1,57 @@
-Suggested Folder Structure:
-bash
-Copy code
-├── src
-│   ├── config
-│   ├── controllers
-│   ├── models
-│   ├── routes
-│   ├── services
-│   ├── utils
-│   └── app.ts
-├── tests
-├── node_modules
-├── .env
-├── .gitignore
-├── package.json
-├── tsconfig.json
-└── README.md
-File Structure:
-/src: Contains all the TypeScript source code. It's good to separate the source code from configuration files and node_modules.
+# Project Title
 
-/src/config: Contains configuration files, such as the MongoDB connection setup.
+Describe your project in a few sentences here.
 
-/src/controllers: Contains all controller files, where each controller corresponds to a model and contains functions to handle HTTP requests.
+## Table of Contents
 
-/src/models: Contains all Mongoose model definitions.
+1.  [Installation](#installation)
+2.  [Usage](#usage)
+3.  [Testing](#testing)
+4.  [API Endpoints](#api-endpoints)
+5.  [Contributing](#contributing)
+6.  [License](#license)
 
-/src/routes: Contains all route definitions, where each route file corresponds to a model/controller.
+## Installation
 
-/src/services: Contains all the business logic of your application. Each service corresponds to a model and is used by the corresponding controller.
+1.  Clone the repository:
+    
+    `git clone https://github.com/TaroSchenker/OutageOutrage.git` 
+    
+2.  Change into the project directory:
+    
+    `cd <server>` 
+    
+3.  Install the dependencies:
+  
+    `npm install` 
+    
+4.  Create a `.env` file in the root directory and fill it with the necessary environment variables:
+    
+    `DB_URL=<your MongoDB connection string>
+    <!--- Add other necessary environment variables here. -->` 
+    
 
-/src/utils: Contains utility functions and constants that can be used throughout the application.
+## Usage
 
-/src/app.ts: This is the entry point for your application. It is responsible for setting up your Express application, middleware, and routes.
+`npm start` 
 
-/tests: Contains all your test files.
+Add more details about how to use application here.
 
-.env: A file for environment variables, such as the MongoDB connection string.
+## Testing
 
-package.json: Lists the package dependencies for the project.
+`npm test` 
 
-tsconfig.json: Configuration for the TypeScript compiler.
+## API Endpoints
 
-Suggested Files and Functions:
-/src/config/mongoose.ts: Setup mongoose connection to MongoDB. Exports a function that establishes the connection.
+-   `GET /api/staff` - Get all staff members
+-   `POST /api/staff` - Add a new staff member
+-   `GET /api/staff/:id` - Get a specific staff member
+-   `PUT /api/staff/:id` - Update a specific staff member
+-   `DELETE /api/staff/:id` - Delete a specific staff member
 
-/src/models/Staff.ts: Defines and exports the Staff mongoose model.
+## Contributing
 
-/src/models/Task.ts: Defines and exports the Task mongoose model.
-
-/src/models/GameEvent.ts: Defines and exports the GameEvent mongoose model.
-
-/src/models/Game.ts: Defines and exports the Game mongoose model.
-
-/src/controllers/staffController.ts: Defines and exports functions for handling HTTP requests related to staff. Each function takes in a request and response object, performs some operation using the Staff service, and sends a response.
-
-/src/controllers/taskController.ts: Defines and exports functions for handling HTTP requests related to tasks.
-
-/src/controllers/gameEventController.ts: Defines and exports functions for handling HTTP requests related to game events.
-
-/src/controllers/gameController.ts: Defines and exports functions for handling HTTP requests related to the game.
-
-/src/services/staffService.ts: Defines and exports functions for performing operations related to staff. Each function takes in some data, performs some operation using the Staff model, and returns a result.
-
-/src/services/taskService.ts: Defines and exports functions for performing operations related to tasks.
-
-/src/services/gameEventService.ts: Defines and exports functions for performing operations related to game events.
-
-/src/services/gameService.ts: Defines and exports functions for performing operations related to the game.
-
-/src/routes/staffRoutes.ts: Defines and exports the routes for staff-related HTTP requests. Each route associates an HTTP verb and path with a controller function.
-
-/src/routes/taskRoutes.ts: Defines and exports the routes for task-related HTTP requests.
-
-/src/routes/gameEventRoutes.ts: Defines and exports the routes for game event-related HTTP requests.
-
-/src/routes/gameRoutes.ts: Defines and exports the routes for game-related HTTP requests.
-
-/src/utils/constants.ts: Defines and exports any constants that need to be used throughout the application.
-
-/src/app.ts: Imports and uses all routes, sets up middleware, and exports the Express application.
+## License
 
 
-This API collection consists of four APIs: Game Management, Staff, Game Event, and Task, which manage games, staff, tasks, and game events respectively.
-
-Game Management API:
-- Retrieve, create, update, and delete games
-
-Staff API:
-- Retrieve, create, update, and delete staff members
-- Assign tasks to staff members
-- Update staff member's morale
-
-Game Event API:
-- Retrieve, create, update, and delete game events
-
-Task API:
-- Retrieve, create, update, and delete tasks
-
-Each API has its own set of paths and methods for interacting with the respective data types. The APIs provide functionality such as managing games, staff, tasks, and game events, assigning tasks to staff members, and managing the staff morale.
+MIT License. See [LICENSE](https://chat.openai.com/LICENSE) for details.

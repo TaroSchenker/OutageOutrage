@@ -24,6 +24,9 @@ export interface IStaffData {
   adaptability: number;
   morale: number;
   currentTask: string | null;
+  availability: boolean;
+  salary: number;
+  satisfaction: number;
 }
 
 export interface ITaskData {
@@ -34,6 +37,8 @@ export interface ITaskData {
   expertiseRequired: Expertise;
   criticality: number;
   status: TaskStatus;
+  dependencies: Array<ObjectId>;
+  businessImpact: BusinessImpact;
 }
 
 export interface IGameEventData {
@@ -42,6 +47,7 @@ export interface IGameEventData {
   effectOnMorale: number;
   effectOnBudget: number;
   effectOnTasks: ITaskData | null;
+  duration: number; // in days, add to model
 }
 
 //Types for Mongoose Models
