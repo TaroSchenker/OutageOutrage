@@ -39,6 +39,8 @@ export interface ITaskData {
   status: TaskStatus;
   dependencies: Array<ObjectId>;
   businessImpact: BusinessImpact;
+  progress: number;
+  description: string;
 }
 
 export interface IGameEventData {
@@ -67,12 +69,28 @@ export enum Role {
   PROJECT_MANAGER = 'Project Manager',
   UX_UI_DESIGNER = 'UX/UI Designer',
   SECURITY_SPECIALIST = 'Security Specialist',
+  DEVOPS_ENGINEER = 'DevOps Engineer', // Responsible for server, CI/CD pipelines, and infrastructure
+  DATA_SCIENTIST = 'Data Scientist', // Works with data to extract insights
+  PRODUCT_OWNER = 'Product Owner', // Directs product vision, prioritizes tasks
 }
 
 export enum TaskType {
   BUG_FIX = 'Bug Fix',
   NEW_FEATURE = 'New Feature',
   SECURITY_PATCH = 'Security Patch',
+  PERFORMANCE_IMPROVEMENT = 'Performance Improvement', // Improve website loading speed, optimization
+  UI_IMPROVEMENT = 'UI Improvement', // Enhance website's user interface
+  DEVOPS_SETUP = 'DevOps Setup', // Set up or manage CI/CD pipelines, servers
+  DATA_ANALYSIS = 'Data Analysis', // Analyze data and generate insights
+  PRODUCT_BACKLOG_PRIORITIZATION = 'Product Backlog Prioritization', // Prioritize tasks for the next sprint
+  FEATURE_VALIDATION = 'Feature Validation', // Validate the requirements of a new feature
+  USER_RESEARCH = 'User Research', // Research on user needs and behavior
+  CUSTOMER_JOURNEY_MAPPING = 'Customer Journey Mapping', // Map the journey of a user to identify potential issues
+  INFRASTRUCTURE_MONITORING = 'Infrastructure Monitoring', // Monitor server and infrastructure health
+  SECURITY_AUDIT = 'Security Audit', // Audit the system for potential security issues
+  A_B_TESTING = 'A/B Testing', // Run A/B tests to validate feature effectiveness
+  CODE_REVIEW = 'Code Review', // Review code for quality assurance
+  STRESS_TESTING = 'Stress Testing', // Test system under heavy load
 }
 
 export enum EventType {
@@ -80,6 +98,11 @@ export enum EventType {
   SECURITY_BREACH = 'Security Breach',
   JOB_OFFER = 'Job Offer',
   BUDGET_CUT = 'Budget Cut',
+  PRODUCT_LAUNCH = 'Product Launch', // Launching a new product feature
+  MAJOR_OUTAGE = 'Major Outage', // Significant downtime affecting multiple systems
+  STAFF_RETENTION_ISSUE = 'Staff Retention Issue', // High staff turnover
+  LEGAL_ISSUE = 'Legal Issue', // Legal problems like lawsuits or compliance issues
+  DATA_BREACH = 'Data Breach', // Customer data is compromised
 }
 
 export enum Expertise {
@@ -90,6 +113,9 @@ export enum Expertise {
   SOFTWARE_TESTING = 'Software Testing',
   PROJECT_MANAGEMENT = 'Project Management',
   UX_DESIGN = 'UX Design',
+  C_SHARP = 'C#',
+  SQL = 'SQL',
+  MACHINE_LEARNING = 'Machine Learning',
 }
 
 export enum BusinessImpact {
