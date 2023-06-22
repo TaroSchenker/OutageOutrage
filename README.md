@@ -6,17 +6,17 @@ OUTAGE OUTRAGE: An Educational and Satirical Tech Management Simulation Game
 Table of Contents
 -----------------
 
-1.  [Installation](https://chat.openai.com/?model=gpt-4#installation)
-2.  [Usage](https://chat.openai.com/?model=gpt-4#usage)
-3.  [Testing](https://chat.openai.com/?model=gpt-4#testing)
-4.  [API Endpoints](https://chat.openai.com/?model=gpt-4#api-endpoints)
-5.  [Game Description](https://chat.openai.com/?model=gpt-4#game-description)
-6.  [Gameplay Mechanics and Flow](https://chat.openai.com/?model=gpt-4#gameplay-mechanics-and-flow)
-7.  [Game Balance & Features](https://chat.openai.com/?model=gpt-4#game-balance-and-features)
-8.  [User Interface and Interaction](https://chat.openai.com/?model=gpt-4#user-interface-and-interaction)
-9.  [Visual Style, Assets, and Educational Aspect](https://chat.openai.com/?model=gpt-4#visual-style-assets-and-educational-aspect)
-10. [Contributing](https://chat.openai.com/?model=gpt-4#contributing)
-11. [License](https://chat.openai.com/?model=gpt-4#license)
+1.  [Installation](#installation)
+2.  [Usage](#usage)
+3.  [Testing](#testing)
+4.  [API Endpoints](#api-endpoints)
+5.  [Game Description](#game-description)
+6.  [Gameplay Mechanics and Flow](#gameplay-mechanics-and-flow)
+7.  [Game Balance & Features](#game-balance-and-features)
+8.  [User Interface and Interaction](#user-interface-and-interaction)
+9.  [Visual Style, Assets, and Educational Aspect](#visual-style-assets-and-educational-aspect)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 Installation
 ------------
