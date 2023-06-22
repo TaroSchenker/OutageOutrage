@@ -46,14 +46,13 @@ export class GameStateService {
         return await this.gameEventService.createEvent(event);
       }),
     );
-
     // 1. Initialize the IGame object
     // 2. Set the initial game state, including budget, staff list, tasks list, events list etc.
     // 3. Store the game state with the provided id in the database or in-memory storage.
     try {
       //init game data
       const game = await this.gameService.createGame({
-        budget: 9999900,
+        budget: 20000,
         morale: 100,
         businessImpact: BusinessImpact.LOW,
         staff: initialStaff.map((staff) => staff.id),
@@ -82,8 +81,8 @@ export class GameStateService {
         throw new Error('Game not found');
       }
       console.log('***************************');
+      console.log('---- STARTING NEW TURN ----');
       console.log('***************************');
-      console.log('<--- STARTING NEW TURN DATA ---->');
       //decrease time remaining by 1 day;
       game.timeRemaining--;
       game = await this.gameService.updateGame(gameId, game);
@@ -127,14 +126,17 @@ export class GameStateService {
         retrievedTask.assignedTo &&
         retrievedTask.status !== TaskStatus.COMPLETED
       ) {
+        console.log('a task is assigned to a staff member and not completed');
         const assignedStaffId = game.staff.find(
           (staff) => String(staff) === retrievedTask.assignedTo,
         );
         const staff = await this.staffService.getStaffById(
           String(assignedStaffId),
         );
+
         if (staff) {
-          retrievedTask.timeToComplete -= 2;
+          console.log('task assigned to staff', staff.name, staff.currentTask);
+          retrievedTask.timeToComplete -= 3;
         }
         // If the task is now complete, mark it as such
         if (retrievedTask.timeToComplete <= 0) {
@@ -151,7 +153,6 @@ export class GameStateService {
   }
 
   async handleStaffReduction(game: IGame): Promise<IGame> {
-    // TODO: Add your code here
     // 1. Update the staff list based on any reductions made by the player.
     // 2. Adjust the budget based on the change in staff salaries.
     // 3. Update any tasks that were assigned to the reduced staff.
@@ -164,8 +165,6 @@ export class GameStateService {
   }
 
   async updateStaffMorale(game: IGame): Promise<IGame> {
-    // TODO: Add your code here
-    //     TODO:
     // 1. Update the morale of each staff member based on the events and decisions made during the game (e.g., staff reductions, successful task completion).
     // 2. Apply any effects of changes in morale (e.g., staff productivity changes, staff might leave if morale gets too low).
     // 3. Save these changes to the game state in the database
