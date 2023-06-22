@@ -53,10 +53,9 @@ export const updateTask = async (
   next: NextFunction,
 ) => {
   try {
-    console.log('updateTask Activated', req.body.assignedTo);
     const task = await taskService.updateTask(
       req.params.taskId,
-      req.body.assignedTo,
+      req.body.staffId,
     );
     return res.status(201).json(task);
   } catch (error) {

@@ -40,7 +40,7 @@ export const deleteStaff = async (req: Request, res: Response) => {
 export const assignTask = async (req: Request, res: Response) => {
   const staff = await staffService.assignTask(
     req.params.staffId,
-    req.body.currentTask,
+    req.body.taskId,
   );
   if (!staff) {
     return res.status(404).json({ message: 'Staff member not found' });
