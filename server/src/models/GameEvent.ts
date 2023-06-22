@@ -8,6 +8,7 @@ const GameEventSchema = new mongoose.Schema({
   effectOnMorale: Number,
   effectOnBudget: Number,
   effectOnTasks: { type: mongoose.Schema.Types.Mixed, default: null },
+  duration: Number,
 });
 
 export default mongoose.models.GameEvent ||
