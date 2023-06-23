@@ -31,5 +31,4 @@ export const staff: IStaffData[] = [
     salary: 60000,
     satisfaction: 75,
   },
-  // add 3 more staff members as per your requirements
 ];

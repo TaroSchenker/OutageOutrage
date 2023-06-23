@@ -1,33 +1,50 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
 import './App.css';
+import './tailwind.css';
+import StaffCard from './components/StaffManagement/StaffCard';
+import staffData from './assets/data/initData/staff';
+import tasksData from './assets/data/initData/tasks';
+import TaskCard from './components/TaskManagement/TaskCard';
+import NavBar from './components/NavBar/NavBar';
+import BudgetIndicator from './components/BudgetMoraleManagement/BudgetIndicator';
+import MoraleIndicator from './components/BudgetMoraleManagement/MoraleIndicator';
 
-/* write me some tailwindcss */
+  // These are just example values. In a real app, you'd fetch these from your server.
+  const budget = 75; // This should be a percentage
+  const emergencyFund = 5000;
+  const morale = 80; // This should be a percentage
+
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="App">
-      // tailwind css for a card
-      <div className="max-w-sm rounded overflow-hidden shadow-lg">
-        <img className="w-full" src={reactLogo} alt="React Logo" />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">React</div>
-          <p className="text-gray-700 text-base">
-            A JavaScript library for building user interfaces
-          </p>
+    <>
+      <NavBar />
+      <div className="App h-screen flex">
+        {/* Staff Management section */}
+        <section className="w-3/12 bg-blue-100 p-4 overflow-y-auto">
+          <h2 className="text-2xl font-bold mb-4">Staff Management</h2>
+          {staffData.map((staff, index) => (
+            <StaffCard key={index} staff={staff} />
+          ))}
+        </section>
 
-          <div className="flex items-center justify-between mt-4">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setCount(count + 1)}
-            >
-              Click Me
-            </button>
-          </div>
-        </div>
+        {/* Task Management section */}
+        <section className="w-4/12 bg-blue-200 p-4 overflow-y-auto">
+          <h2 className="text-2xl font-bold mb-4">Task Management</h2>
+          {tasksData.map((task, index) => (
+            <TaskCard key={index} task={task} />
+          ))}
+        </section>
+
+        {/* Budget and Morale Management section */}
+        <section className="w-1/3 bg-blue-300 p-4 overflow-y-auto">
+          <h2 className="text-2xl font-bold mb-4">
+            Budget and Morale Management
+          </h2>
+          <BudgetIndicator budget={budget} emergencyFund={emergencyFund} />
+          <MoraleIndicator morale={morale} />
+        </section>
       </div>
-    </div>
+    </>
   );
 }
 
