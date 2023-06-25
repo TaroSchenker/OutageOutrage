@@ -17,7 +17,7 @@ const StaffManagement: React.FC = () => {
 
   console.log(staff)
   return (
-    <div>
+    <div className="grid grid-cols-2 gap-4">
       {staff.map((staffMember, index) => (
         <StaffCard key={index} staff={staffMember} />
       ))}

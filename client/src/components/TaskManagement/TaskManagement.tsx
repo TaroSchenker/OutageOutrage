@@ -16,9 +16,9 @@ const TaskManagement: React.FC = () => {
   if (isError) return <div>Error...</div>;
 
   return (
-    <div>
+    <div className="grid grid-cols-2 gap-4">
       {tasks.map((task, index) => (
-        <TaskCard key={index} task={task} />
+        <TaskCard key={index} task={task}   />
       ))}
     </div>
   );
