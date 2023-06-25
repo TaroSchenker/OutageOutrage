@@ -3,6 +3,7 @@ import { getAllTasks } from '../../api';
 
 import { IClientTaskData } from '../../types/types';
 import TaskCard from './TaskCard';
+import StaffManagement from '../StaffManagement/StaffManagement';
 
 const TaskManagement: React.FC = () => {
   const {
@@ -22,3 +23,5 @@ const TaskManagement: React.FC = () => {
     </div>
   );
 };
+
+export default TaskManagement

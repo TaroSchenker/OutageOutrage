@@ -14,7 +14,7 @@ const StaffManagement: React.FC = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
-  
+
   console.log(staff)
   return (
     <div>
@@ -24,3 +24,5 @@ const StaffManagement: React.FC = () => {
     </div>
   );
 };
+
+export default StaffManagement;
