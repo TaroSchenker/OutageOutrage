@@ -241,6 +241,14 @@ export const deleteGameEvent = async (eventId: string) => {
 };
 
 // GameState requests
+export const gameStateInitilise = async () => {
+  const { error, data } = await handleErrors(instance.post(`/gameState`));
+  if (error) {
+    throw error;
+  }
+  return data ? data.data : {};
+};
+
 export const getGameStateById = async (gameStateId: string) => {
   const { error, data } = await handleErrors(
     instance.get<IClientGameData>(`/gameState/${gameStateId}`),
