@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IClientStaffData, Role } from '../../types/types';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
-
+import avatar from '../../assets/images/staff/staff.png';
 interface StaffCardProps {
   staff: IClientStaffData;
 }
@@ -9,47 +9,41 @@ interface StaffCardProps {
 const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleAccordion = () => {
+  const toggleCard = () => {
     setIsOpen((prev) => !prev);
   };
 
-  console.log("Card staff", staff);
-
   return (
-    <div className="rounded-lg shadow-lg overflow-hidden transition-shadow duration-300 ease-in-out">
-      <div className="bg-gunmetal text-white px-6 py-4">
-        <h2 className="text-lg font-bold">
-          {staff.name}
-          {staff.availability ? (
-            <span className="ml-2 text-green-500">Available</span>
-          ) : (
-            <span className="ml-2 text-red-500">Unavailable</span>
-          )}
-        </h2>
-        <p>{staff.role}</p>
+    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-almond my-2 transition-all duration-300 ease-in-out ${isOpen ? 'w-full' : 'w-100'}`}>
+      <div className="px-6 py-4 flex items-center space-x-4 cursor-pointer" onClick={toggleCard}>
+        <img src={avatar} alt={staff.name} className="h-16 w-16 rounded-full"/>
+        <div>
+          <h2 className="text-lg font-bold">{staff.name}</h2>
+          <p>{staff.role}</p>
+        </div>
       </div>
-
-      <div className="p-6 bg-white">
-        <p className="text-sm mt-2">Expertise: {staff.expertise}</p>
-
-        <button
-          onClick={toggleAccordion}
-          className="mt-2 text-left text-blue-500"
-        >
-          {isOpen ? 'Show Less' : 'Show More'}
-        </button>
-        
-        {isOpen ? (
-          <div className="w-full flex flex-col mt-4">
-            <ProgressBar
-              name="Ambition"
-              value={staff.ambition * 10}
-              color="yellow"
-            />
-            {/* Repeat for other attributes */}
+      {isOpen && (
+        <div className="px-6 py-4">
+          <p>Salary: ${staff.salary}</p>
+          <p className="mt-2">Expertise: {staff.expertise}</p>
+          <div className="mt-2">
+            <label>Morale: </label>
+            <ProgressBar name="Paul" value={staff.morale * 10} color="cadet-gray" />
           </div>
-        ) : null}
-      </div>
+          <p className="mt-2">Current Task: {staff.currentTask ? staff.currentTask : "No task assigned"}</p>
+          <div className="px-6 py-4 bg-outer-space text-cadet-gray">
+            <div className="mt-4">
+              <p>Ambition: {staff.ambition}</p>
+              <p>Loyalty: {staff.loyalty}</p>
+              <p>Skill Level: {staff.skillLevel}</p>
+              <p>Resilience: {staff.resilience}</p>
+              <p>Adaptability: {staff.adaptability}</p>
+              <p>Satisfaction: {staff.satisfaction}</p>
+              {/* add more attributes here as needed */}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
