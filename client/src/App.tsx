@@ -28,7 +28,7 @@ function App() {
         </section>
 
         {/* Task Management section */}
-        <section className="w-4/12 bg-blue-200 p-4 overflow-y-auto">
+        <section className="w-6/12 bg-blue-200 p-4 overflow-y-auto">
           <h2 className="text-2xl font-bold mb-4">Task Management</h2>
           {tasksData.map((task, index) => (
             <TaskCard key={index} task={task} />
@@ -36,7 +36,7 @@ function App() {
         </section>
 
         {/* Budget and Morale Management section */}
-        <section className="w-1/3 bg-blue-300 p-4 overflow-y-auto">
+        <section className="w-3/3 bg-blue-300 p-4 overflow-y-auto">
           <h2 className="text-2xl font-bold mb-4">
             Budget and Morale Management
           </h2>
