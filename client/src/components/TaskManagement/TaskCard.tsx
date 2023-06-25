@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { TaskType, Expertise, TaskStatus, BusinessImpact, IClientTaskData } from '../../types/types';
+import { ProgressBar } from '../ProgressBar/ProgressBar';
+import { FaRegUserCircle, FaTasks } from 'react-icons/fa'; // import necessary icons
 
 interface TaskCardProps {
   task: IClientTaskData;
@@ -7,61 +9,35 @@ interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showDesc, setShowDesc] = useState(false);
 
-  const toggleDesc = () => {
-    setShowDesc((prev) => !prev);
-  };
-
-  const toggleAccordion = () => {
+  const toggleCard = () => {
     setIsOpen((prev) => !prev);
   };
 
-  console.log(task);
-
   return (
-    <div className="rounded-lg shadow-lg overflow-hidden transition-shadow duration-300 ease-in-out">
-      <div className="bg-gunmetal text-white px-6 py-4">
-        <h2 className="text-lg font-bold">{task.type}</h2>
+    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-light-cyan my-2 transition-all duration-300 ease-in-out border-2 border-almond ${isOpen ? 'w-full' : 'w-100'} hover:shadow-xl`}>
+      <div className="px-6 py-4 flex items-center space-x-4 cursor-pointer" onClick={toggleCard}>
+        <FaTasks className="text-sky-blue text-2xl"/> 
+        <div>
+          <h2 className="text-xl font-bold">{task.type}</h2>
+          <p className="font-semibold">{task.status}</p>
+        </div>
       </div>
-
-      <div className="p-6 bg-white">
-        <button
-          onClick={toggleDesc}
-          className="mt-2 text-left text-blue-500"
-        >
-          {showDesc ? 'Hide Description ' : 'Show Description'}
-        </button>
-        
-        { showDesc ?  
-          (<p className="text-sm mt-2">Description: {task.description}</p>)
-          : null}
-
-        <p className="text-sm mt-2">
-          Assigned To: {task.assignedTo ? task.assignedTo : 'Not assigned'}
-        </p>
-
-        <button
-          onClick={toggleAccordion}
-          className="mt-2 text-left text-blue-500"
-        >
-          {isOpen ? 'Show Less' : 'Show More'}
-        </button>
-
-        {isOpen ? (
-          <div className="w-full flex flex-col mt-4">
-            <p className="text-sm mt-2">Complexity: {task.complexity}</p>
-            {/* Repeat for other attributes */}
-            
-            <div className="h-1 rounded bg-gray-200 w-3/4 my-1">
-              <div
-                style={{ width: `${task.progress}%` }}
-                className="h-1 rounded bg-blue-500"
-              ></div>
-            </div>
+      {isOpen && (
+        <div className="px-6 py-4">
+          <p className="text-base font-medium">Description: {task.description}</p>
+          <div className="mt-2 flex items-center">
+            <FaRegUserCircle className="text-sky-blue text-xl"/>
+            <p className="ml-2">Assigned To: {task.assignedTo ? task.assignedTo : "No one"}</p>
           </div>
-        ) : null}
-      </div>
+          <p className="mt-2 text-base font-medium">Complexity: {task.complexity}</p>
+          <p className="mt-2 text-base font-medium">Impact: {task.businessImpact}</p>
+          <div className="mt-2">
+            <label>Progress: </label>
+            <ProgressBar name={task.type} value={task.progress} color="sky-blue" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
