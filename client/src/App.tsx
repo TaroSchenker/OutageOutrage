@@ -10,38 +10,15 @@ import BudgetIndicator from './components/BudgetMoraleManagement/BudgetIndicator
 import MoraleIndicator from './components/BudgetMoraleManagement/MoraleIndicator';
 import StaffManagement from './components/StaffManagement/StaffManagement';
 import TaskManagement from './components/TaskManagement/TaskManagement';
+import Landing from './components/Landing/Landing';
+import Home from './pages/Home/Home';
 
-  // These are just example values. In a real app, you'd fetch these from your server.
-  const budget = 75; // This should be a percentage
-  const emergencyFund = 5000;
-  const morale = 80; // This should be a percentage
 
 function App() {
   return (
     <>
-      <NavBar />
-      <div className="App h-screen flex">
-        {/* Staff Management section */}
-        <section className="w-3/12 bg-blue-100 p-4 overflow-y-auto">
-          <h2 className="text-2xl font-bold mb-4">Staff Management</h2>
-          <StaffManagement />
-        </section>
-
-        {/* Task Management section */}
-        <section className="w-6/12 bg-blue-200 p-4 overflow-y-auto">
-          <h2 className="text-2xl font-bold mb-4">Task Management</h2>
-          <TaskManagement />
-        </section>
-
-        {/* Budget and Morale Management section */}
-        <section className="w-3/3 bg-blue-300 p-4 overflow-y-auto">
-          <h2 className="text-2xl font-bold mb-4">
-            Budget and Morale Management
-          </h2>
-          <BudgetIndicator budget={budget} emergencyFund={emergencyFund} />
-          <MoraleIndicator morale={morale} />
-        </section>
-      </div>
+    <Landing />
+    <Home /> 
     </>
   );
 }
