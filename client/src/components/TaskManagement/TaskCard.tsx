@@ -4,22 +4,11 @@ import {
   Expertise,
   TaskStatus,
   BusinessImpact,
+  IClientTaskData,
 } from '../../types/types';
 
 interface TaskCardProps {
-  task: {
-    type: TaskType;
-    complexity: number;
-    timeToComplete: number;
-    assignedTo: string | null;
-    expertiseRequired: Expertise;
-    criticality: number;
-    status: TaskStatus;
-    dependencies: Array<string>;
-    businessImpact: BusinessImpact;
-    progress: number;
-    description: string;
-  };
+  task: IClientTaskData;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
@@ -31,7 +20,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   const toggleAccordion = () => {
     setIsOpen((prev) => !prev);
   };
-
+console.log(task)
   return (
     <div className="p-6 my-1 bg-white shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
       <h2 className="text-2xl font-bold mb-2">{task.type}</h2>

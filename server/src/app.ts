@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { config as dotenvConfig } from 'dotenv';
 import connectDb from './config/db';
-
+import cors from 'cors';
 // Import routers
 import staffRouter from './routes/staffRoutes';
 import taskRouter from './routes/taskRoutes';
@@ -14,6 +14,7 @@ import errorHandler from './middlewares/errorHandler'; //
 dotenvConfig();
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 connectDb();
