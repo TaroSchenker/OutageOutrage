@@ -10,8 +10,17 @@ module.exports = {
         'outer-space': '#4c555b',
         'light-cyan': '#E0FFFF',
         'sky-blue': '#87CEEB',
-        'aquamarine': '#7FFFD4'
-      }
+
+      }, 
+        keyframes: {
+        pulse: {
+          '10%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
+      },
+      animation: {
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
     },
   },
   variants: {
