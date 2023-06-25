@@ -7,7 +7,10 @@ module.exports = {
         'cadet-gray': '#a3bac0',
         'almond': '#f4dcc4',
         'dim-gray': '#5e676b',
-        'outer-space': '#4c555b'
+        'outer-space': '#4c555b',
+        'light-cyan': '#E0FFFF',
+        'sky-blue': '#87CEEB',
+        'aquamarine': '#7FFFD4'
       }
     },
   },
