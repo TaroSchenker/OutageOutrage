@@ -1,5 +1,5 @@
 //Types for non mongoose models
-export interface IGameData {
+export interface IClientGameData {
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
@@ -11,7 +11,7 @@ export interface IGameData {
   timePeriod: number; //game length in days (180 days = 6 months)
 }
 
-export interface IStaffData {
+export interface IClientStaffData {
   name: string;
   role: Role;
   expertise: string;
@@ -27,7 +27,7 @@ export interface IStaffData {
   satisfaction: number;
 }
 
-export interface ITaskData {
+export interface IClientTaskData {
   type: TaskType;
   complexity: number;
   timeToComplete: number;
@@ -41,12 +41,12 @@ export interface ITaskData {
   description: string;
 }
 
-export interface IGameEventData {
+export interface IClientGameEventData {
   type: EventType;
   severity: number;
   effectOnMorale: number;
   effectOnBudget: number;
-  effectOnTasks: ITaskData | null;
+  effectOnTasks: IClientTaskData | null; 
   duration: number; // in days, add to model
 }
 
