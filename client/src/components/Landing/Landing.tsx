@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import backgroundImage from '../../assets/images/bg3.png';
 import { useQuery } from '@tanstack/react-query';
+import OutageOutrageLogo from '../Logo/Logo'
+
 
 const LandingPage: React.FC = () => {
   const [gameId, setGameId] = useState('');
@@ -21,10 +23,10 @@ const LandingPage: React.FC = () => {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="flex flex-col items-center justify-center h-screen bg-cover bg-center"
+      className="flex flex-col items-center justify-center h-screen bg-cover bg-center "
     >
-      <div className="bg-gunmetal bg-opacity-50 p-10 rounded-lg flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-10 text-almond">Welcome to Outage Outrage</h1>
+      <div className="bg-gunmetal bg-opacity-50 p-10 rounded-lg flex flex-col items-center border-2 border-aquamarine">
+  <OutageOutrageLogo  />
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center mb-6"

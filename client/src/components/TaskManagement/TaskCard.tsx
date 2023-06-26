@@ -5,9 +5,9 @@ import { FaRegUserCircle, FaTasks } from 'react-icons/fa'; // import necessary i
 
 interface TaskCardProps {
   task: IClientTaskData;
-}
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+}
+const TaskCard: React.FC<TaskCardProps> = ({ task, ...props }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCard = () => {
@@ -15,7 +15,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
   };
 
   return (
-    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-light-cyan my-2 transition-all duration-300 ease-in-out border-2 border-almond ${isOpen ? 'w-full' : 'w-100'} hover:shadow-xl`}>
+    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-light-cyan my-2 transition-all duration-300 ease-in-out border-2 border-almond ${isOpen ? 'col-span-2' : ''} hover:shadow-xl`}>
       <div className="px-6 py-4 flex items-center space-x-4 cursor-pointer" onClick={toggleCard}>
         <FaTasks className="text-sky-blue text-2xl"/> 
         <div>
@@ -41,5 +41,6 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
     </div>
   );
 };
+
 
 export default TaskCard;

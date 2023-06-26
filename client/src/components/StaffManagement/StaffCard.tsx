@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IClientStaffData, Role } from '../../types/types';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
-import avatar from '../../assets/images/staff/staff.png';
+import avatar from '../../assets/images/staff/staff_dev.png';
 interface StaffCardProps {
   staff: IClientStaffData;
 }
@@ -14,7 +14,9 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
   };
 
   return (
-    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-almond my-2 transition-all duration-300 ease-in-out border-2 border-light-cyan ${isOpen ? 'w-full' : 'w-100'}`}>
+    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-almond my-2 transition-all duration-300 ease-in-out border-2 border-light-cyan ${isOpen ? 'col-span-2' : ''}`}>
+
+
       <div className="px-6 py-4 flex items-center space-x-4 cursor-pointer" onClick={toggleCard}>
         <img src={avatar} alt={staff.name} className="h-16 w-16 rounded-full"/>
         <div>
