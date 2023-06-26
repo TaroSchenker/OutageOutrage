@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IClientStaffData, Role } from '../../types/types';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
-import avatar from '../../assets/images/staff/staff.png';
+import avatar from '../../assets/images/staff/staff_dev.png';
 interface StaffCardProps {
   staff: IClientStaffData;
 }
