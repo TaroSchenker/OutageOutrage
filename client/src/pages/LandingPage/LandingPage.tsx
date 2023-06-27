@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import backgroundImage from '../../assets/images/bg3.png';
-import { useQuery } from '@tanstack/react-query';
-import OutageOutrageLogo from '../Logo/Logo'
 
+import OutageOutrageLogo from '../../components/Logo/Logo';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
-  const [gameId, setGameId] = useState('');
+  const [gameId, setGameId] = useState('649985adde5ff21e2404f6a4');
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGameId(e.target.value);
@@ -14,6 +15,7 @@ const LandingPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle submit logic, e.g., redirecting to the game page
+    navigate(`/game/${gameId}`);
   };
 
   const handleNewGame = () => {
@@ -26,7 +28,7 @@ const LandingPage: React.FC = () => {
       className="flex flex-col items-center justify-center h-screen bg-cover bg-center "
     >
       <div className="bg-gunmetal bg-opacity-50 p-10 rounded-lg flex flex-col items-center border-2 border-aquamarine">
-  <OutageOutrageLogo  />
+        <OutageOutrageLogo />
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center mb-6"

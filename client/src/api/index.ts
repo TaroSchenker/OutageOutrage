@@ -5,11 +5,10 @@ import {
   IClientStaffData,
   IClientTaskData,
 } from '../types/types';
-
+import { QueryFunctionContext } from '@tanstack/react-query';
 const instance = axios.create({
   baseURL: 'http://localhost:3000/api',
 });
-
 async function handleErrors<T>(
   promise: Promise<T>,
 ): Promise<{ error: Error | null; data: T | null }> {
@@ -36,7 +35,10 @@ export const getAllGames = async () => {
   }
   return data ? data.data : [];
 };
-export const getGameById = async (gameId: string) => {
+export const getGameById = async ({
+  queryKey,
+}: QueryFunctionContext) => {
+  const [, gameId] = queryKey;
   const { error, data } = await handleErrors(
     instance.get<IClientGameData>(`/game/${gameId}`),
   );
@@ -45,9 +47,8 @@ export const getGameById = async (gameId: string) => {
     throw error;
   }
 
-  return data ? data.data : {};
+  return data?.data as IClientGameData;
 };
-
 //TODO: Types here.
 export const createGame = async (game: object) => {
   const { error, data } = await handleErrors(instance.post('/game', game));
@@ -58,7 +59,6 @@ export const createGame = async (game: object) => {
 
   return data ? data.data : [];
 };
-
 export const updateGame = async (
   gameId: string,
   updates: Partial<IClientGameData>,
@@ -73,7 +73,6 @@ export const updateGame = async (
 
   return data ? data.data : {};
 };
-
 //TODO: Types here
 export const deleteGame = async (gameId: string) => {
   const { error, data } = await handleErrors(
@@ -99,7 +98,6 @@ export const getGameState = async (gameId: string) => {
 
   return data ? data.data : [];
 };
-
 export const initializeGameState = async () => {
   const { error, data } = await handleErrors(instance.post(`/gameState`));
 
@@ -109,7 +107,6 @@ export const initializeGameState = async () => {
 
   return data ? data.data : [];
 };
-
 export const startNewTurn = async (gameId: string) => {
   const { error, data } = await handleErrors(
     instance.post(`/gameState/${gameId}/turn`),
@@ -122,7 +119,7 @@ export const startNewTurn = async (gameId: string) => {
   return data ? data.data : [];
 };
 
-// Staff requests
+// Staff requests 
 export const getAllStaff = async () => {
   const { error, data } = await handleErrors(
     instance.get<IClientStaffData[]>('/staff'),
@@ -160,9 +157,23 @@ export const getAllTasks = async () => {
   return data ? data.data : [];
 };
 
-export const getTaskById = async (taskId: string) => {
+export const getTaskById = async ({queryKey}: QueryFunctionContext) => {
+  const [, taskId] = queryKey;
   const { error, data } = await handleErrors(
     instance.get<IClientTaskData>(`/game/${taskId}`),
+  );
+
+  if (error) {
+    throw error;
+  }
+
+  return data ? data.data : {};
+};
+
+export const updateTask = async ({ queryKey}: QueryFunctionContext) => {
+  const [, taskId, updates] = queryKey;
+  const { error, data } = await handleErrors(
+    instance.put<IClientTaskData>(`/tasks/${taskId}`, updates),
   );
 
   if (error) {

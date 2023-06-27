@@ -3,15 +3,16 @@ export interface IClientGameData {
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
-  staff: Array<string>;
-  tasks: Array<string>;
-  events: Array<string>;
+  staff: Array<IClientStaffData>;
+  tasks: Array<IClientTaskData>;
+  events: Array<IClientGameEventData>;
   timeRemaining: number; // decreases by 1 each day
   startingBudget: number;
   timePeriod: number; //game length in days (180 days = 6 months)
 }
 
 export interface IClientStaffData {
+  _id: string;
   name: string;
   role: Role;
   expertise: string;
@@ -28,6 +29,7 @@ export interface IClientStaffData {
 }
 
 export interface IClientTaskData {
+  _id: string
   type: TaskType;
   complexity: number;
   timeToComplete: number;

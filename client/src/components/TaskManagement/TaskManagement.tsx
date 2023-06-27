@@ -1,24 +1,21 @@
 import { useQuery } from '@tanstack/react-query';
 import { getAllTasks } from '../../api';
 
-import { IClientTaskData } from '../../types/types';
+import { IClientStaffData, IClientTaskData } from '../../types/types';
 import TaskCard from './TaskCard';
 import StaffManagement from '../StaffManagement/StaffManagement';
 
-const TaskManagement: React.FC = () => {
-  const {
-    data: tasks,
-    isLoading,
-    isError,
-  } = useQuery<IClientTaskData[], Error>(['getAllTasks'], getAllTasks);
+interface TaskManagementProps {
+  tasks: IClientTaskData[];
+  staff: IClientStaffData[];
+}
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error...</div>;
+const TaskManagement= ({tasks, staff}: TaskManagementProps) => {
 
   return (
     <div className="grid grid-cols-2 gap-4">
       {tasks.map((task, index) => (
-        <TaskCard key={index} task={task}   />
+        <TaskCard key={index} task={task} staff={staff}  />
       ))}
     </div>
   );

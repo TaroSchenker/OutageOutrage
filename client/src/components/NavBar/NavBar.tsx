@@ -7,16 +7,14 @@ const NavBar: React.FC = () => {
     console.log("clicked");
   }
   const {data: initialisedNewGame, isLoading, isError} = useQuery(['gameStateInitilise'], gameStateInitilise);
-console.log(initialisedNewGame)
+  console.log(initialisedNewGame)
+
   return (
-    <nav className="bg-gunmetal text-almond p-4 flex justify-between">
-      <h1 className="text-2xl">Outage Outrage</h1>
-      <div className="text-2xl">{initialisedNewGame?.gameStateId}</div>
+    <nav className="bg-gunmetal text-almond p-4 flex justify-between items-center shadow-lg">
+      <h1 className="text-2xl font-bold">Outage Outrage</h1>
+      <div className="text-xl font-semibold">{initialisedNewGame?.gameStateId}</div>
       <div className="space-x-4">
-        <button className="hover:underline text-outer-space" onClick={handleClick}>Start Game</button>
-        {/* <Link to="/" className="hover:underline text-outer-space">Home</Link> */}
-        {/* <Link to="/metrics" className="hover:underline text-outer-space">Metrics</Link>
-        <Link to="/settings" className="hover:underline text-outer-space">Settings</Link> */}
+        {/* Add navigation items here */}
       </div>
     </nav>
   );
