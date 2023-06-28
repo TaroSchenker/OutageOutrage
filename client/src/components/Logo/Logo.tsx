@@ -1,19 +1,13 @@
-import React from 'react';
-
 const OutageOutrageLogo = () => {
   return (
     <div className="flex items-center mb-10">
       <span
-  className="text-transparent bg-clip-text font-bold text-6xl 
-             bg-gradient-to-r from-sky-blue via-light-cyan to-cadet-gray 
-             shadow-lg ml-2 py-3 animate-pulse"
->
-  Outage
-</span>
+        className="text-primary-text font-bold text-6xl shadow-lg ml-2 py-3 animate-pulse"
+      >
+        Outage
+      </span>
       <span
-        className="text-transparent bg-clip-text font-bold text-6xl 
-                   bg-gradient-to-r from-sky-blue via-light-cyan to-cadet-gray 
-                   shadow-lg ml-2 py-3  "
+        className="text-secondary-text font-bold text-6xl shadow-lg ml-2 py-3"
       >
         Outrage
       </span>
