@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
-import backgroundImage from '../../assets/images/bg3.png';
+import React, { useState, useEffect } from 'react';
+import backgroundImage1 from '../../assets/images/bg4.png';
+import backgroundImage2 from '../../assets/images/bg5.png';
+import backgroundImage3 from '../../assets/images/bg6.png';
+import backgroundImage4 from '../../assets/images/bg7.png';
+import backgroundImage5 from '../../assets/images/bg8.png';
 
 import OutageOutrageLogo from '../../components/Logo/Logo';
 import { useNavigate } from 'react-router-dom';
+import { useGameStateInitilise } from '../../hooks/useGameEventQueries';
+import { IClientGameData } from '../../types/types';
 
 const LandingPage: React.FC = () => {
   const [gameId, setGameId] = useState('649985adde5ff21e2404f6a4');
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const backgrounds = [
+    backgroundImage1,
+    backgroundImage2,
+    backgroundImage3,
+    backgroundImage4,
+    backgroundImage5,
+  ];
+  const [background, setBackground] = useState(backgroundImage1);
   const navigate = useNavigate();
+  const initiliseGameMutation = useGameStateInitilise();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBackgroundIndex((prevIndex) => (prevIndex + 1) % backgrounds.length);
+    }, 5000); // Change background every 5 seconds
+
+    return () => clearTimeout(timer); // Clean up timer on component unmount
+  }, [backgroundIndex]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGameId(e.target.value);
@@ -14,20 +38,35 @@ const LandingPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle submit logic, e.g., redirecting to the game page
     navigate(`/game/${gameId}`);
   };
 
-  const handleNewGame = () => {
+  const handleNewGame = async () => {
     // Handle new game creation logic
-  };
 
+    // Trigger mutation and wait for it to complete
+    initiliseGameMutation.mutate(
+      undefined,
+      {
+        onSuccess: (data: IClientGameData) => {
+          console.log('Game created with id', data?._id);
+          navigate(`/game/${data?._id}`);
+        },
+        onError: (error) => {
+          console.error('Game creation failed', error);
+        },
+      },
+    );
+  };
   return (
     <div
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="flex flex-col items-center justify-center h-screen bg-cover bg-center "
+      style={{
+        backgroundImage: `url(${backgrounds[backgroundIndex]})`,
+        transition: 'background-image 1s ease-in-out',
+      }}
+      className="flex flex-col items-center justify-center h-screen bg-cover bg-center"
     >
-      <div className="bg-gunmetal bg-opacity-50 p-10 rounded-lg flex flex-col items-center border-2 border-aquamarine">
+      <div className="bg-secondary-background bg-opacity-70 p-10 rounded-lg flex flex-col items-center border-2 border-primary-text">
         <OutageOutrageLogo />
         <form
           onSubmit={handleSubmit}
@@ -38,18 +77,18 @@ const LandingPage: React.FC = () => {
             placeholder="Enter your game ID"
             value={gameId}
             onChange={handleInputChange}
-            className="mb-6 p-2 border rounded-md text-gunmetal bg-cadet-gray"
+            className="mb-6 p-2 border rounded-md text-dark-background bg-dimmed-background placeholder-dark-background border-dark-background"
           />
           <button
             type="submit"
-            className="py-2 px-4 border rounded-md bg-outer-space text-almond"
+            className="py-2 px-4 border rounded-md bg-dark-background text-background hover:bg-secondary-text hover:text-background"
           >
             Enter Game
           </button>
         </form>
         <button
           onClick={handleNewGame}
-          className="py-2 px-4 border rounded-md bg-dim-gray text-almond"
+          className="py-2 px-4 border rounded-md bg-dark-background text-background hover:bg-secondary-text hover:text-background"
         >
           Create New Game
         </button>

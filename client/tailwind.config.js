@@ -3,25 +3,26 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'gunmetal': '#334D5C',    // Dark blue-gray, reminiscent of a stormy sea
-        'cadet-gray': '#6E8A94',  // Lighter blue-gray, like weathered wood
-        'almond': '#EFC88B',      // Warm almond for treasure and parchment
-        'dim-gray': '#5A6D7C',    // Muted gray-blue for shadows
-        'outer-space': '#1C2D3F', // Deep blue-black for night skies
-        'light-cyan': '#9CD6DE',  // Light cyan for water and skies
-        'sky-blue': '#57A8AC'     // Muted sky blue for water and adventure
+        'background': '#FFFFFF',             // White for a minimal background
+        'secondary-background': '#F7F7F7',   // Light gray for layering
+        'primary-text': '#000000',           // Black for text
+        'secondary-text': '#4F4F4F',         // Dark gray for secondary text
+        'border': '#E0E0E0',                 // Light gray for borders
+        'dimmed-background': '#DADADA',      // Medium light gray for dimmed elements
+        'dark-background': '#333333',        // Dark gray for dark background elements
     }
     
     
-
+    
+    
       // colors: {
-      //   'gunmetal': '#25323f',
-      //   'cadet-gray': '#a3bac0',
-      //   'almond': '#f4dcc4',
-      //   'dim-gray': '#5e676b',
-      //   'outer-space': '#4c555b',
-      //   'light-cyan': '#E0FFFF',
-      //   'sky-blue': '#87CEEB',
+      //   'background': '#25323f',
+      //   'secondary-background': '#a3bac0',
+      //   'primary-text': '#f4dcc4',
+      //   'dimmed-background': '#5e676b',
+      //   'dark-background': '#4c555b',
+      //   'border': '#E0FFFF',
+      //   'secondary-text': '#87CEEB',
       // }, 
       ,
         keyframes: {

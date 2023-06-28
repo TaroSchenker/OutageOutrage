@@ -1,5 +1,6 @@
 //Types for non mongoose models
 export interface IClientGameData {
+  _id: string;
   budget: number;
   morale: number;
   businessImpact: BusinessImpact;
@@ -44,6 +45,7 @@ export interface IClientTaskData {
 }
 
 export interface IClientGameEventData {
+  _id: string;
   type: EventType;
   severity: number;
   effectOnMorale: number;

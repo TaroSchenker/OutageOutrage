@@ -7,10 +7,10 @@ const NavBar: React.FC = () => {
     console.log("clicked");
   }
   const {data: initialisedNewGame, isLoading, isError} = useQuery(['gameStateInitilise'], gameStateInitilise);
-  console.log(initialisedNewGame)
+
 
   return (
-    <nav className="bg-gunmetal text-almond p-4 flex justify-between items-center shadow-lg">
+    <nav className="bg-background text-primary-text p-4 flex justify-between items-center shadow-lg">
       <h1 className="text-2xl font-bold">Outage Outrage</h1>
       <div className="text-xl font-semibold">{initialisedNewGame?.gameStateId}</div>
       <div className="space-x-4">

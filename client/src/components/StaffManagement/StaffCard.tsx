@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
 import { IClientStaffData, Role } from '../../types/types';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
-import avatar from '../../assets/images/staff/staff_dev.png';
+import avatar2 from '../../assets/images/staff/staff_dev.png';
+import BackendDev from '../../assets/images/staff/BackendDev.png';
+import FrontendDev from '../../assets/images/staff/FrontendDev.png';
+import ProjectManager from '../../assets/images/staff/ProjectManager.png';
+import Security from '../../assets/images/staff/Security.png';
+import UIUX from '../../assets/images/staff/UIUX.png';
+import Staff from '../../assets/images/staff/staff.png';
+import StaffDev from '../../assets/images/staff/staff_dev.png';
+
+
 interface StaffCardProps {
   staff: IClientStaffData;
 }
+const staffImages = [BackendDev, FrontendDev, ProjectManager, Security, UIUX, Staff, StaffDev, avatar2];
+const getRandomImage = () => {
+  return staffImages[Math.floor(Math.random() * staffImages.length)];
+};
 
 const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,42 +25,32 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
   };
-
-  return (
-    <div className={`bg-gunmetal rounded-lg shadow-lg overflow-hidden text-almond my-2 transition-all duration-300 ease-in-out border-2 border-light-cyan ${isOpen ? 'col-span-2' : ''}`}>
-
-
-      <div className={`px-6 py-4 flex items-center space-x-4 cursor-pointer ${isOpen ? 'border boder-almond': ''} `} onClick={toggleCard}>
-        <img src={avatar} alt={staff.name} className="h-16 w-16 rounded-full"/>
-        <div>
-          <h2 className="text-lg font-bold">{staff.name}</h2>
-          <p>{staff.role}</p>
-        </div>
+  const avatar = getRandomImage();
+// ...
+return (
+  <div className={`bg-background rounded-lg shadow-lg overflow-hidden text-primary-text my-2 transition-all duration-300 ease-in-out border-2 border-border relative cursor-pointer  ${isOpen ? 'col-span-2' : ''}`} onClick={toggleCard}>
+    <img src={avatar} alt={staff.name} className="h-full w-full object-cover"/>
+    <div className={`px-6 py-4 absolute bottom-0 left-0 bg-opacity-75 bg-background flex flex-col justify-center ${isOpen ? 'h-full' : 'h-20'}`}>
+      <div className="flex items-center space-x-4">
+        <h2 className="text-lg font-bold">{staff.name}</h2>
+        <p>{staff.role}</p>
       </div>
       {isOpen && (
-        <div className="px-6 py-4">
+        <>
           <p>Salary: ${staff.salary}</p>
           <p className="mt-2">Expertise: {staff.expertise}</p>
           <div className="mt-2">
             <label>Morale: </label>
-            <ProgressBar name="Paul" value={staff.morale * 10} color="cadet-gray" />
+            <ProgressBar name="Paul" value={staff.morale * 10} color="secondary-background" />
           </div>
           <p className="mt-2">Current Task: {staff.currentTask ? staff.currentTask : "No task assigned"}</p>
-          {/* <div className="px-6 py-4 bg-outer-space text-cadet-gray">
-            <div className="mt-4">
-              <p>Ambition: {staff.ambition}</p>
-              <p>Loyalty: {staff.loyalty}</p>
-              <p>Skill Level: {staff.skillLevel}</p>
-              <p>Resilience: {staff.resilience}</p>
-              <p>Adaptability: {staff.adaptability}</p>
-              <p>Satisfaction: {staff.satisfaction}</p> */}
-              {/* add more attributes here as needed */}
-            {/* </div>
-          </div> */}
-        </div>
+        </>
       )}
     </div>
-  );
+  </div>
+);
 };
+
+
 
 export default StaffCard;

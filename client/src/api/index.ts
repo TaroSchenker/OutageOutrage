@@ -57,7 +57,7 @@ export const createGame = async (game: object) => {
     throw error;
   }
 
-  return data ? data.data : [];
+  return data ? data.data : {};
 };
 export const updateGame = async (
   gameId: string,
@@ -208,9 +208,9 @@ export const getGameEventById = async (gameEventId: string) => {
   return data ? data.data : {};
 };
 
-export const createGameEvent = async (event: IClientGameData) => {
+export const createGameEvent = async () => {
   const { error, data } = await handleErrors(
-    instance.post<IClientGameData>('/gameEvents/events', event),
+    instance.post('/gameEvents/events'),
   );
 
   if (error) {
