@@ -7,5 +7,5 @@ export function useGetAllGames() {
 }
 
 export function useGetGameEventById(taskId: string) {
-  return useQuery(['getGameEventById', taskId], () => getGameById(taskId));
+  return useQuery(['getGameEventById', taskId], () => getGameById);
 }

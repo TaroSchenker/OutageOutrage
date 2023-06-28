@@ -9,19 +9,19 @@ interface ProgressBarProps {
 const mapColorToScheme = (color: string) => {
   switch (color) {
     case 'yellow':
-      return 'almond';
+      return 'primary-text';
     case 'purple':
-      return 'cadet-gray';
+      return 'secondary-background';
     case 'blue':
-      return 'outer-space';
+      return 'dark-background';
     case 'red':
-      return 'dim-gray';
+      return 'dimmed-background';
     case 'teal':
-      return 'cadet-gray';
+      return 'secondary-background';
     case 'green':
-      return 'cadet-gray';
+      return 'secondary-background';
     default:
-      return 'dim-gray';
+      return 'dimmed-background';
   }
 }
 
@@ -31,7 +31,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ name, value, color }) 
   return (
     <div className="w-full flex flex-col">
       <p className="text-sm mt-2 text-left">{name}:</p>
-      <div className="h-1 rounded bg-cadet-gray w-3/4 my-1">
+      <div className="h-1 rounded bg-secondary-background w-3/4 my-1">
         <div style={{ width: `${value}%` }} className={`h-1 rounded bg-${colorClass}`}></div>
       </div>
     </div>
