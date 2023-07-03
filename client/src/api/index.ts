@@ -173,7 +173,7 @@ export const getTaskById = async ({queryKey}: QueryFunctionContext) => {
 export const updateTask = async ({ queryKey}: QueryFunctionContext) => {
   const [, taskId, updates] = queryKey;
   const { error, data } = await handleErrors(
-    instance.put<IClientTaskData>(`/tasks/${taskId}`, updates),
+    instance.put<Partial<IClientTaskData>>(`/tasks/${taskId}`, updates),
   );
 
   if (error) {

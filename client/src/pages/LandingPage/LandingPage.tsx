@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import backgroundImage1 from '../../assets/images/bg4.png';
+// import backgroundImage0 from '../../assets/images/bg6.png';
+// import backgroundImage1 from '../../assets/images/bg4.png';
 import backgroundImage2 from '../../assets/images/bg5.png';
-import backgroundImage3 from '../../assets/images/bg6.png';
-import backgroundImage4 from '../../assets/images/bg7.png';
-import backgroundImage5 from '../../assets/images/bg8.png';
+import backgroundImage3 from '../../assets/images/bg9.png';
+import backgroundImage4 from '../../assets/images/bg10.png';
+import backgroundImage5 from '../../assets/images/bg11.png';
+import backgroundImage6 from '../../assets/images/bg12.png';
+import backgroundImage7 from '../../assets/images/bg13.png';
+import backgroundImage8 from '../../assets/images/bg14.png';
 
 import OutageOutrageLogo from '../../components/Logo/Logo';
 import { useNavigate } from 'react-router-dom';
@@ -12,26 +16,35 @@ import { IClientGameData } from '../../types/types';
 
 const LandingPage: React.FC = () => {
   const [gameId, setGameId] = useState('649985adde5ff21e2404f6a4');
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const [backgroundIndex, setBackgroundIndex] = useState(6);
+  const [direction, setDirection] = useState(-1);
   const backgrounds = [
-    backgroundImage1,
+    // backgroundImage0,
+    // backgroundImage1,
     backgroundImage2,
     backgroundImage3,
     backgroundImage4,
     backgroundImage5,
+    backgroundImage6,
+    backgroundImage7,
+    backgroundImage8,
   ];
-  const [background, setBackground] = useState(backgroundImage1);
+  // const [background, setBackground] = useState(backgroundImage1);
   const navigate = useNavigate();
   const initiliseGameMutation = useGameStateInitilise();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setBackgroundIndex((prevIndex) => (prevIndex + 1) % backgrounds.length);
-    }, 5000); // Change background every 5 seconds
-
+      if (direction > 0 && backgroundIndex >= backgrounds.length - 2) {
+        setDirection(-1);
+      } else if (direction < 0 && backgroundIndex <= 1) {
+        setDirection(1);
+      }
+      setBackgroundIndex(backgroundIndex + direction);
+    }, 4000); // Change background every 3 seconds
+  
     return () => clearTimeout(timer); // Clean up timer on component unmount
-  }, [backgroundIndex]);
-
+  }, [backgroundIndex, direction]);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGameId(e.target.value);
   };
@@ -58,6 +71,7 @@ const LandingPage: React.FC = () => {
       },
     );
   };
+  
   return (
     <div
       style={{

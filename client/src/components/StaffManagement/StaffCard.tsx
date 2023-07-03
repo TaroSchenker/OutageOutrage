@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IClientStaffData, Role } from '../../types/types';
+import { IClientStaffData, IClientTaskData, Role } from '../../types/types';
 import { ProgressBar } from '../ProgressBar/ProgressBar';
 import avatar2 from '../../assets/images/staff/staff_dev.png';
 import BackendDev from '../../assets/images/staff/BackendDev.png';
@@ -13,13 +13,14 @@ import StaffDev from '../../assets/images/staff/staff_dev.png';
 
 interface StaffCardProps {
   staff: IClientStaffData;
+  tasks: IClientTaskData[];
 }
 const staffImages = [BackendDev, FrontendDev, ProjectManager, Security, UIUX, Staff, StaffDev, avatar2];
 const getRandomImage = () => {
   return staffImages[Math.floor(Math.random() * staffImages.length)];
 };
 
-const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
+const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCard = () => {

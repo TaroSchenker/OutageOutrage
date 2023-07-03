@@ -87,7 +87,7 @@ export const assignTaskToStaff = async (
   try {
     const task = await taskService.assignTaskToStaff(
       req.params.taskId,
-      req.body.assignedTo,
+      req.body.staffId,
     );
     if (!task) {
       throw new AppError('Task not found.', 404);

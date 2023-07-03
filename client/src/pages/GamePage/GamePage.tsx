@@ -35,10 +35,10 @@ const GamePage = () => {
       <NavBar />
       <div className="App h-screen flex">
         <section className="w-4/12 bg-background border boder-primary-text p-4 overflow-y-auto">
-          <h2 className="text-2xl font-bold mb-4 text-background">
+          <h2 className="text-2xl font-bold mb-4 text-primary-text">
             Staff Management
           </h2>
-          <StaffManagement staff={data.staff} />
+          <StaffManagement staff={data.staff}  tasks={data.tasks}/>
         </section>
 
         <section className="w-5/12 bg-background border boder-primary-text p-4 overflow-y-auto text-border">
@@ -48,8 +48,8 @@ const GamePage = () => {
           <TaskManagement tasks={data.tasks} staff={data.staff} />
         </section>
 
-        <section className="w-2/12 bg-background border boder-primary-text p-4 overflow-y-auto text-primary-text">
-          <h2 className="text-2xl font-bold mb-4 text-secondary-text">
+        <section className="w-3/12 bg-background border boder-primary-text p-4 overflow-y-auto text-primary-text">
+          <h2 className="text-2xl font-bold mb-4 text-primary-text">
             Budget and Morale Management
           </h2>
           <BudgetIndicator budget={budget} emergencyFund={emergencyFund} />

@@ -11,7 +11,7 @@ interface TaskManagementProps {
 }
 
 const TaskManagement= ({tasks, staff}: TaskManagementProps) => {
-
+console.log("Task management tasks", tasks)
   return (
     <div className="grid grid-cols-2 gap-4">
       {tasks.map((task, index) => (
