@@ -75,7 +75,7 @@ const getStaffNameFromId = (id: string) => {
             <FaRegUserCircle className="text  text-xl"/>
             <div className="ml-2 flex flex-col">
               <p className="font-medium">Assigned To: {task.assignedTo ? getStaffNameFromId(task.assignedTo): "not assigned"}</p>
-              <CustomSelector options={staff.map(member => member.name)} onChange={handleSelectorChange} />
+              <CustomSelector value={task.assignedTo ? getStaffNameFromId(task.assignedTo): ""} options={staff.map(member => member.name)} onChange={handleSelectorChange} />
             </div>
           </div>
           <p className="mt-2 text-base font-medium">Complexity: {task.complexity}</p>
