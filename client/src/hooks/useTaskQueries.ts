@@ -10,8 +10,7 @@ export function useGetAllTask() {
 export function useGetTaskById(taskId: string) {
   return useQuery(['getTaskById', taskId], () => getTaskById);
 }
- 
-export function useUpdateTask(taskId: string, updates: Partial<IClientTaskData>) {
-  console.log('useUpdateTask', taskId, updates);
-  return useMutation(['updateTask', taskId, updates], updateTask);
+export function useUpdateTask() {
+  return useMutation((taskId: string, updates: Partial<IClientTaskData>) => updateTask(taskId, updates));
 }
+

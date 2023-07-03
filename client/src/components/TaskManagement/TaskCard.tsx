@@ -4,31 +4,61 @@ import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { FaRegUserCircle, FaTasks } from 'react-icons/fa';
 import CustomSelector from '../CustomSelect/CustomSelect'; // adjust the path based on your project structure
 import { useUpdateTask } from '../../hooks/useTaskQueries';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
+import { useQueryClient } from '@tanstack/react-query';
+
 
 interface TaskCardProps {
   task: IClientTaskData;
   staff: IClientStaffData[];
 }
-const TaskCard: React.FC<TaskCardProps> = ({ task, staff, ...props }) => {
+const TaskCard= ({ task, staff, ...props }: TaskCardProps ) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
   };
-  const handleSelectorChange = (selected: string) => {
-    console.log(`Selected: ${selected}`);
-    console.log("handkle selector change Task", task)
-    const taskId = task._id;
-    console.log("task id", taskId)
-    const staffId = staff.filter((member) => member.name === selected ? member : null)
-    console.log("staff id", staffId[0]._id)
-    if(!taskId) return;
-    const updatedTask = useUpdateTask(taskId, { assignedTo: staffId[0]._id });
-    // console.log(`Task ID: ${taskId}`)
-    // You can handle the selected value here
-  };
 
-  const staffMembers = staff.map((member) => member)
- console.log("staff members", staffMembers)
+// Get QueryClient from the context
+const queryClient = useQueryClient()
+
+const getStaffNameFromId = (id: string) => {
+  const staffMember = staff.find((member) => member._id === id);
+  return staffMember ? staffMember.name : '';
+};
+
+  const updateTaskMutation = useMutation({
+    mutationFn: (updatedTask: Partial<IClientTaskData>) => {
+      return axios.put(`http://localhost:3000/api/tasks/${task._id}/assignTask`, updatedTask)
+    },
+    onError: (error, variables, context) => {
+      // An error happened!
+      console.log(`error in mutate!`)
+    },
+    onSuccess: (data, variables, context) => {
+      // Boom baby!
+      console.log("on success called")
+      queryClient.invalidateQueries({ queryKey: ['getGameById'] })
+      // queryClient.invalidateQueries({ queryKey: ['getGameById'] })
+
+    },
+    onSettled: (data, error, variables, context) => {
+      // Error or success... doesn't matter!
+    },
+  })  
+  const handleSelectorChange = (selected: string) => {
+
+    const selectedStaff = staff.find((member) => member.name === selected);
+    if(!task._id || !selectedStaff) return;
+  console.log("selectedStaff", selectedStaff, selectedStaff._id)
+
+    const updatedTask = {
+      ...task,
+      staffId: String(selectedStaff._id),
+    }
+    updateTaskMutation.mutate(updatedTask)
+
+  };
   return (
     <div className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${isOpen ? 'col-span-2' : ''} hover:shadow-xl`}>
       <div className="px-6 py-4 flex items-center space-x-4 cursor-pointer border border" onClick={toggleCard}>
@@ -44,8 +74,8 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, staff, ...props }) => {
           <div className="mt-2 flex items-center">
             <FaRegUserCircle className="text  text-xl"/>
             <div className="ml-2 flex flex-col">
-              <p className="font-medium">Assigned To:</p>
-              <CustomSelector options={staffMembers.map(member => member.name)} onChange={handleSelectorChange} />
+              <p className="font-medium">Assigned To: {task.assignedTo ? getStaffNameFromId(task.assignedTo): "not assigned"}</p>
+              <CustomSelector options={staff.map(member => member.name)} onChange={handleSelectorChange} />
             </div>
           </div>
           <p className="mt-2 text-base font-medium">Complexity: {task.complexity}</p>

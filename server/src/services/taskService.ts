@@ -1,5 +1,7 @@
+import { staff } from '../config/initialData/staff';
+import { StaffModel } from '../models/Staff';
 import { TaskModel } from '../models/Task';
-import { ITask, ITaskData } from '../types/types';
+import { IStaff, ITask, ITaskData } from '../types/types';
 import AppError from '../utils/AppError';
 
 export class TaskService {
@@ -15,9 +17,8 @@ export class TaskService {
 
   // Create a new task
   createTask(taskData: ITaskData): Promise<ITask> {
-    console.log('*TASK SERVICE*: taskData: ', taskData);
     const task = new TaskModel(taskData);
-    console.log('*TASK SERVICE*: new task model: ', task);
+
     return task.save();
   }
 
@@ -33,12 +34,25 @@ export class TaskService {
 
   // Assign a task to a staff member
   assignTaskToStaff(taskId: string, staffId: string): Promise<ITask | null> {
+    console.log(
+      '****Assign task to staff**** TASK / STAFF ID',
+      taskId,
+      staffId,
+    );
     try {
-      return TaskModel.findByIdAndUpdate(
+      const updatedTask = TaskModel.findByIdAndUpdate(
         taskId,
         { assignedTo: staffId },
         { new: true },
       );
+      const assignedStaff = StaffModel.findByIdAndUpdate(
+        staffId,
+        { currentTask: taskId },
+        { new: true },
+      );
+
+      // console.log('updatedstaff:', assignedStaff);
+      return updatedTask;
     } catch (error) {
       console.error('Error updating task:', error);
       throw new AppError('An error occurred while updating the task', 500);

@@ -15,7 +15,6 @@ export class StaffService {
   // Create a new staff member
   createStaff(staffData: IStaffData): Promise<IStaff> {
     const staff = new StaffModel(staffData);
-    console.log('*STAFF SERVICE*: <Created>staffData: ', staffData);
     return staff.save();
   }
 
@@ -31,10 +30,18 @@ export class StaffService {
 
   // Assign a task to a staff member
   assignTask(staffId: string, taskId: string): Promise<IStaff | null> {
-    console.log('staff service, assign task', staffId, taskId);
     return StaffModel.findByIdAndUpdate(
       staffId,
       { currentTask: taskId },
+      { new: true },
+    );
+  }
+
+  // Delete a task to a staff member
+  RemoveTask(staffId: string): Promise<IStaff | null> {
+    return StaffModel.findByIdAndUpdate(
+      staffId,
+      { currentTask: '' },
       { new: true },
     );
   }
