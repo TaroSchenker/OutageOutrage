@@ -15,6 +15,7 @@ export interface IGameData {
 
 export interface IStaffData {
   name: string;
+  avatarUrl: string;
   role: Role;
   expertise: string;
   ambition: number;

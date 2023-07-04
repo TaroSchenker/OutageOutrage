@@ -30,7 +30,7 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
 // ...
 return (
   <div className={`bg-background rounded-lg shadow-lg overflow-hidden text-primary-text my-2 transition-all duration-300 ease-in-out border-2 border-border relative cursor-pointer  ${isOpen ? 'col-span-2' : ''}`} onClick={toggleCard}>
-    <img src={avatar} alt={staff.name} className="h-full w-full object-cover"/>
+    <img src={staff.avatarUrl} alt={staff.name} className="h-full w-full object-cover"/>
     <div className={`px-6 py-4 absolute bottom-0 left-0 bg-opacity-75 bg-background flex flex-col justify-center ${isOpen ? 'h-full' : 'h-20'}`}>
       <div className="flex items-center space-x-4">
         <h2 className="text-lg font-bold">{staff.name}</h2>

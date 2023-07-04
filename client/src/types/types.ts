@@ -15,6 +15,7 @@ export interface IClientGameData {
 export interface IClientStaffData {
   _id: string;
   name: string;
+  avatarUrl: string;
   role: Role;
   expertise: string;
   ambition: number;

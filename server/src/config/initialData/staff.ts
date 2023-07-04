@@ -2,7 +2,9 @@ import { Expertise, IStaffData, Role } from '../../types/types';
 
 export const staff: IStaffData[] = [
   {
-    name: 'API Andy',
+    name: 'API RAndy',
+    avatarUrl:
+      'https://raw.githubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
     role: Role.BACKEND_DEV,
     expertise: Expertise.JAVA,
     ambition: 7,
@@ -18,6 +20,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'React Rachel',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.FRONTEND_DEV,
     expertise: Expertise.JAVASCRIPT,
     ambition: 8,
@@ -33,6 +37,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Test-case Tom',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.QA,
     expertise: Expertise.SOFTWARE_TESTING,
     ambition: 8,
@@ -48,6 +54,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Agile Alex',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/ProjectManager.png?raw=true',
     role: Role.PROJECT_MANAGER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 9,
@@ -62,7 +70,9 @@ export const staff: IStaffData[] = [
     satisfaction: 80,
   },
   {
-    name: 'Design Dave',
+    name: 'Design Divina',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/UIUX.png?raw=true',
     role: Role.UX_UI_DESIGNER,
     expertise: Expertise.UX_DESIGN,
     ambition: 7,
@@ -78,6 +88,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Firewall Fred',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.SECURITY_SPECIALIST,
     expertise: Expertise.CYBER_SECURITY,
     ambition: 8,
@@ -93,6 +105,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Kubernetes Ken',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/staff_dev.png?raw=true',
     role: Role.DEVOPS_ENGINEER,
     expertise: Expertise.JAVA,
     ambition: 8,
@@ -108,6 +122,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Stats Steve',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.DATA_SCIENTIST,
     expertise: Expertise.MACHINE_LEARNING,
     ambition: 9,
@@ -123,6 +139,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Roadmap Rick',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/ProjectManager.png?raw=true',
     role: Role.PRODUCT_OWNER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 9,
@@ -138,6 +156,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Byte Betty',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true?raw=true',
     role: Role.BACKEND_DEV,
     expertise: Expertise.JAVA,
     ambition: 5,
@@ -153,6 +173,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'CSS Cindy',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.FRONTEND_DEV,
     expertise: Expertise.JAVASCRIPT,
     ambition: 6,
@@ -168,6 +190,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Quality Queen Quinn',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.QA,
     expertise: Expertise.SOFTWARE_TESTING,
     ambition: 7,
@@ -183,6 +207,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Organizer Olivia',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.PROJECT_MANAGER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 6,
@@ -198,6 +224,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Sketch Sam',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.UX_UI_DESIGNER,
     expertise: Expertise.UX_DESIGN,
     ambition: 8,
@@ -213,6 +241,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Secure-server Sarah',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.SECURITY_SPECIALIST,
     expertise: Expertise.CYBER_SECURITY,
     ambition: 6,
@@ -228,6 +258,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Infrastructure Ian',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.DEVOPS_ENGINEER,
     expertise: Expertise.JAVA,
     ambition: 9,
@@ -243,6 +275,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Cluster Chris',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.DATA_SCIENTIST,
     expertise: Expertise.MACHINE_LEARNING,
     ambition: 6,
@@ -258,6 +292,8 @@ export const staff: IStaffData[] = [
   },
   {
     name: 'Feature Fran',
+    avatarUrl:
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.PRODUCT_OWNER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 7,
