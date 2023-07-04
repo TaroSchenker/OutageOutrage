@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IClientStaffData, IClientTaskData, Role } from '../../types/types';
-import { ProgressBar } from '../ProgressBar/ProgressBar';
 import { Tabs } from 'antd';
 import {
   Radar,
@@ -10,6 +9,7 @@ import {
   PolarRadiusAxis,
   Tooltip,
 } from 'recharts';
+import ProgressBar from '../ProgressBar/ProgressBar';
 
 const { TabPane } = Tabs;
 
@@ -55,30 +55,25 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
           <p>{staff.role}</p>
         </div>
         {isOpen && (
-          <div className="absolute top-20 bottom-0">
+          <div className="absolute top-20 bottom-50">
             <Tabs defaultActiveKey="1">
               <TabPane tab="Basic Info" key="1">
                 <p>Expertise: {staff.expertise}</p>
-                <div style={{ width: '250px', height: '250px', display: 'flex' }}>
-  <RadarChart cx={125} cy={125} outerRadius={80} width={250} height={250} data={data}>
-    <PolarGrid />
-    <PolarAngleAxis dataKey="subject" stroke="#000000" /> 
-    <PolarRadiusAxis />
-    <Radar name={staff.name} dataKey="A" stroke="#000000" fill="#8884d8" fillOpacity={0.6} /> 
-    <Tooltip />
-  </RadarChart>
-</div>
-
+                <div style={{ width: '300px', height: '300px', padding: '25px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <RadarChart cx={150} cy={150} outerRadius={70} width={300} height={350} data={data}>
+                    <PolarGrid />
+                    <PolarAngleAxis dataKey="subject" stroke="#000000" /> 
+                    <PolarRadiusAxis />
+                    <Radar name={staff.name} dataKey="A" stroke="#000000" fill="#8884d8" fillOpacity={0.6} /> 
+                    <Tooltip />
+                  </RadarChart>
+                </div>
               </TabPane>
               <TabPane tab="Salary & Morale" key="2">
                 <p>Salary: ${staff.salary}</p>
                 <div className="mt-2">
                   <label>Morale: </label>
-                  <ProgressBar
-                    name="Paul"
-                    value={staff.morale * 10}
-                    color="secondary-background"
-                  />
+                  <ProgressBar value={staff.morale * 10} />
                 </div>
               </TabPane>
               <TabPane tab="Tasks" key="3">
