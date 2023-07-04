@@ -18,39 +18,39 @@ export interface IClientStaffData {
   avatarUrl: string;
   role: Role;
   expertise: string;
-  ambition: number;
-  loyalty: number;
-  skillLevel: number;
-  resilience: number;
-  adaptability: number;
-  morale: number;
+  ambition: number; // 0 - 100
+  loyalty: number; // 0 - 100
+  skillLevel: number; // 0 - 100
+  resilience: number; // 0 - 100
+  adaptability: number; // 0 - 100
+  morale: number; // 0 - 100
   currentTask: string | null;
   availability: boolean;
   salary: number;
-  satisfaction: number;
+  satisfaction: number; // 0 - 100
 }
 
 export interface IClientTaskData {
   _id: string
   type: TaskType;
-  complexity: number;
-  timeToComplete: number;
+  complexity: number; // 0 - 100
+  timeToComplete: number; // 0 - 100
   assignedTo: string | null;
   expertiseRequired: Expertise;
-  criticality: number;
+  criticality: number; // 0 - 100
   status: TaskStatus;
   dependencies: Array<string>;
   businessImpact: BusinessImpact;
-  progress: number;
+  progress: number; // 0 - 100
   description: string;
 }
 
 export interface IClientGameEventData {
   _id: string;
   type: EventType;
-  severity: number;
-  effectOnMorale: number;
-  effectOnBudget: number;
+  severity: number; // 0 - 100
+  effectOnMorale: number; // 0 - 100
+  effectOnBudget: number; // 0 - 100
   effectOnTasks: IClientTaskData | null; 
   duration: number; // in days, add to model
 }
@@ -129,14 +129,14 @@ export enum TaskStatus {
 export const STARTING_BUDGET = 1000000;
 export const TIME_PERIOD = 180; // 6 months
 
-export const MIN_SKILL_LEVEL = 1;
-export const MAX_SKILL_LEVEL = 10;
+export const MIN_SKILL_LEVEL = 0;
+export const MAX_SKILL_LEVEL = 100;
 
 export const MIN_MORALE = 0;
 export const MAX_MORALE = 100;
 
-export const MIN_COMPLEXITY = 1;
-export const MAX_COMPLEXITY = 10;
+export const MIN_COMPLEXITY = 0;
+export const MAX_COMPLEXITY = 100;
 
-export const MIN_TIME_TO_COMPLETE = 1;
-export const MAX_TIME_TO_COMPLETE = 30; // assuming in days
+export const MIN_TIME_TO_COMPLETE = 0;
+export const MAX_TIME_TO_COMPLETE = 100;
