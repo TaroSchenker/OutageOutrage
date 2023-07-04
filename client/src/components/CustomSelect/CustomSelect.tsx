@@ -13,8 +13,9 @@ const CustomSelector: FC<SelectorProps> = ({ options, onChange, value }) => {
 
   return (
     <div className="flex items-center mt-2">
-      <label className="font-medium text-base mr-2">Select Option:</label>
-      <select onChange={handleChange} value={value}  className="form-select block w-full py-2 px-4 rounded-md border border-primary-text bg-background text-border  text-primary-text shadow-sm">
+      {/* <label className="font-medium text-base mr-2">Select Option:</label> */}
+      <select onChange={handleChange} value={value} className="form-select block w-full py-2 px-4 rounded-md border border-primary-text bg-background text-border  text-primary-text shadow-sm">
+        <option value="">Not Assigned</option> {/* Make sure this option is present */}
         {options.map((option, index) => (
           <option key={index} value={option} className="py-1">
             {option}

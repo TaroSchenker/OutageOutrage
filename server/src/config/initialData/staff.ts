@@ -89,7 +89,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Firewall Fred',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/Security.png?raw=true',
     role: Role.SECURITY_SPECIALIST,
     expertise: Expertise.CYBER_SECURITY,
     ambition: 8,
@@ -208,7 +208,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Organizer Olivia',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/ProjectManager.png?raw=true',
     role: Role.PROJECT_MANAGER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 6,
@@ -225,7 +225,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Sketch Sam',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/UIUX.png?raw=true',
     role: Role.UX_UI_DESIGNER,
     expertise: Expertise.UX_DESIGN,
     ambition: 8,
@@ -242,7 +242,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Secure-server Sarah',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/Security.png?raw=true',
     role: Role.SECURITY_SPECIALIST,
     expertise: Expertise.CYBER_SECURITY,
     ambition: 6,
@@ -276,7 +276,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Cluster Chris',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/staff_dev.png?raw=true',
     role: Role.DATA_SCIENTIST,
     expertise: Expertise.MACHINE_LEARNING,
     ambition: 6,
@@ -293,7 +293,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Feature Fran',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/staff.png?raw=truee',
     role: Role.PRODUCT_OWNER,
     expertise: Expertise.PROJECT_MANAGEMENT,
     ambition: 7,
