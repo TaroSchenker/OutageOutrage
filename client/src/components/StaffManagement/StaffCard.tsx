@@ -36,22 +36,22 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
   return (
     <div
       className={`bg-background rounded-lg shadow-lg overflow-hidden text-primary-text my-2 transition-all duration-300 ease-in-out border-2 border-border relative cursor-pointer  ${
-        isOpen ? 'col-span-2' : ''
+        isOpen ? 'col-span-2 ' : ''
       }`}
       onClick={toggleCard}
     >
       <img
         src={staff.avatarUrl}
         alt={staff.name}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover "
       />
       <div
-        className={`px-6 py-4 absolute bottom-0 left-0 bg-opacity-75 bg-background flex flex-col justify-start ${
+        className={`px-2 py-2 absolute bottom-0 w-full left-0 bg-opacity-75 bg-background flex flex-col justify-start border-2 border-dark-background ${
           isOpen ? 'h-full w-full' : 'h-20'
         }`}
       >
-        <div className="flex items-center space-x-4">
-          <h2 className="text-lg font-bold">{staff.name}</h2>
+        <div className="flex flex-col items-start ">
+          <h2 className="text-lg font-bold ">{staff.name}</h2>
           <p>{staff.role}</p>
         </div>
         {isOpen && (
@@ -59,12 +59,35 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
             <Tabs defaultActiveKey="1">
               <TabPane tab="Basic Info" key="1">
                 <p>Expertise: {staff.expertise}</p>
-                <div style={{ width: '300px', height: '300px', padding: '25px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                  <RadarChart cx={150} cy={150} outerRadius={70} width={300} height={350} data={data}>
+                <div
+                  style={{
+                    width: '300px',
+                    height: '300px',
+                    padding: '25px',
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <RadarChart
+                    cx={150}
+                    cy={150}
+                    outerRadius={70}
+                    width={300}
+                    height={350}
+                    data={data}
+                  >
                     <PolarGrid />
-                    <PolarAngleAxis dataKey="subject" stroke="#000000" /> 
+                    <PolarAngleAxis dataKey="subject" stroke="#000000" />
                     <PolarRadiusAxis />
-                    <Radar name={staff.name} dataKey="A" stroke="#000000" fill="#8884d8" fillOpacity={0.6} /> 
+                    <Radar
+                      name={staff.name}
+                      dataKey="A"
+                      stroke="#000000"
+                      fill="#8884d8"
+                      fillOpacity={0.6}
+                    />
                     <Tooltip />
                   </RadarChart>
                 </div>
