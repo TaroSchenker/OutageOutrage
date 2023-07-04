@@ -10,6 +10,7 @@ import {
 
 const StaffSchema = new mongoose.Schema({
   name: String,
+  avatarUrl: String,
   role: { type: String, enum: Object.values(Role) },
   expertise: String,
   ambition: { type: Number, min: MIN_MORALE, max: MAX_MORALE },

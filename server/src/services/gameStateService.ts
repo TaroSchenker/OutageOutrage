@@ -40,7 +40,7 @@ export class GameStateService {
         return await this.staffService.createStaff(staff);
       }),
     );
-
+    console.log('initial staff:', initialStaff);
     const initialEvents = await Promise.all(
       preCreatedEvents.map(async (event): Promise<IGameEvent> => {
         return await this.gameEventService.createEvent(event);
