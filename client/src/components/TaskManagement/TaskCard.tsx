@@ -7,8 +7,8 @@ import {
   IClientTaskData,
   IClientStaffData,
 } from '../../types/types';
-import { ProgressBar } from '../ProgressBar/ProgressBar';
-import { FaRegUserCircle, FaTasks } from 'react-icons/fa';
+import ProgressBar from '../ProgressBar/ProgressBar';
+import { FaRegUserCircle, FaTasks, FaUserCheck } from 'react-icons/fa';
 import CustomSelector from '../CustomSelect/CustomSelect'; // adjust the path based on your project structure
 import { useUpdateTask } from '../../hooks/useTaskQueries';
 import { useMutation } from '@tanstack/react-query';
@@ -69,22 +69,25 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
     };
     updateTaskMutation.mutate(updatedTask);
   };
-  return (
-    <div
-      className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${
-        isOpen ? 'col-span-2' : ''
-      } hover:shadow-xl`}
-    >
+
+    return (
       <div
-        className="px-6 py-4 flex items-center space-x-4 cursor-pointer border border"
-        onClick={toggleCard}
+        className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${
+          isOpen ? 'col-span-2' : ''
+        } hover:shadow-xl`}
       >
-        <FaTasks className="text-primary-text text-2xl" />
-        <div>
-          <h2 className="text-xl font-bold">{task.type}</h2>
-          <p className="font-semibold">{task.status}</p>
+        <div
+          className="px-6 py-4 flex items-center space-x-4 cursor-pointer border border"
+          onClick={toggleCard}
+        >
+          <FaTasks className="text-primary-text text-2xl" />
+          <div>
+            <h2 className="text-xl font-bold">{task.type}</h2>
+            <p className="font-semibold">{task.status}</p>
+            {/* Conditionally render the assigned icon */}
+            {task.assignedTo && <FaUserCheck className="text-primary-text text-2xl"  title="Task is assigned"/>}
+          </div>
         </div>
-      </div>
       {isOpen && (
         <div className="px-6 py-4">
           <p className="text-base  font-medium">
@@ -117,11 +120,7 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
           </p>
           <div className="mt-2">
             <label>Progress: </label>
-            <ProgressBar
-              name={task.type}
-              value={task.progress}
-              color="primary-text"
-            />
+            <ProgressBar value={task.progress} color="primary-text" />
           </div>
         </div>
       )}
