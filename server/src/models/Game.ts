@@ -12,7 +12,9 @@ const GameSchema = new mongoose.Schema<IGame>({
     type: Number,
   },
   startingBudget: Number,
+  totalSpent: Number,
   timePeriod: Number,
+  websiteHealth: Number,
 });
 
 export const GameModel = mongoose.model<IGame & Document>('Game', GameSchema);

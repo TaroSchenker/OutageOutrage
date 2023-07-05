@@ -1,5 +1,6 @@
 // components/BudgetMoraleManagement/BudgetIndicator.tsx
 import React from 'react';
+import StyledButton from '../StyledButton/StyledButton';
 
 interface BudgetIndicatorProps {
   budget: number;
@@ -21,10 +22,10 @@ const BudgetIndicator: React.FC<BudgetIndicatorProps> = ({
           />
         </div>
       </div>
-      <h3 className="font-semibold mb-1 text-primary-text">Emergency Fund: ${emergencyFund}</h3>
-      <button className="px-4 py-2 bg-primary-text text-background rounded">
-        Add to Emergency Fund
-      </button>
+      <h3 className="font-semibold mb-1 text-primary-text">
+        Emergency Fund: ${emergencyFund}
+      </h3>
+      <StyledButton>Add to Emergency Fund</StyledButton>
     </div>
   );
 };

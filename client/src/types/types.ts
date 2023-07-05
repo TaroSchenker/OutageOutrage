@@ -9,7 +9,9 @@ export interface IClientGameData {
   events: Array<IClientGameEventData>;
   timeRemaining: number; // decreases by 1 each day
   startingBudget: number;
+  totalSpent: number;
   timePeriod: number; //game length in days (180 days = 6 months)
+  websiteHealth: number; // 0 - 100
 }
 
 export interface IClientStaffData {

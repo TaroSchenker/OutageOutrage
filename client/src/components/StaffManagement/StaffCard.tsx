@@ -46,7 +46,7 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
         className="h-full w-full object-cover "
       />
       <div
-        className={`px-2 py-2 absolute bottom-0 w-full left-0 bg-opacity-75 bg-background flex flex-col justify-start border-2 border-dark-background ${
+        className={`px-2 py-2 absolute bottom-0 w-full left-0 text-sm bg-opacity-75 bg-background flex flex-col justify-start border-2 border-dark-background ${
           isOpen ? 'h-full w-full' : 'h-20'
         }`}
       >

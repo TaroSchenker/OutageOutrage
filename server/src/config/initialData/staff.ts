@@ -36,7 +36,7 @@ export const staff: IStaffData[] = [
     satisfaction: 75,
   },
   {
-    name: 'Test-case Tom',
+    name: 'Testcase Tom',
     avatarUrl:
       'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.QA,
@@ -189,7 +189,7 @@ export const staff: IStaffData[] = [
     satisfaction: 65,
   },
   {
-    name: 'Quality Queen Quinn',
+    name: 'Quality Quinn',
     avatarUrl:
       'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
     role: Role.QA,
@@ -240,7 +240,7 @@ export const staff: IStaffData[] = [
     satisfaction: 80,
   },
   {
-    name: 'Secure-server Sarah',
+    name: 'Secure Sarah',
     avatarUrl:
       'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/Security.png?raw=true',
     role: Role.SECURITY_SPECIALIST,

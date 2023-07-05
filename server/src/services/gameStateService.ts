@@ -58,9 +58,11 @@ export class GameStateService {
         staff: initialStaff.map((staff) => staff.id),
         tasks: initialTasks.map((task) => task.id),
         events: initialEvents.map((event) => event.id),
-        timeRemaining: 180,
-        startingBudget: 100,
-        timePeriod: 180,
+        timeRemaining: 180, // 180 days = 6 months
+        startingBudget: 20000,
+        totalSpent: 0,
+        timePeriod: 180, // 180 days = 6 months
+        websiteHealth: 100, // 0-100
       });
 
       return game;

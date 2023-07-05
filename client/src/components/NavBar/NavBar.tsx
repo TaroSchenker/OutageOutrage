@@ -1,20 +1,66 @@
-import { Link } from "react-router-dom";
-import {useQuery} from '@tanstack/react-query';
-import { gameStateInitilise } from "../../api";
+import { Link, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { gameStateInitilise, getGameById } from '../../api';
+import StyledButton from '../StyledButton/StyledButton';
+import axios from 'axios';
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  websiteHealth: number;
+  timeRemaining: number;
+}
+import { useQueryClient } from '@tanstack/react-query';
+const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
+  const { gameId } = useParams();
+
+  // Get QueryClient from the context
+  const queryClient = useQueryClient();
+
+  const processTurnMutation = useMutation({
+    mutationFn: (gameId: string) => {
+      return axios.post(
+        `http://localhost:3000/api/gameState/${gameId}/turn`
+      );
+    },
+    onError: (error, variables, context) => {
+      // An error happened!
+      console.log(`error in mutate!`);
+    },
+    onSuccess: (data, variables, context) => {
+      // Boom baby!
+      console.log('on success called');
+      queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+      // queryClient.invalidateQueries({ queryKey: ['getGameById'] })
+    },
+    onSettled: (data, error, variables, context) => {
+      // Error or success... doesn't matter!
+    },
+  });
   const handleClick = () => {
-    console.log("clicked");
-  }
-  const {data: initialisedNewGame, isLoading, isError} = useQuery(['gameStateInitilise'], gameStateInitilise);
-
+    console.log('clicked');
+    if(gameId){
+       processTurnMutation.mutate(gameId);
+    }
+   
+  };
+  const { data, isLoading, isError } = useQuery(
+    ['getGameById', String(gameId)],
+    getGameById,
+  );
 
   return (
     <nav className="bg-background text-primary-text p-4 flex justify-between items-center shadow-lg">
       <h1 className="text-2xl font-bold">Outage Outrage</h1>
-      <div className="text-xl font-semibold">{initialisedNewGame?.gameStateId}</div>
+      <StyledButton onClick={handleClick}> Process Turn</StyledButton>
+      <div className="text-xl font-semibold">Game ID: {gameId} </div>
       <div className="space-x-4">
-        {/* Add navigation items here */}
+        <div className="flex flex-col items-center">
+          <div className="text-lg font-medium text-secondary-text">
+            Time Remaining: {timeRemaining} days
+          </div>
+          <div className="text-lg font-medium text-secondary-text">
+            Website Health: {websiteHealth}%
+          </div>
+        </div>
       </div>
     </nav>
   );
