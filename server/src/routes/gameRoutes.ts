@@ -6,7 +6,9 @@ const router = express.Router();
 
 router.get('/', gameController.getAllGames);
 
-router.get('/:gameId', gameController.getGameById);
+router.get('/:gameId', gameController.getGameByIdPopulated);
+
+// router.get('/:gameId', gameController.getGameById);
 
 router.post('/', gameController.createGame);
 

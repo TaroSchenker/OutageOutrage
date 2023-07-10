@@ -7,12 +7,17 @@ export class GameService {
     return GameModel.find({});
   }
 
-  // Retrieve a game by ID
-  getGameById(id: string): Promise<IGame | null> {
+  // Retrieve a populated game by ID
+  getGameByIdPopulated(id: string): Promise<IGame | null> {
     return GameModel.findById(id)
       .populate('staff')
       .populate('tasks')
       .populate('events');
+  }
+
+  // Retrieve a game by ID
+  getGameById(id: string): Promise<IGame | null> {
+    return GameModel.findById(id);
   }
 
   // Create a new game

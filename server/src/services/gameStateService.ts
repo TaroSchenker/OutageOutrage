@@ -40,7 +40,6 @@ export class GameStateService {
         return await this.staffService.createStaff(staff);
       }),
     );
-    console.log('initial staff:', initialStaff);
     const initialEvents = await Promise.all(
       preCreatedEvents.map(async (event): Promise<IGameEvent> => {
         return await this.gameEventService.createEvent(event);
@@ -73,84 +72,62 @@ export class GameStateService {
   }
 
   async startNewTurn(gameId: string): Promise<IGame> {
-    // 1. Update the game turn state (you could be tracking turns with a simple counter).
-    // 2. Refresh the available tasks and events (according to the game logic).
-    // 3. Update the budget based on any recurring expenses (like staff salaries).
-    // 4. Save the new game state in the database.
-    try {
-      let game = await this.gameService.getGameById(gameId);
-      if (!game) {
-        throw new Error('Game not found');
-      }
-      console.log('***************************');
-      console.log('---- STARTING NEW TURN ----');
-      console.log('***************************');
-      //decrease time remaining by 1 day;
-      game.timeRemaining--;
-      game = await this.gameService.updateGame(gameId, game);
+    // Fetch the game
+    let game = await this.gameService.getGameById(gameId);
 
-      if (!game) {
-        throw new Error('Game not found');
-      }
-
-      game = await this.processTaskAssignments(game);
-
-      if (!game) {
-        throw new Error('Game not found');
-      }
-      // Check win/loss conditions
-      const result = this.checkWinLossConditions(game);
-      console.log('Win / Loss conditions result:', result);
-
-      // // Save game state
-      // await this.gameService.updateGame(gameId, game);
-
-      return game;
-    } catch (err) {
-      console.log(err);
-      throw err;
+    if (!game) {
+      throw new Error('Game not found');
     }
+
+    // Decrement the time remaining and process the task assignments
+    game.timeRemaining--;
+    game = await this.processTaskAssignments(game);
+
+    // Check win/loss conditions
+    const result = this.checkWinLossConditions(game);
+    console.log('Win / Loss conditions result:', result);
+
+    // Save game state
+    await this.gameService.updateGame(gameId, game);
+
+    return game;
   }
+
   async processTaskAssignments(game: IGame): Promise<IGame> {
-    // TODO:
-    // 1. Process the assignments made by the player during the turn.
-    // 2. Update the status of the tasks (e.g., completed, in-progress, not-started).
-    // 3. Update the workload of the staff based on the assigned tasks.
-    // 4. Save these changes to the game state in the database or in-memory storage.
-    console.log('Process task assignments');
-    game.tasks.forEach(async (task) => {
-      const retrievedTask = await this.taskService.getTaskById(String(task));
-      if (!retrievedTask) {
-        throw new Error('Game not found');
-      }
-      // If the task is assigned to a staff member and not completed
-      if (
-        retrievedTask.assignedTo &&
-        retrievedTask.status !== TaskStatus.COMPLETED
-      ) {
-        console.log('a task is assigned to a staff member and not completed');
-        const assignedStaffId = game.staff.find(
-          (staff) => String(staff) === retrievedTask.assignedTo,
-        );
-        const staff = await this.staffService.getStaffById(
-          String(assignedStaffId),
-        );
+    // Loop through each task in the game
+    for (const taskId of game.tasks) {
+      // Fetch the actual task document
+      const task = await this.taskService.getTaskById(taskId.toString());
 
-        if (staff) {
-          console.log('task assigned to staff', staff.name, staff.currentTask);
-          retrievedTask.timeToComplete -= 3;
-        }
+      // Continue to the next task if this one doesn't exist or isn't assigned to anyone
+      if (!task || !task.assignedTo) continue;
+
+      // Fetch the staff member assigned to the task
+      const staff = await this.staffService.getStaffById(task.assignedTo);
+
+      // Continue to the next task if the assigned staff member doesn't exist
+      if (!staff) continue;
+
+      // Logic for progressing the task and updating the staff member
+      if (task.status !== TaskStatus.COMPLETED) {
+        task.status = TaskStatus.IN_PROGRESS;
+        task.progress += 30;
+        task.assignedTo = staff._id;
+        staff.currentTask = task._id;
+        staff.morale--;
+
         // If the task is now complete, mark it as such
-        if (retrievedTask.timeToComplete <= 0) {
-          retrievedTask.status = TaskStatus.COMPLETED;
+        if (task.timeToComplete <= task.progress) {
+          task.status = TaskStatus.COMPLETED;
         }
-        void (await this.taskService.updateTask(
-          retrievedTask._id,
-          retrievedTask,
-        ));
-      }
-    });
 
+        // Save the updates
+        await this.staffService.updateStaff(staff._id, staff);
+        await this.taskService.updateTask(task._id, task);
+      }
+    }
+
+    // Return the updated game
     return game;
   }
 
