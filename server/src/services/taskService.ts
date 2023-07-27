@@ -1,7 +1,5 @@
-import { staff } from '../config/initialData/staff';
-import { StaffModel } from '../models/Staff';
 import { TaskModel } from '../models/Task';
-import { IStaff, ITask, ITaskData } from '../types/types';
+import { ITask, ITaskData } from '../types/types';
 import AppError from '../utils/AppError';
 
 export class TaskService {
@@ -45,13 +43,6 @@ export class TaskService {
         { assignedTo: staffId },
         { new: true },
       );
-      const assignedStaff = StaffModel.findByIdAndUpdate(
-        staffId,
-        { currentTask: taskId },
-        { new: true },
-      );
-
-      // console.log('updatedstaff:', assignedStaff);
       return updatedTask;
     } catch (error) {
       console.error('Error updating task:', error);

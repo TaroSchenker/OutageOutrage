@@ -10,21 +10,7 @@ module.exports = {
         'border': '#E0E0E0',                 // Light gray for borders
         'dimmed-background': '#DADADA',      // Medium light gray for dimmed elements
         'dark-background': '#333333',        // Dark gray for dark background elements
-    }
-    
-    
-    
-    
-      // colors: {
-      //   'background': '#25323f',
-      //   'secondary-background': '#a3bac0',
-      //   'primary-text': '#f4dcc4',
-      //   'dimmed-background': '#5e676b',
-      //   'dark-background': '#4c555b',
-      //   'border': '#E0FFFF',
-      //   'secondary-text': '#87CEEB',
-      // }, 
-      ,
+    },
         keyframes: {
         pulse: {
           '10%, 100%': { opacity: 1 },

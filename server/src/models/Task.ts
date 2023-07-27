@@ -25,7 +25,12 @@ const TaskSchema = new mongoose.Schema({
   status: { type: String, enum: Object.values(TaskStatus) },
   dependencies: [{ type: Schema.Types.ObjectId, ref: 'Task' }], // tasks that must be completed before this task can be started
   businessImpact: { type: String, enum: Object.values(BusinessImpact) },
-  progress: { type: Number, default: 0 },
+  progress: {
+    type: Number,
+    min: MIN_TIME_TO_COMPLETE,
+    max: MAX_TIME_TO_COMPLETE,
+    default: 0,
+  },
   description: String,
 });
 

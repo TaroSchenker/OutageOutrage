@@ -7,8 +7,8 @@ export const getAllGames = async (req: Request, res: Response) => {
   return res.json(allGames);
 };
 
-export const getGameById = async (req: Request, res: Response) => {
-  const game = await gameService.getGameById(req.params.gameId);
+export const getGameByIdPopulated = async (req: Request, res: Response) => {
+  const game = await gameService.getGameByIdPopulated(req.params.gameId);
   if (!game) {
     return res.status(404).json({ message: 'Game not found' });
   }
