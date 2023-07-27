@@ -111,7 +111,7 @@ export class GameStateService {
       // Logic for progressing the task and updating the staff member
       if (task.status !== TaskStatus.COMPLETED) {
         task.status = TaskStatus.IN_PROGRESS;
-        task.progress += 30;
+        task.progress += 10;
         task.assignedTo = staff._id;
         staff.currentTask = task._id;
         staff.morale--;

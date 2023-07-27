@@ -184,7 +184,10 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
           </p>
           <div className="mt-2">
             <label>Progress: {task.progress} </label>
-            <ProgressBar value={task.progress} color="primary-text" />
+            {/* <ProgressBar value={task.progress / 4} color="black" /> */}
+            <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
+          <div style={{ width: `${task.progress}%` }} className="bg-secondary-text h-full" />
+        </div>
           </div>
         </div>
       )}
