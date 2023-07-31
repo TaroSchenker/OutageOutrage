@@ -19,7 +19,7 @@ export interface IStaffData {
   name: string;
   avatarUrl: string;
   role: Role;
-  expertise: string;
+  expertise: Expertise;
   ambition: number; // 0 - 100
   loyalty: number; // 0 - 100
   skillLevel: number; // 0 - 100

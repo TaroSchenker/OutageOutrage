@@ -48,7 +48,7 @@ const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
   );
 
   return (
-    <nav className="bg-background text-primary-text p-4 flex justify-between items-center shadow-lg">
+    <nav className="bg-background sticky top-0 z-50 text-primary-text p-4 flex justify-between items-center shadow-lg">
       <h1 className="text-2xl font-bold">Outage Outrage</h1>
       <StyledButton onClick={handleClick}> Process Turn</StyledButton>
       <div className="text-xl font-semibold">Game ID: {gameId} </div>
