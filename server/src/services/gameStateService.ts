@@ -112,15 +112,27 @@ export class GameStateService {
       if (task.status !== TaskStatus.COMPLETED) {
         task.status = TaskStatus.IN_PROGRESS;
 
-        //function to calculate how much progress should be made according to staff attributes
-        const staffProductivity: number =
-          staff.skillLevel * 3 + staff.resilience + staff.morale; //potential 500 total
-        task.progress += (staffProductivity / task.complexity) * 2;
         task.assignedTo = staff._id;
         staff.currentTask = task._id;
-        staff.morale--;
-
+        //calcualte morale based on expterise match
+        if (staff.expertise === task.expertiseRequired) {
+          staff.morale += 10;
+        } else {
+          staff.morale -= 10;
+        }
+        // calcualte task progress based on staff productivity
+        const staffProductivity: number =
+          staff.skillLevel * 3 + staff.resilience + staff.morale; //potential 500 total
+        task.progress += Math.floor((staffProductivity / task.complexity) * 2);
+        if (task.progress > task.timeToComplete)
+          task.progress = task.timeToComplete;
         // If the task is now complete, mark it as such
+        console.log(
+          'timeToComplete',
+          task.timeToComplete,
+          'progress',
+          task.progress,
+        );
         if (task.timeToComplete <= task.progress) {
           task.status = TaskStatus.COMPLETED;
         }
