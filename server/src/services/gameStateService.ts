@@ -111,7 +111,11 @@ export class GameStateService {
       // Logic for progressing the task and updating the staff member
       if (task.status !== TaskStatus.COMPLETED) {
         task.status = TaskStatus.IN_PROGRESS;
-        task.progress += 10;
+
+        //function to calculate how much progress should be made according to staff attributes
+        const staffProductivity: number =
+          staff.skillLevel * 3 + staff.resilience + staff.morale; //potential 500 total
+        task.progress += (staffProductivity / task.complexity) * 2;
         task.assignedTo = staff._id;
         staff.currentTask = task._id;
         staff.morale--;
