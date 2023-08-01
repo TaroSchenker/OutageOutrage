@@ -176,18 +176,24 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
             </div>
           </div>
 
-          <p className="mt-2 text-base font-medium">
-            Complexity: {task.complexity}
-          </p>
-          <p className="mt-2 text-base font-medium">
-            Impact: {task.businessImpact}
-          </p>
-          <p className="mt-2 text-base font-medium">
-            Expertise: {task.expertiseRequired}
-          </p>
-          <p className="mt-2 text-base font-medium">
-            Effort to complete: {task.timeToComplete}
-          </p>
+          <div className="grid grid-cols-2 gap-2 mt-2 text-base font-medium">
+  <div>
+    <strong>Complexity:</strong>
+    <p>{task.complexity}</p>
+  </div>
+  <div>
+    <strong>Impact:</strong>
+    <p>{task.businessImpact}</p>
+  </div>
+  <div>
+    <strong>Expertise required:</strong>
+    <p>{task.expertiseRequired}</p>
+  </div>
+  <div>
+    <strong>Effort to complete:</strong>
+    <p>{task.timeToComplete}</p>
+  </div>
+</div>
           <div className="mt-2">
             <label>Progress: {(task.progress / task.timeToComplete) * 100 } </label>
             {/* <ProgressBar value={task.progress / 4} color="black" /> */}
