@@ -67,4 +67,16 @@ export class StaffService {
 
     return totalCost;
   }
+
+  async calculateTotalStaffMorale(staffIds: string[]): Promise<number> {
+    const staffMembers = await StaffModel.find({
+      _id: { $in: staffIds },
+    });
+    let totalMorale = 0;
+    staffMembers.forEach((staff) => {
+      totalMorale += staff.morale;
+    });
+    console.log('totalMorale', totalMorale);
+    return totalMorale / staffMembers.length;
+  }
 }
