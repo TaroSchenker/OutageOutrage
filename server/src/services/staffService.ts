@@ -32,7 +32,7 @@ export class StaffService {
   assignTask(staffId: string, taskId: string): Promise<IStaff | null> {
     return StaffModel.findByIdAndUpdate(
       staffId,
-      { currentTask: taskId },
+      { currentTask: taskId, availability: false },
       { new: true },
     );
   }
@@ -41,7 +41,10 @@ export class StaffService {
   RemoveTask(staffId: string): Promise<IStaff | null> {
     return StaffModel.findByIdAndUpdate(
       staffId,
-      { currentTask: '' },
+      {
+        currentTask: '',
+        availability: true,
+      },
       { new: true },
     );
   }

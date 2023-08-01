@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
-import {
-  TaskType,
-  Expertise,
-  TaskStatus,
-  BusinessImpact,
-  IClientTaskData,
-  IClientStaffData,
-} from '../../types/types';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import { FaRegUserCircle, FaTasks, FaUserCheck } from 'react-icons/fa';
-import CustomSelector from '../CustomSelect/CustomSelect'; // adjust the path based on your project structure
-// import { useUpdateTask } from '../../hooks/useTaskQueries';
+import { TaskType, IClientTaskData, IClientStaffData } from '../../types/types';
+import { FaRegUserCircle, FaUserCheck } from 'react-icons/fa';
+import CustomSelector from '../CustomSelect/CustomSelect';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
@@ -55,8 +46,9 @@ const taskTypeIcons = {
 interface TaskCardProps {
   task: IClientTaskData;
   staff: IClientStaffData[];
+  gameId: string;
 }
-const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
+const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
@@ -64,7 +56,6 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
 
   // Get QueryClient from the context
   const queryClient = useQueryClient();
-
 
   const updateTaskMutation = useMutation({
     mutationFn: (updatedTask: Partial<IClientTaskData>) => {
@@ -74,11 +65,9 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
       );
     },
     onError: (error, variables, context) => {
-      // An error happened!
       console.log(`error in mutate!`);
     },
     onSuccess: (data, variables, context) => {
-      // Boom baby!
       console.log('on success called');
       queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       // queryClient.invalidateQueries({ queryKey: ['getGameById'] })
@@ -87,6 +76,35 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
       // Error or success... doesn't matter!
     },
   });
+
+  const updateStaffMutation = useMutation(
+    ({
+      updatedTask,
+      selectedStaff,
+    }: {
+      updatedTask: Partial<IClientTaskData>;
+      selectedStaff: IClientStaffData;
+    }) => {
+      if(!updatedTask._id) throw new Error("no task")
+      console.log("selected staff ID : ", selectedStaff._id)
+      return axios.put(
+        `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
+        updatedTask._id,
+      );
+    },
+    {
+      onError: (error, variables, context) => {
+        console.log(`error in updateStaffMutation mutate!`);
+      },
+      onSuccess: (data, variables, context) => {
+        console.log('on success called');
+        queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+      },
+      onSettled: (data, error, variables, context) => {
+        // Error or success... doesn't matter!
+      },
+    },
+  );
 
   // const updateStaffMutation = useMutation({
   //   mutationFn: (updatedStaff: Partial<IClientStaffData>) => {
@@ -122,7 +140,9 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
       ...task,
       staffId: String(selectedStaff._id),
     };
-    updateTaskMutation.mutate(updatedTask);
+    const returnedUpdatedTask = updateTaskMutation.mutate(updatedTask);
+    const returnedUpdatedStaff = updateStaffMutation.mutate({ updatedTask, selectedStaff });
+
     // updateStaffMutation.mutate(selectedStaff);
   };
   return (
@@ -147,11 +167,22 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
               title="Task is assigned"
             />
           )}
-                  <div className="mt-2">
-            <label>Progress: {(task.progress / task.timeToComplete) * 100 }
-            <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
-          <div style={{ width: `${(task.progress > 0 ? (task.progress / task.timeToComplete) * 100 : 0)}%` }} className="bg-secondary-text h-full" />
-        </div> </label>
+          <div className="mt-2">
+            <label>
+              Progress: {(task.progress / task.timeToComplete) * 100}
+              <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
+                <div
+                  style={{
+                    width: `${
+                      task.progress > 0
+                        ? (task.progress / task.timeToComplete) * 100
+                        : 0
+                    }%`,
+                  }}
+                  className="bg-secondary-text h-full"
+                />
+              </div>{' '}
+            </label>
           </div>
         </div>
       </div>
@@ -180,23 +211,23 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
           </div>
 
           <div className="grid grid-cols-2 gap-2 mt-2 text-base font-medium">
-  <div>
-    <strong>Complexity:</strong>
-    <p>{task.complexity}</p>
-  </div>
-  <div>
-    <strong>Impact:</strong>
-    <p>{task.businessImpact}</p>
-  </div>
-  <div>
-    <strong>Expertise required:</strong>
-    <p>{task.expertiseRequired}</p>
-  </div>
-  <div>
-    <strong>Effort to complete:</strong>
-    <p>{task.timeToComplete}</p>
-  </div>
-</div>
+            <div>
+              <strong>Complexity:</strong>
+              <p>{task.complexity}</p>
+            </div>
+            <div>
+              <strong>Impact:</strong>
+              <p>{task.businessImpact}</p>
+            </div>
+            <div>
+              <strong>Expertise required:</strong>
+              <p>{task.expertiseRequired}</p>
+            </div>
+            <div>
+              <strong>Effort to complete:</strong>
+              <p>{task.timeToComplete}</p>
+            </div>
+          </div>
           {/* <div className="mt-2">
             <label>Progress: {(task.progress / task.timeToComplete) * 100 }
             <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
