@@ -80,9 +80,14 @@ export class GameStateService {
     // Decrement the time remaining and process the task assignments
     game.timeRemaining--;
     game = await this.processTaskAssignments(game);
+    //adjust remaining budget
     const dailyCost = await this.calcualteTurnCost(game);
     game.totalSpent += dailyCost;
     game.budget = game.startingBudget - game.totalSpent;
+    //calculate game morale
+    const gameMorale = await this.calculateTotalStaffMorale(game);
+    game.morale = gameMorale;
+
     // Check win/loss conditions
     const result = this.checkWinLossConditions(game);
     console.log('Win / Loss conditions result:', result);
@@ -144,9 +149,16 @@ export class GameStateService {
 
   async calcualteTurnCost(game: IGame): Promise<number> {
     const staffIds = this.objectIdtoStringId(game.staff);
-    console.log('staff id test', staffIds);
     const cost = await this.staffService.calculateTotalStaffCost(staffIds);
     return Math.floor(cost / 220);
+  }
+
+  async calculateTotalStaffMorale(game: IGame): Promise<number> {
+    const staffIds = this.objectIdtoStringId(game.staff);
+    const gameMorale = await this.staffService.calculateTotalStaffMorale(
+      staffIds,
+    );
+    return gameMorale;
   }
 
   async handleStaffReduction(game: IGame): Promise<IGame> {
