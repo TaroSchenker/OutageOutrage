@@ -10,8 +10,8 @@ import { getGameById } from '../../api';
 import { IClientGameData } from '../../types/types';
 import { useParams } from 'react-router';
 
-const budget = 75;
-const emergencyFund = 5000;
+// const budget = 75;
+// const emergencyFund = 5000;
 const morale = 80;
 // const gameId = '649c15319cc3aa37b2ad7503';
 const GamePage = () => {
@@ -52,7 +52,7 @@ const GamePage = () => {
           <h2 className="text-2xl font-bold mb-4 text-primary-text">
             Budget and Morale Management
           </h2>
-          <BudgetIndicator budget={budget} emergencyFund={emergencyFund} />
+          <BudgetIndicator budget={data.budget} />
           <MoraleIndicator morale={morale} />
         </section>
       </div>

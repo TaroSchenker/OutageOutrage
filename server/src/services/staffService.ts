@@ -54,4 +54,17 @@ export class StaffService {
       { new: true },
     );
   }
+
+  async calculateTotalStaffCost(staffIds: string[]): Promise<number> {
+    const staffMembers = await StaffModel.find({
+      _id: { $in: staffIds },
+    });
+
+    let totalCost = 0;
+    staffMembers.forEach((staff) => {
+      totalCost += staff.salary;
+    });
+
+    return totalCost;
+  }
 }
