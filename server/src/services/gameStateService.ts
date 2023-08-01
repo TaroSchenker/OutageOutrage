@@ -72,17 +72,16 @@ export class GameStateService {
   }
 
   async startNewTurn(gameId: string): Promise<IGame> {
-    // Fetch the game
     let game = await this.gameService.getGameById(gameId);
-
     if (!game) {
       throw new Error('Game not found');
     }
-
     // Decrement the time remaining and process the task assignments
     game.timeRemaining--;
     game = await this.processTaskAssignments(game);
-
+    const dailyCost = await this.calcualteTurnCost(game);
+    game.totalSpent += dailyCost;
+    game.budget = game.startingBudget - game.totalSpent;
     // Check win/loss conditions
     const result = this.checkWinLossConditions(game);
     console.log('Win / Loss conditions result:', result);
@@ -103,7 +102,7 @@ export class GameStateService {
       if (!task || !task.assignedTo) continue;
 
       // Fetch the staff member assigned to the task
-      const staff = await this.staffService.getStaffById(task.assignedTo);
+      let staff = await this.staffService.getStaffById(task.assignedTo);
 
       // Continue to the next task if the assigned staff member doesn't exist
       if (!staff) continue;
@@ -124,20 +123,15 @@ export class GameStateService {
         const staffProductivity: number =
           staff.skillLevel * 3 + staff.resilience + staff.morale; //potential 500 total
         task.progress += Math.floor((staffProductivity / task.complexity) * 2);
-        if (task.progress > task.timeToComplete)
+
+        if (task.progress >= task.timeToComplete) {
           task.progress = task.timeToComplete;
-        // If the task is now complete, mark it as such
-        console.log(
-          'timeToComplete',
-          task.timeToComplete,
-          'progress',
-          task.progress,
-        );
-        if (task.timeToComplete <= task.progress) {
           task.status = TaskStatus.COMPLETED;
+          staff = await this.staffService.RemoveTask(staff._id);
         }
 
         // Save the updates
+        if (!staff) continue;
         await this.staffService.updateStaff(staff._id, staff);
         await this.taskService.updateTask(task._id, task);
       }
@@ -145,6 +139,14 @@ export class GameStateService {
 
     // Return the updated game
     return game;
+  }
+
+  async calcualteTurnCost(game: IGame): Promise<number> {
+    const staffIds = game.staff.map((id) => id.toString());
+    console.log('calcu', staffIds);
+    const cost = await this.staffService.calculateTotalStaffCost(staffIds);
+    console.log(' daily cost', cost / 220);
+    return Math.floor(cost / 220);
   }
 
   async handleStaffReduction(game: IGame): Promise<IGame> {
