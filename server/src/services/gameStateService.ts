@@ -14,6 +14,7 @@ import { GameEventService } from '../services/gameEventService';
 import { tasks as preCreatedTasks } from '../config/initialData/tasks';
 import { staff as preCreatedStaff } from '../config/initialData/staff';
 import { events as preCreatedEvents } from '../config/initialData/gameEvents';
+import { ObjectId } from 'mongoose';
 
 export class GameStateService {
   private gameService: GameService;
@@ -51,7 +52,7 @@ export class GameStateService {
     try {
       //init game data
       const game = await this.gameService.createGame({
-        budget: 20000,
+        budget: 200000,
         morale: 100,
         businessImpact: BusinessImpact.LOW,
         staff: initialStaff.map((staff) => staff.id),
@@ -142,10 +143,9 @@ export class GameStateService {
   }
 
   async calcualteTurnCost(game: IGame): Promise<number> {
-    const staffIds = game.staff.map((id) => id.toString());
-    console.log('calcu', staffIds);
+    const staffIds = this.objectIdtoStringId(game.staff);
+    console.log('staff id test', staffIds);
     const cost = await this.staffService.calculateTotalStaffCost(staffIds);
-    console.log(' daily cost', cost / 220);
     return Math.floor(cost / 220);
   }
 
@@ -186,5 +186,9 @@ export class GameStateService {
       return 'WIN';
     }
     return 'ONGOING';
+  }
+
+  objectIdtoStringId(id: ObjectId[]): string[] {
+    return id.map((id) => id.toString());
   }
 }
