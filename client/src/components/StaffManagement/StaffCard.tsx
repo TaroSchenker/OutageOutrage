@@ -53,6 +53,8 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
         <div className="flex flex-col items-start ">
           <h2 className="text-lg font-bold ">{staff.name}</h2>
           <p>{staff.role}</p>
+          <p>{staff.availability ? "true" : "false"}</p>
+          <p>{staff.expertise}</p>
         </div>
         {isOpen && (
           <div className="absolute top-20 bottom-50">
