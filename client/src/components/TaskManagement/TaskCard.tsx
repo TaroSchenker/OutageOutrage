@@ -1,16 +1,9 @@
+//!TODO: I need to find a way to disable the staff member in the custom select when his availability is false.
+
 import React, { useState } from 'react';
-import {
-  TaskType,
-  Expertise,
-  TaskStatus,
-  BusinessImpact,
-  IClientTaskData,
-  IClientStaffData,
-} from '../../types/types';
-import ProgressBar from '../ProgressBar/ProgressBar';
-import { FaRegUserCircle, FaTasks, FaUserCheck } from 'react-icons/fa';
-import CustomSelector from '../CustomSelect/CustomSelect'; // adjust the path based on your project structure
-import { useUpdateTask } from '../../hooks/useTaskQueries';
+import { TaskType, IClientTaskData, IClientStaffData } from '../../types/types';
+import { FaRegUserCircle, FaUserCheck } from 'react-icons/fa';
+import CustomSelector from '../CustomSelect/CustomSelect';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useQueryClient } from '@tanstack/react-query';
@@ -31,6 +24,7 @@ import {
   FaCode,
   FaBomb,
 } from 'react-icons/fa';
+import { getStaffNameFromId } from '../../utils/staffHelpers';
 
 const taskTypeIcons = {
   [TaskType.BUG_FIX]: <FaBug />,
@@ -54,8 +48,9 @@ const taskTypeIcons = {
 interface TaskCardProps {
   task: IClientTaskData;
   staff: IClientStaffData[];
+  gameId: string;
 }
-const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
+const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
@@ -63,11 +58,6 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
 
   // Get QueryClient from the context
   const queryClient = useQueryClient();
-
-  const getStaffNameFromId = (id: string) => {
-    const staffMember = staff.find((member) => member._id === id);
-    return staffMember ? staffMember.name : '';
-  };
 
   const updateTaskMutation = useMutation({
     mutationFn: (updatedTask: Partial<IClientTaskData>) => {
@@ -77,13 +67,17 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
       );
     },
     onError: (error, variables, context) => {
-      // An error happened!
       console.log(`error in mutate!`);
     },
     onSuccess: (data, variables, context) => {
-      // Boom baby!
       console.log('on success called');
-      queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+      queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+        const updatedTasks = oldData.tasks.map((task: any) =>
+          task._id === data.data._id ? data.data : task,
+        );
+        return { ...oldData, tasks: updatedTasks };
+      });
+      // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       // queryClient.invalidateQueries({ queryKey: ['getGameById'] })
     },
     onSettled: (data, error, variables, context) => {
@@ -91,26 +85,40 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
     },
   });
 
-  const updateStaffMutation = useMutation({
-    mutationFn: (updatedStaff: Partial<IClientStaffData>) => {
+  const updateStaffMutation = useMutation(
+    ({
+      updatedTask,
+      selectedStaff,
+    }: {
+      updatedTask: Partial<IClientTaskData>;
+      selectedStaff: IClientStaffData;
+    }) => {
+      if (!updatedTask._id) throw new Error('no task');
+      console.log('selected staff ID : ', selectedStaff._id);
       return axios.put(
-        `http://localhost:3000/api/staff/${updatedStaff}/assignTask`,
-        { currentTask: task._id },
+        `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
+        updatedTask._id,
       );
     },
-    onError: (error, variables, context) => {
-      // An error happened!
-      console.log(`error in staff mutate!`);
+    {
+      onError: (error, variables, context) => {
+        console.log(`error in updateStaffMutation mutate!`);
+      },
+      onSuccess: (data, variables, context) => {
+        console.log('on success called');
+        queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+          const updatedStaff = oldData.staff.map((staffMember: any) =>
+            staffMember._id === data.data._id ? data.data : staffMember,
+          );
+          return { ...oldData, staff: updatedStaff };
+        });
+        // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+      },
+      onSettled: (data, error, variables, context) => {
+        // Error or success... doesn't matter!
+      },
     },
-    onSuccess: (data, variables, context) => {
-      // Boom baby!
-      console.log('on success called');
-      queryClient.invalidateQueries({ queryKey: ['getGameById'] });
-    },
-    onSettled: (data, error, variables, context) => {
-      // Error or success... doesn't matter!
-    },
-  });
+  );
 
   const handleSelectorChange = (selected: string) => {
     if (selected === 'Not Assigned') {
@@ -125,9 +133,11 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
       ...task,
       staffId: String(selectedStaff._id),
     };
-    updateTaskMutation.mutate(updatedTask);
-    // updateStaffMutation.mutate(selectedStaff);
+
+    void updateTaskMutation.mutate(updatedTask);
+    void updateStaffMutation.mutate({ updatedTask, selectedStaff });
   };
+  
   return (
     <div
       className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${
@@ -150,6 +160,23 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
               title="Task is assigned"
             />
           )}
+          <div className="mt-2">
+            <label>
+              Progress: {(task.progress / task.timeToComplete) * 100} %
+              <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
+                <div
+                  style={{
+                    width: `${
+                      task.progress > 0
+                        ? (task.progress / task.timeToComplete) * 100
+                        : 0
+                    }%`,
+                  }}
+                  className="bg-secondary-text h-full"
+                />
+              </div>{' '}
+            </label>
+          </div>
         </div>
       </div>
       {isOpen && (
@@ -164,12 +191,13 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
               <CustomSelector
                 value={
                   task.assignedTo
-                    ? getStaffNameFromId(task.assignedTo)
+                    ? getStaffNameFromId(staff, task.assignedTo)
                     : 'Not Assigned'
                 }
+                //!TODO: The person needs to be displayed where chosen but not options on the remaining selectors
                 options={[
-                  'Not Assigned',
-                  ...staff.map((member) => member.name),
+                  // 'Not Assigned',
+                  ...staff,
                 ]}
                 onChange={handleSelectorChange}
               />
@@ -177,30 +205,24 @@ const TaskCard = ({ task, staff, ...props }: TaskCardProps) => {
           </div>
 
           <div className="grid grid-cols-2 gap-2 mt-2 text-base font-medium">
-  <div>
-    <strong>Complexity:</strong>
-    <p>{task.complexity}</p>
-  </div>
-  <div>
-    <strong>Impact:</strong>
-    <p>{task.businessImpact}</p>
-  </div>
-  <div>
-    <strong>Expertise required:</strong>
-    <p>{task.expertiseRequired}</p>
-  </div>
-  <div>
-    <strong>Effort to complete:</strong>
-    <p>{task.timeToComplete}</p>
-  </div>
-</div>
-          <div className="mt-2">
-            <label>Progress: {(task.progress / task.timeToComplete) * 100 } </label>
-            {/* <ProgressBar value={task.progress / 4} color="black" /> */}
-            <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
-          <div style={{ width: `${(task.progress > 0 ? (task.progress / task.timeToComplete) * 100 : 0)}%` }} className="bg-secondary-text h-full" />
-        </div>
+            <div>
+              <strong>Complexity:</strong>
+              <p>{task.complexity}</p>
+            </div>
+            <div>
+              <strong>Impact:</strong>
+              <p>{task.businessImpact}</p>
+            </div>
+            <div>
+              <strong>Expertise required:</strong>
+              <p>{task.expertiseRequired}</p>
+            </div>
+            <div>
+              <strong>Effort to complete:</strong>
+              <p>{task.timeToComplete}</p>
+            </div>
           </div>
+
         </div>
       )}
     </div>
