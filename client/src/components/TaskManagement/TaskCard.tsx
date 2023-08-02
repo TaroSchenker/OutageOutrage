@@ -1,3 +1,5 @@
+//!TODO: I need to find a way to disable the staff member in the custom select when his availability is false.
+
 import React, { useState } from 'react';
 import { TaskType, IClientTaskData, IClientStaffData } from '../../types/types';
 import { FaRegUserCircle, FaUserCheck } from 'react-icons/fa';
@@ -69,7 +71,13 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
     },
     onSuccess: (data, variables, context) => {
       console.log('on success called');
-      queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+      queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+        const updatedTasks = oldData.tasks.map((task: any) =>
+          task._id === data.data._id ? data.data : task,
+        );
+        return { ...oldData, tasks: updatedTasks };
+      });
+      // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       // queryClient.invalidateQueries({ queryKey: ['getGameById'] })
     },
     onSettled: (data, error, variables, context) => {
@@ -85,8 +93,8 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
       updatedTask: Partial<IClientTaskData>;
       selectedStaff: IClientStaffData;
     }) => {
-      if(!updatedTask._id) throw new Error("no task")
-      console.log("selected staff ID : ", selectedStaff._id)
+      if (!updatedTask._id) throw new Error('no task');
+      console.log('selected staff ID : ', selectedStaff._id);
       return axios.put(
         `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
         updatedTask._id,
@@ -98,34 +106,19 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
       },
       onSuccess: (data, variables, context) => {
         console.log('on success called');
-        queryClient.invalidateQueries({ queryKey: ['getGameById'] });
+        queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+          const updatedStaff = oldData.staff.map((staffMember: any) =>
+            staffMember._id === data.data._id ? data.data : staffMember,
+          );
+          return { ...oldData, staff: updatedStaff };
+        });
+        // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       },
       onSettled: (data, error, variables, context) => {
         // Error or success... doesn't matter!
       },
     },
   );
-
-  // const updateStaffMutation = useMutation({
-  //   mutationFn: (updatedStaff: Partial<IClientStaffData>) => {
-  //     return axios.put(
-  //       `http://localhost:3000/api/staff/${updatedStaff}/assignTask`,
-  //       { currentTask: task._id },
-  //     );
-  //   },
-  //   onError: (error, variables, context) => {
-  //     // An error happened!
-  //     console.log(`error in staff mutate!`);
-  //   },
-  //   onSuccess: (data, variables, context) => {
-  //     // Boom baby!
-  //     console.log('on success called');
-  //     queryClient.invalidateQueries({ queryKey: ['getGameById'] });
-  //   },
-  //   onSettled: (data, error, variables, context) => {
-  //     // Error or success... doesn't matter!
-  //   },
-  // });
 
   const handleSelectorChange = (selected: string) => {
     if (selected === 'Not Assigned') {
@@ -140,11 +133,11 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
       ...task,
       staffId: String(selectedStaff._id),
     };
-    const returnedUpdatedTask = updateTaskMutation.mutate(updatedTask);
-    const returnedUpdatedStaff = updateStaffMutation.mutate({ updatedTask, selectedStaff });
 
-    // updateStaffMutation.mutate(selectedStaff);
+    void updateTaskMutation.mutate(updatedTask);
+    void updateStaffMutation.mutate({ updatedTask, selectedStaff });
   };
+  
   return (
     <div
       className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${
@@ -169,7 +162,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
           )}
           <div className="mt-2">
             <label>
-              Progress: {(task.progress / task.timeToComplete) * 100}
+              Progress: {(task.progress / task.timeToComplete) * 100} %
               <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
                 <div
                   style={{
@@ -201,9 +194,10 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
                     ? getStaffNameFromId(staff, task.assignedTo)
                     : 'Not Assigned'
                 }
+                //!TODO: The person needs to be displayed where chosen but not options on the remaining selectors
                 options={[
-                  'Not Assigned',
-                  ...staff.map((member) => member.name),
+                  // 'Not Assigned',
+                  ...staff,
                 ]}
                 onChange={handleSelectorChange}
               />
@@ -228,12 +222,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
               <p>{task.timeToComplete}</p>
             </div>
           </div>
-          {/* <div className="mt-2">
-            <label>Progress: {(task.progress / task.timeToComplete) * 100 }
-            <div className="w-full bg-dimmed-background rounded h-4 overflow-hidden">
-          <div style={{ width: `${(task.progress > 0 ? (task.progress / task.timeToComplete) * 100 : 0)}%` }} className="bg-secondary-text h-full" />
-        </div> </label>
-          </div> */}
+
         </div>
       )}
     </div>
