@@ -119,17 +119,21 @@ export class GameStateService {
 
         task.assignedTo = staff._id;
         staff.currentTask = task._id;
+        staff.availability = false;
         //calcualte morale based on expterise match
         if (staff.expertise === task.expertiseRequired) {
           staff.morale += 10;
         } else {
-          staff.morale -= 10;
+          staff.morale -= 30;
         }
-        // calcualte task progress based on staff productivity
-        const staffProductivity: number =
-          staff.skillLevel * 3 + staff.resilience + staff.morale; //potential 500 total
+        // calcualte task progress based on staff productivity. Minimum 0 value.
+        const staffProductivity: number = Math.max(
+          0,
+          staff.skillLevel * 3 + staff.resilience + staff.morale,
+        ); //potential 500 total
+        console.log('name productivity', staff.name, staffProductivity);
         task.progress += Math.floor((staffProductivity / task.complexity) * 2);
-
+        console.log('Task progress', task.progress);
         if (task.progress >= task.timeToComplete) {
           task.progress = task.timeToComplete;
           task.status = TaskStatus.COMPLETED;
