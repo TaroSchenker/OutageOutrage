@@ -15,7 +15,7 @@ import { useGameStateInitilise } from '../../hooks/useGameEventQueries';
 import { IClientGameData } from '../../types/types';
 
 const LandingPage: React.FC = () => {
-  const [gameId, setGameId] = useState('649985adde5ff21e2404f6a4');
+  const [gameId, setGameId] = useState('');
   const [backgroundIndex, setBackgroundIndex] = useState(6);
   const [direction, setDirection] = useState(-1);
   const backgrounds = [
