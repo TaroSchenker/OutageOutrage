@@ -21,7 +21,7 @@ export const staff: IStaffData[] = [
   {
     name: 'React Rachel',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/UIUX.png?raw=true',
     role: Role.FRONTEND_DEV,
     expertise: Expertise.JAVASCRIPT,
     ambition: 80,
@@ -38,7 +38,7 @@ export const staff: IStaffData[] = [
   {
     name: 'Testcase Tom',
     avatarUrl:
-      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/FrontendDev.png?raw=true',
+      'https://github.com/TaroSchenker/OutageOutrage/blob/main/client/src/assets/images/staff/Noir_QA.png?raw=true',
     role: Role.QA,
     expertise: Expertise.SOFTWARE_TESTING,
     ambition: 20,
