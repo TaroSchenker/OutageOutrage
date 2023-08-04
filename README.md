@@ -3,6 +3,8 @@
 ## 'npm install' within the 'client' and 'server' directories.
 ## then run `chmod +x start-both.sh` (from the root directory) the first time you run the project it to make the script executable
 
+George is here
+
 Project Title
 =============
 
