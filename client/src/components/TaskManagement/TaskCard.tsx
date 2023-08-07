@@ -56,6 +56,16 @@
       setIsOpen((prev) => !prev);
     };
 
+      // Filter staff based on availability
+  const availableStaff = staff.filter((member) => member.availability);
+  const selectorOptions = [
+    { name: 'Not Assigned', availability: true },
+    ...staff.map((member) => ({
+      name: member.name,
+      availability: member.availability,
+    })),
+  ];
+
     // Get QueryClient from the context
     const queryClient = useQueryClient();
 
@@ -195,10 +205,7 @@
                       : 'Not Assigned'
                   }
                   //!TODO: The person needs to be displayed where chosen but not options on the remaining selectors
-                  options={[
-                    // 'Not Assigned',
-                    ...staff,
-                  ]}
+                  options={selectorOptions}
                   onChange={handleSelectorChange}
                 />
               </div>
