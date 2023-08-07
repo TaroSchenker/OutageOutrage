@@ -42,6 +42,7 @@ describe('StaffService', () => {
 
     const staff = await staffService.createStaff(staffData);
     expect(staff.name).toBe(staffData.name);
+    expect(staff.avatarUrl).toBe(staffData.avatarUrl);
     expect(staff.role).toBe(staffData.role);
     expect(staff.expertise).toBe(staffData.expertise);
   });
