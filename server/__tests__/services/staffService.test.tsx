@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { StaffService } from '../../src/services/staffService';
-import { StaffModel } from '../../src/models/Staff';
+
 import { Expertise, IStaffData, Role } from '../../src/types/types';
 
 describe('StaffService', () => {
-  let con: MongoClient;
+  // let con: MongoClient;
   let mongoServer: MongoMemoryServer;
   let staffService: StaffService;
 
@@ -15,10 +13,7 @@ describe('StaffService', () => {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
 
-    await mongoose.connect(uri, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+    await mongoose.connect(uri);
     staffService = new StaffService();
   });
 
