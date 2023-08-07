@@ -122,7 +122,6 @@
             );
             return { ...oldData, staff: updatedStaff };
           });
-          // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
         },
         onSettled: (data, error, variables, context) => {
           // Error or success... doesn't matter!
