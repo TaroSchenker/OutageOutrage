@@ -12,7 +12,6 @@ interface TaskManagementProps {
 }
 
 const TaskManagement = ({ tasks, staff, gameId }: TaskManagementProps) => {
-  console.log('Task management tasks', tasks);
   const tasksCompleted = tasks.filter((task) => task.status === 'Completed');
   const tasksInProgress = tasks.filter((task) => task.status === 'In Progress');
   const tasksBlocked = tasks.filter((task) => task.status === 'Blocked');
