@@ -1,4 +1,4 @@
-import { Expertise, IClientStaffData, Role } from "../../../types/types";
+import { Expertise, IClientStaffData, Role } from "../../types/types";
 
 export const testStaffData: IClientStaffData[] = [{
   _id: '1',

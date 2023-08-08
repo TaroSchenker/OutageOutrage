@@ -4,7 +4,7 @@ import {
   IClientTaskData,
   TaskStatus,
   TaskType,
-} from '../../../types/types';
+} from '../../types/types';
 
 export const testTaskData: IClientTaskData[] = [
   {
