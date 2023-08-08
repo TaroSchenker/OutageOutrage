@@ -1,81 +1,51 @@
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import { StaffService } from '../../src/services/staffService';
-import { StaffModel } from '../../src/models/Staff';
-import { Expertise, IStaff, IStaffData, Role } from '../../src/types/types';
-import { mockDeep } from 'jest-mock-extended';
 
-// We create a deep mock, as we're dealing wtesth complex objects
-jest.mock('../../src/models/Staff');
-const mockedStaffModel = mockDeep<IStaff>();
-(StaffModel as unknown as jest.Mock).mockReturnValue(mockedStaffModel);
-
-//Mock staff data
-const mockStaffData: IStaffData = {
-  name: 'API Andy',
-  avatarUrl:
-    'https://raw.gtesthubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
-  role: Role.BACKEND_DEV,
-  expertise: Expertise.JAVA,
-  ambition: 10,
-  loyalty: 60,
-  skillLevel: 90,
-  resilience: 20,
-  adaptability: 20,
-  morale: 20,
-  currentTask: null,
-  availability: true,
-  salary: 70000,
-  satisfaction: 50,
-};
+import { Expertise, IStaffData, Role } from '../../src/types/types';
 
 describe('StaffService', () => {
-  let service: StaffService;
+  // let con: MongoClient;
+  let mongoServer: MongoMemoryServer;
+  let staffService: StaffService;
 
-  beforeEach(() => {
-    service = new StaffService();
+  beforeAll(async () => {
+    mongoServer = await MongoMemoryServer.create();
+    const uri = mongoServer.getUri();
+
+    await mongoose.connect(uri);
+    staffService = new StaffService();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
+  afterAll(async () => {
+    await mongoose.disconnect();
+    await mongoServer.stop();
   });
 
-  test('should create a staff member', async () => {
-    await service.createStaff(mockStaffData);
-    expect(mockedStaffModel.save).toBeCalled();
+  it('should create a new staff member', async () => {
+    const staffData: IStaffData = {
+      name: 'Test',
+      avatarUrl: 'https://test.com',
+      role: Role.BACKEND_DEV,
+      expertise: Expertise.JAVA,
+      ambition: 80,
+      loyalty: 80,
+      skillLevel: 80,
+      resilience: 80,
+      adaptability: 80,
+      morale: 80,
+      currentTask: null,
+      availability: true,
+      salary: 50000,
+      satisfaction: 100,
+    };
+
+    const staff = await staffService.createStaff(staffData);
+    expect(staff.name).toBe(staffData.name);
+    expect(staff.avatarUrl).toBe(staffData.avatarUrl);
+    expect(staff.role).toBe(staffData.role);
+    expect(staff.expertise).toBe(staffData.expertise);
   });
 
-  test('should fetch a staff member by id', async () => {
-    // Implement test for getStaffById here
-  });
-
-  test('should create a new staff member', async () => {
-    // Implement test for createStaff here
-  });
-
-  test('should update a staff member', async () => {
-    // Implement test for updateStaff here
-  });
-
-  test('should delete a staff member', async () => {
-    // Implement test for deleteStaff here
-  });
-
-  test('should assign a task to a staff member', async () => {
-    // Implement test for assignTask here
-  });
-
-  test('should remove a task from a staff member', async () => {
-    // Implement test for RemoveTask here
-  });
-
-  test('should update the morale of a staff member', async () => {
-    // Implement test for updateMorale here
-  });
-
-  test('should calculate the total cost of staff members', async () => {
-    // Implement test for calculateTotalStaffCost here
-  });
-
-  test('should calculate the total morale of staff members', async () => {
-    // Implement test for calculateTotalStaffMorale here
-  });
+  // TODO: Other tests for get, update, delete operations
 });
