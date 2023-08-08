@@ -49,8 +49,7 @@ interface TaskCardProps {
   task: IClientTaskData;
   staff: IClientStaffData[];
   gameId: string;
-}
-const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
+}const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
@@ -104,10 +103,10 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
       selectedStaff: IClientStaffData;
     }) => {
       if (!updatedTask._id) throw new Error('no task');
-      console.log('selected staff ID : ', selectedStaff._id);
+  
       return axios.put(
         `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
-        updatedTask._id,
+        { taskId: String(updatedTask._id) },
       );
     },
     {
@@ -129,15 +128,54 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
     },
   );
 
-  const handleSelectorChange = (selected: string) => {
+  const removeTaskFromStaffMutation = useMutation(  
+    (staffId: string) => {
+      return axios.put(`http://localhost:3000/api/staff/${staffId}/removeTask`);
+    },
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+          const updatedStaff = oldData.staff.map((staffMember: any) =>
+          staffMember._id === data.data._id
+            ? { ...staffMember, currentTask: '', availability: true }
+            : staffMember,
+        );
+        return { ...oldData, staff: updatedStaff };
+        });
+      },
+    }
+  );
+  
+  const handleSelectorChange = async (selected: string) => {
     if (selected === 'Not Assigned') {
       // Do nothing if "Not Assigned" is selected
-      return;
+      if (task.assignedTo) {
+        const previousStaff = staff.find((member) => member._id === task.assignedTo);
+        if (previousStaff) {
+          await removeTaskFromStaffMutation.mutateAsync(previousStaff._id);
+        }
+      }
+      const updatedTask = {
+        ...task,
+        staffId: "",
+        progress: 0,
+        assignedTo: "",
+      };
+
+      const notAssigned = updateTaskMutation.mutate(updatedTask);
+      console.log("notAssigned", notAssigned); 
     }
 
     const selectedStaff = staff.find((member) => member.name === selected);
     if (!task._id || !selectedStaff) return;
 
+     // If task is already assigned to someone else, unassign them
+  if (task.assignedTo) {
+    const previousStaff = staff.find((member) => member._id === task.assignedTo);
+    if (previousStaff) {
+      await removeTaskFromStaffMutation.mutateAsync(previousStaff._id);
+    }
+  }
     const updatedTask = {
       ...task,
       staffId: String(selectedStaff._id),

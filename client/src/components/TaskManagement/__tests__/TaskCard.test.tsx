@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 // import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
@@ -67,7 +67,6 @@ describe('<TaskCard />', () => {
       </QueryClientProvider>,
     );
 
-    screen.debug();
     const progressText = `Progress: ${
       (testTaskData[0].progress / testTaskData[0].timeToComplete) * 100
     } %`;
@@ -92,6 +91,56 @@ describe('<TaskCard />', () => {
     );
     expect(screen.getByText(assignedStaffName)).toBeInTheDocument();
   });
+
+  //   //!TODO: Fix this test, ITS NOT COMPLETE. - there is some issue with checking the staff member newly assigned is now not available.
+  // it('unassigns task from current staff member when re-assigned to another staff member', async () => {
+  //   // Initialise with a task that is already assigned to a staff member
+  //   const alreadyAssignedTask = { ...testTaskData[0], assignedTo: testStaffData[0]._id };
+  //   // Initialise with a staff member that is assigned to the task
+  //   const alreadyAssignedStaff = { ...testStaffData[0], availability: false, assignedTask: alreadyAssignedTask._id}
+  //   // Initialise with a staff member that is not assigned to any task
+  //   const newStaffToAssign = testStaffData[1];
+    
+  //   render(
+  //     <QueryClientProvider client={queryClient}>
+  //       <TaskCard
+  //         task={alreadyAssignedTask}
+  //         staff={testStaffData}
+  //         gameId="gameId"
+  //       />
+  //     </QueryClientProvider>,
+  //   );
+    
+  //   console.log("alreadyAssignedStaff.availability INITIAL", alreadyAssignedStaff.availability)
+
+  //  // Open the task card to access the custom selector
+  //  userEvent.click(screen.getByText(alreadyAssignedTask.type));
+
+  //  // Find the custom selector related to staff assignment
+  //  const customSelector = await screen.findByLabelText('custom-selector');
+  //  // Fire a click event on the custom selector to open the dropdown
+  //  userEvent.click(customSelector);
+  //   // Select a different staff member from the selector
+  //   const newOption = screen.getByRole('option', { name: newStaffToAssign.name });
+  //   userEvent.click(newOption);
+  // screen.debug()
+  //   // Wait for async operations (like API calls handled by axios and mutations) to complete
+  // await waitFor(() => {
+  //   // Check that the old staff member is now available and not disabled
+  //   const oldStaffElement = screen.getByText(testStaffData[0].name);
+  //   // expect(oldStaffElement).toHaveAttribute('disabled', 'false'); // Adjust as per your actual attribute
+  //   expect(testStaffData[0].availability).toBe(true);
+  //   console.log("alreadyAssignedStaff.availability LATER", alreadyAssignedStaff.availability)
+  //   // Check that the new staff member is now not available and is disabled
+  //   // const newStaffElement = screen.getByText(newStaffToAssign.name);
+
+  //   // // // expect(newStaffElement).toHaveAttribute('disabled', 'true'); // Adjust as per your actual attribute
+  //   // expect(newStaffToAssign.availability).toBe(false);
+  // });
+
+  //   // Validate if the corresponding removal of the previous staff member's current task was made on the server-side, etc. depending on how your component behaves
+  // });
+  
 
   // it('assigns staff member to the task when selected from the custom selector', async () => {
   //   render(
