@@ -56,6 +56,16 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
     setIsOpen((prev) => !prev);
   };
 
+  // Filter staff based on availability
+  const availableStaff = staff.filter((member) => member.availability);
+  const selectorOptions = [
+    { name: 'Not Assigned', availability: true },
+    ...staff.map((member) => ({
+      name: member.name,
+      availability: member.availability,
+    })),
+  ];
+
   // Get QueryClient from the context
   const queryClient = useQueryClient();
 
@@ -112,7 +122,6 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
           );
           return { ...oldData, staff: updatedStaff };
         });
-        // queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       },
       onSettled: (data, error, variables, context) => {
         // Error or success... doesn't matter!
@@ -137,7 +146,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
     void updateTaskMutation.mutate(updatedTask);
     void updateStaffMutation.mutate({ updatedTask, selectedStaff });
   };
-  
+
   return (
     <div
       className={`bg-background rounded-lg shadow-lg overflow-hidden text-border my-2 transition-all duration-300 ease-in-out border-2 border text-primary-text ${
@@ -187,20 +196,19 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
           <div className="mt-2 flex items-center">
             <FaRegUserCircle className="text  text-xl" />
             <div className="ml-2 flex items-center">
-              <span className="font-medium mr-2">Assigned To:</span>
-              <CustomSelector
-                value={
-                  task.assignedTo
-                    ? getStaffNameFromId(staff, task.assignedTo)
-                    : 'Not Assigned'
-                }
-                //!TODO: The person needs to be displayed where chosen but not options on the remaining selectors
-                options={[
-                  // 'Not Assigned',
-                  ...staff,
-                ]}
-                onChange={handleSelectorChange}
-              />
+              <label role="label" className="font-medium mr-2">
+                Assigned To:
+                <CustomSelector
+                  value={
+                    task.assignedTo
+                      ? getStaffNameFromId(staff, task.assignedTo)
+                      : 'Not Assigned'
+                  }
+                  //!TODO: The person needs to be displayed where chosen but not options on the remaining selectors
+                  options={selectorOptions}
+                  onChange={handleSelectorChange}
+                />
+              </label>
             </div>
           </div>
 
@@ -222,7 +230,6 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
               <p>{task.timeToComplete}</p>
             </div>
           </div>
-
         </div>
       )}
     </div>
