@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '**' # Adjust this to your main branch or any other branches you want to watch
+  pull_request:
+    branches:
+      - main # Adjust this to your main branch or any other branches you want to watch
+      - staging
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.16.0] # Updated to your specific Node.js version
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies (Client)
+      working-directory: ./client
+      run: npm install
+
+    - name: Run Client tests
+      working-directory: ./client
+      run: npm test
+
+    - name: Install dependencies (Server)
+      working-directory: ./server
+      run: npm install
+
+    - name: Run Server tests
+      working-directory: ./server
+      run: npm test
