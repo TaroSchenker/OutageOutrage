@@ -1,7 +1,8 @@
-import { Expertise, IClientStaffData, Role } from "../../types/types";
+import { Expertise, IClientStaffData, Role } from '../../types/types';
 
-export const testStaffData: IClientStaffData[] = [{
-  _id: '1',
+export const testStaffData: IClientStaffData[] = [
+  {
+    _id: '1',
     name: 'API Andy',
     avatarUrl:
       'https://raw.githubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
@@ -53,5 +54,5 @@ export const testStaffData: IClientStaffData[] = [{
     availability: false,
     salary: 55000,
     satisfaction: 75,
-  }];
-  
+  },
+];

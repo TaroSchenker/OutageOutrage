@@ -42,7 +42,7 @@ const LandingPage: React.FC = () => {
       }
       setBackgroundIndex(backgroundIndex + direction);
     }, 4000); // Change background every 3 seconds
-  
+
     return () => clearTimeout(timer); // Clean up timer on component unmount
   }, [backgroundIndex, direction]);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,20 +58,17 @@ const LandingPage: React.FC = () => {
     // Handle new game creation logic
 
     // Trigger mutation and wait for it to complete
-    initiliseGameMutation.mutate(
-      undefined,
-      {
-        onSuccess: (data: IClientGameData) => {
-          console.log('Game created with id', data?._id);
-          navigate(`/game/${data?._id}`);
-        },
-        onError: (error) => {
-          console.error('Game creation failed', error);
-        },
+    initiliseGameMutation.mutate(undefined, {
+      onSuccess: (data: IClientGameData) => {
+        console.log('Game created with id', data?._id);
+        navigate(`/game/${data?._id}`);
       },
-    );
+      onError: (error) => {
+        console.error('Game creation failed', error);
+      },
+    });
   };
-  
+
   return (
     <div
       style={{

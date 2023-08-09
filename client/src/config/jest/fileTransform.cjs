@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // config/jest/fileTransform.js
-"use strict";
+'use strict';
 
-const path = require("path");
-const camelcase = require("camelcase");
+const path = require('path');
+const camelcase = require('camelcase');
 
 // This is a custom Jest transformer turning file imports into filenames.
 // http://facebook.github.io/jest/docs/en/webpack.html

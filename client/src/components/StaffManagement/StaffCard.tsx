@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IClientStaffData, IClientTaskData, Role } from '../../types/types';
+import { IClientStaffData, IClientTaskData } from '../../types/types';
 import { Tabs } from 'antd';
 import {
   Radar,
@@ -18,7 +18,7 @@ interface StaffCardProps {
   tasks: IClientTaskData[];
 }
 
-const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
+const StaffCard: React.FC<StaffCardProps> = ({ staff }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCard = () => {
@@ -53,7 +53,7 @@ const StaffCard: React.FC<StaffCardProps> = ({ staff, tasks }) => {
         <div className="flex flex-col items-start ">
           <h2 className="text-lg font-bold ">{staff.name}</h2>
           <p>{staff.role}</p>
-          <p>{staff.availability ? "true" : "false"}</p>
+          <p>{staff.availability ? 'true' : 'false'}</p>
           <p>{staff.expertise}</p>
         </div>
         {isOpen && (

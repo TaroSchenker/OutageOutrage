@@ -1,15 +1,8 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
 import { server } from '../../../mocks/node';
 import TaskCard from '../TaskCard';
-import {
-  IClientTaskData,
-  IClientStaffData,
-  TaskType,
-} from '../../../types/types';
 import { testStaffData } from '../../../mocks/data/staff';
 import { testTaskData } from '../../../mocks/data/tasks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -82,7 +75,7 @@ describe('<TaskCard />', () => {
           gameId="gameId"
         />
       </QueryClientProvider>,
-    );  
+    );
 
     if (testTaskData[0].assignedTo === null) return;
     const assignedStaffName = getStaffNameFromId(
@@ -100,7 +93,7 @@ describe('<TaskCard />', () => {
   //   const alreadyAssignedStaff = { ...testStaffData[0], availability: false, assignedTask: alreadyAssignedTask._id}
   //   // Initialise with a staff member that is not assigned to any task
   //   const newStaffToAssign = testStaffData[1];
-    
+
   //   render(
   //     <QueryClientProvider client={queryClient}>
   //       <TaskCard
@@ -110,7 +103,7 @@ describe('<TaskCard />', () => {
   //       />
   //     </QueryClientProvider>,
   //   );
-    
+
   //   console.log("alreadyAssignedStaff.availability INITIAL", alreadyAssignedStaff.availability)
 
   //  // Open the task card to access the custom selector
@@ -140,7 +133,6 @@ describe('<TaskCard />', () => {
 
   //   // Validate if the corresponding removal of the previous staff member's current task was made on the server-side, etc. depending on how your component behaves
   // });
-  
 
   // it('assigns staff member to the task when selected from the custom selector', async () => {
   //   render(
@@ -152,10 +144,10 @@ describe('<TaskCard />', () => {
   //       />
   //     </QueryClientProvider>,
   //   );
-  
+
   //   // Open the task card to access the custom selector
   //   userEvent.click(screen.getByText(testTaskData[0].type));
-  
+
   //   // Click on the custom selector and select a staff member
   //   const selector = await screen.findByText(
   //     `Assigned to:`,
@@ -165,12 +157,12 @@ describe('<TaskCard />', () => {
   //   const staffMemberToSelect = testStaffData[0].name; // Adjust based on your actual staff data
   //   const option = screen.getByRole('option', { name: staffMemberToSelect });
   //   userEvent.click(option);
-  
+
   //   // Wait for the mutations to be successful (if they trigger re-renders)
   //   await waitFor(() => {
   //     expect(screen.getByText(staffMemberToSelect)).toBeInTheDocument();
   //   });
-  
+
   //   // Additional assertions can be made here to ensure that the corresponding
   //   // update was made on the server-side, depending on how your component behaves
   // });

@@ -1,8 +1,5 @@
 import express from 'express';
-
-import * as staffController from '../controllers/staffController';
 import * as gameEventController from '../controllers/gameEventController';
-import * as gameController from '../controllers/gameController';
 const router = express.Router();
 
 router.get('/events', gameEventController.getAllEvents);

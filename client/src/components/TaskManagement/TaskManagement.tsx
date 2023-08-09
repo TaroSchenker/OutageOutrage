@@ -1,9 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getAllTasks } from '../../api';
-
 import { IClientStaffData, IClientTaskData } from '../../types/types';
 import TaskCard from './TaskCard';
-import StaffManagement from '../StaffManagement/StaffManagement';
 
 interface TaskManagementProps {
   tasks: IClientTaskData[];
@@ -38,7 +34,7 @@ const TaskManagement = ({ tasks, staff, gameId }: TaskManagementProps) => {
           <TaskCard key={index} task={task} staff={staff} gameId={gameId} />
         ))}
       </div>
-      
+
       <h2 className="text-md font-bold text-black"> Completed</h2>
       <div className="grid grid-cols-2 gap-4">
         {tasksCompleted.map((task, index) => (
