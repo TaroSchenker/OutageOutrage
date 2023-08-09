@@ -7,7 +7,7 @@ const gameStateService = new GameStateService();
 export const initializeGame = async (req: Request, res: Response) => {
   console.log('gameStateController: initializeGame');
   const game = await gameStateService.initializeGame();
- 
+
   res.status(201).json(game);
 };
 
@@ -19,6 +19,7 @@ export const newTurn = async (req: Request, res: Response) => {
   res.status(200).json(game);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const processTaskAssignments = (req: Request, res: Response) => {
   console.log('process task assignments');
   // const game = await gameStateService.processTaskAssignments

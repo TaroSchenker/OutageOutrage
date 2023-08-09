@@ -4,10 +4,10 @@ type AsyncFunction = (
   req: Request,
   res: Response,
   next: NextFunction,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => Promise<any>;
 
 export default function catchAsync(fn: AsyncFunction) {
-
   return (req: Request, res: Response, next: NextFunction) => {
     fn(req, res, next).catch(next);
   };
