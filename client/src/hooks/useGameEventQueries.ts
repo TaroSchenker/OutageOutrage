@@ -1,6 +1,6 @@
 //useTaskQueries.ts
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createGameEvent, gameStateInitilise, getAllGameEvents, getGameEventById } from '../api';
+import { gameStateInitilise, getAllGameEvents, getGameEventById } from '../api';
 import { IClientGameData } from '../types/types';
 
 export function useGetAllGameEvent() {

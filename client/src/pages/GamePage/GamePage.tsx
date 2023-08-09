@@ -24,24 +24,31 @@ const GamePage = () => {
     return <div>No data available</div>;
   }
 
-  console.log("game page data", data);
-  
+  console.log('game page data', data);
+
   return (
     <>
-      <NavBar websiteHealth={data.websiteHealth} timeRemaining={data.timeRemaining} />
+      <NavBar
+        websiteHealth={data.websiteHealth}
+        timeRemaining={data.timeRemaining}
+      />
       <div className="App h-screen flex">
         <section className="w-4/12 bg-background border boder-primary-text p-4 overflow-y-auto">
           <h2 className="text-2xl font-bold mb-4 text-primary-text">
             Staff Management
           </h2>
-          <StaffManagement staff={data.staff}  tasks={data.tasks}/>
+          <StaffManagement staff={data.staff} tasks={data.tasks} />
         </section>
 
         <section className="w-5/12 bg-background border boder-primary-text p-4 overflow-y-auto text-border">
           <h2 className="text-2xl font-bold mb-4 text-primary-text">
             Task Management
           </h2>
-          <TaskManagement tasks={data.tasks} staff={data.staff} gameId={data._id}/>
+          <TaskManagement
+            tasks={data.tasks}
+            staff={data.staff}
+            gameId={data._id}
+          />
         </section>
 
         <section className="w-3/12 bg-background border boder-primary-text p-4 overflow-y-auto text-primary-text">

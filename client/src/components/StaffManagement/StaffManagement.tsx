@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { getAllStaff } from '../../api';
-
 import StaffCard from './StaffCard';
 import { IClientStaffData, IClientTaskData } from '../../types/types';
 

@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -p tsconfig.prod.json && vite build",
     "preview": "vite preview",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint './src/**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.4.0",

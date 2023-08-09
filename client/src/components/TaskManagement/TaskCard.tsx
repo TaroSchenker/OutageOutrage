@@ -1,7 +1,12 @@
-//!TODO: I need to find a way to disable the staff member in the custom select when his availability is false.
-
-import React, { useState } from 'react';
-import { TaskType, IClientTaskData, IClientStaffData, TaskStatus } from '../../types/types';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
+import {
+  TaskType,
+  IClientTaskData,
+  IClientStaffData,
+  TaskStatus,
+} from '../../types/types';
 import { FaRegUserCircle, FaUserCheck } from 'react-icons/fa';
 import CustomSelector from '../CustomSelect/CustomSelect';
 import { useMutation } from '@tanstack/react-query';
@@ -49,7 +54,8 @@ interface TaskCardProps {
   task: IClientTaskData;
   staff: IClientStaffData[];
   gameId: string;
-}const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
+}
+const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleCard = () => {
     setIsOpen((prev) => !prev);
@@ -98,7 +104,8 @@ interface TaskCardProps {
   const removeStaffFromTaskMutation = useMutation({
     mutationFn: (updatedTask: Partial<IClientTaskData>) => {
       return axios.put(
-        `http://localhost:3000/api/tasks/${task._id}/removeStaff`);
+        `http://localhost:3000/api/tasks/${task._id}/removeStaff`,
+      );
     },
     onError: (error, variables, context) => {
       console.log(`error in mutate!`);
@@ -112,9 +119,8 @@ interface TaskCardProps {
       //   );
       //   return { ...oldData, tasks: updatedTasks };
       // });
-      queryClient.invalidateQueries({ queryKey: ['getGameById'] })
+      queryClient.invalidateQueries({ queryKey: ['getGameById'] });
       queryClient.invalidateQueries({ queryKey: ['getAllTasks'] });
- 
     },
     onSettled: (data, error, variables, context) => {
       // Error or success... doesn't matter!
@@ -129,7 +135,7 @@ interface TaskCardProps {
       selectedStaff: IClientStaffData;
     }) => {
       if (!updatedTask._id) throw new Error('no task');
-  
+
       return axios.put(
         `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
         { taskId: String(updatedTask._id) },
@@ -154,7 +160,7 @@ interface TaskCardProps {
     },
   );
 
-  const removeTaskFromStaffMutation = useMutation(  
+  const removeTaskFromStaffMutation = useMutation(
     (staffId: string) => {
       return axios.put(`http://localhost:3000/api/staff/${staffId}/removeTask`);
     },
@@ -162,49 +168,52 @@ interface TaskCardProps {
       onSuccess: (data, variables, context) => {
         queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
           const updatedStaff = oldData.staff.map((staffMember: any) =>
-          staffMember._id === data.data._id
-            ? { ...staffMember, currentTask: '', availability: true }
-            : staffMember,
-        );
-        return { ...oldData, staff: updatedStaff };
+            staffMember._id === data.data._id
+              ? { ...staffMember, currentTask: '', availability: true }
+              : staffMember,
+          );
+          return { ...oldData, staff: updatedStaff };
         });
       },
-    }
+    },
   );
-  
-  const handleSelectorChange = async (selected: string) => {
 
+  const handleSelectorChange = async (selected: string) => {
     if (selected === 'Not Assigned') {
       if (task.assignedTo) {
-        const previousStaff = staff.find((member) => member._id === task.assignedTo);
+        const previousStaff = staff.find(
+          (member) => member._id === task.assignedTo,
+        );
         if (previousStaff) {
-          const removed =  removeStaffFromTaskMutation.mutate(task);
+          const removed = removeStaffFromTaskMutation.mutate(task);
           removeTaskFromStaffMutation.mutate(previousStaff._id);
-          console.log("<-----removed--->", removed)
+          console.log('<-----removed--->', removed);
         }
       }
       const updatedTask = {
         ...task,
-        staffId: "",
+        staffId: '',
         progress: 0,
-        assignedTo: "",
+        assignedTo: '',
         status: TaskStatus.NOT_STARTED,
       };
 
       const notAssigned = updateTaskMutation.mutate(updatedTask);
-      console.log("notAssigned", notAssigned); 
+      console.log('notAssigned', notAssigned);
     }
 
     const selectedStaff = staff.find((member) => member.name === selected);
     if (!task._id || !selectedStaff) return;
 
-     // If task is already assigned to someone else, unassign them
-  if (task.assignedTo) {
-    const previousStaff = staff.find((member) => member._id === task.assignedTo);
-    if (previousStaff) {
-      await removeTaskFromStaffMutation.mutateAsync(previousStaff._id);
+    // If task is already assigned to someone else, unassign them
+    if (task.assignedTo) {
+      const previousStaff = staff.find(
+        (member) => member._id === task.assignedTo,
+      );
+      if (previousStaff) {
+        await removeTaskFromStaffMutation.mutateAsync(previousStaff._id);
+      }
     }
-  }
     const updatedTask = {
       ...task,
       staffId: String(selectedStaff._id),

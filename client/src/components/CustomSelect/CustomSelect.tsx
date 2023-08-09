@@ -1,5 +1,4 @@
 import React, { FC, ChangeEvent } from 'react';
-import { IClientStaffData } from '../../types/types';
 
 interface SelectorOption {
   id: string;
