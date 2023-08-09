@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon --exec ts-node ./src/server.ts",
-    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+    "lint": "eslint '*/**/*.{ts,tsx}'",
     "prettier": "prettier --write 'src/**/*.{ts,tsx,js,json,css}'"
   },
   "keywords": [],
