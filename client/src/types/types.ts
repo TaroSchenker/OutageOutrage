@@ -33,7 +33,7 @@ export interface IClientStaffData {
 }
 
 export interface IClientTaskData {
-  _id: string
+  _id: string;
   type: TaskType;
   complexity: number; // 0 - 100
   timeToComplete: number; // 0 - 100
@@ -53,7 +53,7 @@ export interface IClientGameEventData {
   severity: number; // 0 - 100
   effectOnMorale: number; // 0 - 100
   effectOnBudget: number; // 0 - 100
-  effectOnTasks: IClientTaskData | null; 
+  effectOnTasks: IClientTaskData | null;
   duration: number; // in days, add to model
 }
 
@@ -142,4 +142,3 @@ export const MAX_COMPLEXITY = 100;
 
 export const MIN_TIME_TO_COMPLETE = 0;
 export const MAX_TIME_TO_COMPLETE = 100;
-

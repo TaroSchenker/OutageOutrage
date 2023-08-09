@@ -1,6 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { gameStateInitilise, getGameById } from '../../api';
+import { getGameById } from '../../api';
 import StyledButton from '../StyledButton/StyledButton';
 import axios from 'axios';
 
@@ -17,9 +18,7 @@ const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
 
   const processTurnMutation = useMutation({
     mutationFn: (gameId: string) => {
-      return axios.post(
-        `http://localhost:3000/api/gameState/${gameId}/turn`
-      );
+      return axios.post(`http://localhost:3000/api/gameState/${gameId}/turn`);
     },
     onError: (error, variables, context) => {
       // An error happened!
@@ -37,10 +36,9 @@ const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
   });
   const handleClick = () => {
     console.log('clicked');
-    if(gameId){
-       processTurnMutation.mutate(gameId);
+    if (gameId) {
+      processTurnMutation.mutate(gameId);
     }
-   
   };
   const { data, isLoading, isError } = useQuery(
     ['getGameById', String(gameId)],

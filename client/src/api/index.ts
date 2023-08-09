@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import {
   IClientGameData,
   IClientGameEventData,
@@ -35,9 +35,7 @@ export const getAllGames = async () => {
   }
   return data ? data.data : [];
 };
-export const getGameById = async ({
-  queryKey,
-}: QueryFunctionContext) => {
+export const getGameById = async ({ queryKey }: QueryFunctionContext) => {
   const [, gameId] = queryKey;
   const { error, data } = await handleErrors(
     instance.get<IClientGameData>(`/game/${gameId}`),
@@ -119,7 +117,7 @@ export const startNewTurn = async (gameId: string) => {
   return data ? data.data : [];
 };
 
-// Staff requests 
+// Staff requests
 export const getAllStaff = async () => {
   const { error, data } = await handleErrors(
     instance.get<IClientStaffData[]>('/staff'),
@@ -157,7 +155,7 @@ export const getAllTasks = async () => {
   return data ? data.data : [];
 };
 
-export const getTaskById = async ({queryKey}: QueryFunctionContext) => {
+export const getTaskById = async ({ queryKey }: QueryFunctionContext) => {
   const [, taskId] = queryKey;
   const { error, data } = await handleErrors(
     instance.get<IClientTaskData>(`/game/${taskId}`),
@@ -170,7 +168,7 @@ export const getTaskById = async ({queryKey}: QueryFunctionContext) => {
   return data ? data.data : {};
 };
 
-export const updateTask = async ({ queryKey}: QueryFunctionContext) => {
+export const updateTask = async ({ queryKey }: QueryFunctionContext) => {
   const [, taskId, updates] = queryKey;
   const { error, data } = await handleErrors(
     instance.put<Partial<IClientTaskData>>(`/tasks/${taskId}`, updates),

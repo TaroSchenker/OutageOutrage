@@ -1,6 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import CustomSelector from '../CustomSelect';
 
 const options = [
@@ -28,21 +27,31 @@ describe('<CustomSelector />', () => {
 
   it('calls onChange handler with correct value when selection changes', () => {
     const handleChange = jest.fn();
-    render(<CustomSelector options={options} onChange={handleChange} value="Option 1" />);
-  
+    render(
+      <CustomSelector
+        options={options}
+        onChange={handleChange}
+        value="Option 1"
+      />,
+    );
+
     // Retrieve the select element
     const selectElement = screen.getByTestId('custom-selector-select');
-    
+
     // Select the option by its value attribute
     fireEvent.change(selectElement, { target: { value: 'Option 3' } });
-  
+
     expect(handleChange).toHaveBeenCalledWith('Option 3');
   });
 
   it('selects the correct initial value', () => {
-    render(<CustomSelector options={options} onChange={() => {}} value="Option 3" />);
+    render(
+      <CustomSelector options={options} onChange={() => {}} value="Option 3" />,
+    );
 
-    const selectElement = screen.getByTestId('custom-selector-select') as HTMLSelectElement;
+    const selectElement = screen.getByTestId(
+      'custom-selector-select',
+    ) as HTMLSelectElement;
     expect(selectElement.value).toBe('Option 3');
   });
 

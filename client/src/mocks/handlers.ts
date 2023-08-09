@@ -8,8 +8,7 @@ export const handlers = [
       const assignedTask = {
         // existing task data goes here, but with the changes applied
         assignedTo: req.params.id, // or whatever staff information you are receiving
-
-      }
+      };
       return res(ctx.status(200), ctx.json({ data: assignedTask }));
     },
   ),
@@ -30,7 +29,7 @@ export const handlers = [
       // const { taskId } = await req.json();
       const updatedStaff = {
         // existing staff data goes here, but with the changes applied
-        currentTask: "", // or whatever task information you are receiving
+        currentTask: '', // or whatever task information you are receiving
         availability: true,
       };
       return res(ctx.status(200), ctx.json({ data: updatedStaff }));
