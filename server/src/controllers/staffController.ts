@@ -56,3 +56,11 @@ export const updateMorale = async (req: Request, res: Response) => {
   );
   return res.status(201).json(staff);
 };
+
+export const removeTask = async (req: Request, res: Response) => {
+  const staff = await staffService.removeTask(req.params.staffId);
+  if (!staff) {
+    return res.status(404).json({ message: 'Staff member not found' });
+  }
+  return res.status(201).json(staff);
+};
