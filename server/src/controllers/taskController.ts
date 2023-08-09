@@ -97,3 +97,19 @@ export const assignTaskToStaff = async (
     next(error);
   }
 };
+
+export const removeStaffFromTask = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const task = await taskService.removeStaffFromTask(req.params.taskId);
+    if (!task) {
+      throw new AppError('Task not found.', 404);
+    }
+    return res.status(201).json(task);
+  } catch (error) {
+    next(error);
+  }
+};
