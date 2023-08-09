@@ -1,7 +1,7 @@
 //!TODO: I need to find a way to disable the staff member in the custom select when his availability is false.
 
 import React, { useState } from 'react';
-import { TaskType, IClientTaskData, IClientStaffData } from '../../types/types';
+import { TaskType, IClientTaskData, IClientStaffData, TaskStatus } from '../../types/types';
 import { FaRegUserCircle, FaUserCheck } from 'react-icons/fa';
 import CustomSelector from '../CustomSelect/CustomSelect';
 import { useMutation } from '@tanstack/react-query';
@@ -95,6 +95,31 @@ interface TaskCardProps {
     },
   });
 
+  const removeStaffFromTaskMutation = useMutation({
+    mutationFn: (updatedTask: Partial<IClientTaskData>) => {
+      return axios.put(
+        `http://localhost:3000/api/tasks/${task._id}/removeStaff`);
+    },
+    onError: (error, variables, context) => {
+      console.log(`error in mutate!`);
+    },
+    onSuccess: (data, variables, context) => {
+      console.log('on success called');
+      // queryClient.setQueryData(['getGameById', gameId], (oldData: any) => {
+      //   console.log("look here for updates data.data", data.data)
+      //   const updatedTasks = oldData.tasks.map((task: any) =>
+      //     task._id === data.data._id ? data.data : task,
+      //   );
+      //   return { ...oldData, tasks: updatedTasks };
+      // });
+      queryClient.invalidateQueries({ queryKey: ['getGameById'] })
+      queryClient.invalidateQueries({ queryKey: ['getAllTasks'] });
+ 
+    },
+    onSettled: (data, error, variables, context) => {
+      // Error or success... doesn't matter!
+    },
+  });
   const updateStaffMutation = useMutation(
     ({
       updatedTask,
@@ -148,12 +173,14 @@ interface TaskCardProps {
   );
   
   const handleSelectorChange = async (selected: string) => {
+
     if (selected === 'Not Assigned') {
-      // Do nothing if "Not Assigned" is selected
       if (task.assignedTo) {
         const previousStaff = staff.find((member) => member._id === task.assignedTo);
         if (previousStaff) {
-          await removeTaskFromStaffMutation.mutateAsync(previousStaff._id);
+          const removed =  removeStaffFromTaskMutation.mutate(task);
+          removeTaskFromStaffMutation.mutate(previousStaff._id);
+          console.log("<-----removed--->", removed)
         }
       }
       const updatedTask = {
@@ -161,6 +188,7 @@ interface TaskCardProps {
         staffId: "",
         progress: 0,
         assignedTo: "",
+        status: TaskStatus.NOT_STARTED,
       };
 
       const notAssigned = updateTaskMutation.mutate(updatedTask);
