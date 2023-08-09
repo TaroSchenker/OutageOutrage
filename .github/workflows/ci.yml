@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x] # Choose the Node.js version that matches your project's requirements
+        node-version: [16.16.0] # Updated to your specific Node.js version
 
     steps:
     - uses: actions/checkout@v2
