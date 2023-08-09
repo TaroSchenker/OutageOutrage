@@ -58,8 +58,9 @@ interface TaskCardProps {
   // Filter staff based on availability
   const availableStaff = staff.filter((member) => member.availability);
   const selectorOptions = [
-    { name: 'Not Assigned', availability: true },
+    { id: 'not_assigned', name: 'Not Assigned', availability: true },
     ...staff.map((member) => ({
+      id: member._id,
       name: member.name,
       availability: member.availability,
     })),
