@@ -38,7 +38,7 @@ export class StaffService {
   }
 
   // Delete a task to a staff member
-  RemoveTask(staffId: string): Promise<IStaff | null> {
+  removeTask(staffId: string): Promise<IStaff | null> {
     return StaffModel.findByIdAndUpdate(
       staffId,
       {

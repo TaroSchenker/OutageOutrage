@@ -137,7 +137,7 @@ export class GameStateService {
         if (task.progress >= task.timeToComplete) {
           task.progress = task.timeToComplete;
           task.status = TaskStatus.COMPLETED;
-          staff = await this.staffService.RemoveTask(staff._id);
+          staff = await this.staffService.removeTask(staff._id);
         }
 
         // Save the updates

@@ -1,5 +1,5 @@
 import { TaskModel } from '../models/Task';
-import { ITask, ITaskData } from '../types/types';
+import { ITask, ITaskData, TaskStatus } from '../types/types';
 import AppError from '../utils/AppError';
 
 export class TaskService {
@@ -48,5 +48,15 @@ export class TaskService {
       console.error('Error updating task:', error);
       throw new AppError('An error occurred while updating the task', 500);
     }
+  }
+
+  // Remove a task from a staff member
+  removeStaffFromTask(taskId: string): Promise<ITask | null> {
+    console.log('removeStaffFromTask');
+    return TaskModel.findByIdAndUpdate(
+      taskId,
+      { assignedTo: '', status: TaskStatus.NOT_STARTED, progress: 0 },
+      { new: true },
+    );
   }
 }
