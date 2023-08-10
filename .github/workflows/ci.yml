@@ -1,4 +1,4 @@
-name: CI
+name: CI and Deploy to Staging
 
 on:
   push:
@@ -50,3 +50,45 @@ jobs:
     - name: Run Server tests
       working-directory: ./server
       run: npm test
+
+  deploy:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    needs: [test]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS CLI
+      uses: aws-actions/configure-aws-cli@v1
+      with:
+        aws-region: us-west-2 # Replace with your region
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Assume AWS Role
+      run: |
+        CREDS=$(aws sts assume-role --role-arn "arn:aws:iam::924083598312:role/taro-admin" --role-session-name GitHubActions --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)
+        AWS_ACCESS_KEY_ID=$(echo $CREDS | awk '{print $1}')
+        AWS_SECRET_ACCESS_KEY=$(echo $CREDS | awk '{print $2}')
+        AWS_SESSION_TOKEN=$(echo $CREDS | awk '{print $3}')
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+        echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN" >> $GITHUB_ENV
+
+    # Build and package your code if needed
+
+    - name: Install Elastic Beanstalk CLI
+      run: pip install awsebcli
+
+    - name: Deploy to Elastic Beanstalk
+      run: |
+        # Navigate to your server directory, if applicable
+        cd ./server
+
+        # Initialize Elastic Beanstalk CLI with your environment
+        eb init outage-outrage -r us-west-2 -p "64bit Amazon Linux 2018.03 v4.14.1 running Node.js"
+
+        # Deploy to your specific environment
+        eb deploy outage-outrage-staging
