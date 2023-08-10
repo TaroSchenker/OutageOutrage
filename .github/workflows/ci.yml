@@ -57,6 +57,12 @@ jobs:
     needs: [test]
 
     steps:
+    - name: Print github.ref value
+      run: echo "GitHub Ref: ${{ github.ref }}" # This line will print the value of github.ref
+
+    - name: Print AWS CLI configuration
+      run: aws configure list
+      
     - name: Checkout code
       uses: actions/checkout@v2
 
