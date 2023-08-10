@@ -1,0 +1,58 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.tasks = void 0;
+const types_1 = require("../../types/types");
+exports.tasks = [
+    {
+        type: types_1.TaskType.BUG_FIX,
+        complexity: 50,
+        timeToComplete: 100,
+        assignedTo: null,
+        expertiseRequired: types_1.Expertise.JAVASCRIPT,
+        criticality: 70,
+        status: types_1.TaskStatus.NOT_STARTED,
+        dependencies: [],
+        businessImpact: types_1.BusinessImpact.MEDIUM,
+        description: 'Some rascal forgot a semicolon and the whole shopping cart feature went haywire! Fix it before our customers end up buying the entire inventory for the price of a chewing gum.',
+        progress: 0,
+    },
+    {
+        type: types_1.TaskType.NEW_FEATURE,
+        complexity: 80,
+        timeToComplete: 20,
+        assignedTo: null,
+        expertiseRequired: types_1.Expertise.PYTHON,
+        criticality: 80,
+        status: types_1.TaskStatus.NOT_STARTED,
+        dependencies: [],
+        businessImpact: types_1.BusinessImpact.HIGH,
+        description: "Management read in a fortune cookie that adding 'AI' to anything increases sales. Your task is to integrate an 'AI-powered' color picker to our website. How it uses AI? Who cares! Just do it!",
+        progress: 0,
+    },
+    {
+        type: types_1.TaskType.SECURITY_PATCH,
+        complexity: 70,
+        timeToComplete: 15,
+        assignedTo: null,
+        expertiseRequired: types_1.Expertise.CYBER_SECURITY,
+        criticality: 90,
+        status: types_1.TaskStatus.NOT_STARTED,
+        dependencies: [],
+        businessImpact: types_1.BusinessImpact.HIGH,
+        description: "Our interns developed a password encryption module, but apparently, replacing every letter with 'X' isn't 'secure'. Patch it up before our customer passwords become a public secret!",
+        progress: 0,
+    },
+    {
+        type: types_1.TaskType.UI_IMPROVEMENT,
+        complexity: 30,
+        timeToComplete: 70,
+        assignedTo: null,
+        expertiseRequired: types_1.Expertise.UX_DESIGN,
+        criticality: 50,
+        status: types_1.TaskStatus.NOT_STARTED,
+        dependencies: [],
+        businessImpact: types_1.BusinessImpact.LOW,
+        description: 'Our CEO visited a website with a fancy spinning logo and now he wants one too! Add a spinning animation to our logo, and maybe it will distract him from the pending tasks.',
+        progress: 0,
+    },
+];

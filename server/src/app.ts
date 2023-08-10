@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import { config as dotenvConfig } from 'dotenv';
 import connectDb from './config/db';
@@ -14,6 +15,11 @@ import errorHandler from './middlewares/errorHandler'; //
 dotenvConfig();
 
 const app = express();
+
+// Serve static files from the React app
+const clientBuildPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(clientBuildPath));
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -33,5 +39,9 @@ app.use('/api/gameState', gameStateRouter);
 
 // Error handling middleware
 app.use(errorHandler); // <-- Use error handler
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientBuildPath, 'index.html'));
+});
 
 export default app;

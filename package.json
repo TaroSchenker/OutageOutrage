@@ -1,0 +1,25 @@
+{
+  "name": "outageoutrage",
+  "version": "1.0.0",
+  "description": "Tech Management Sim",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build:client": "cd client && npm run build",
+    "build:server": "tsc -p server/tsconfig.json",
+    "build": "npm run build:client && npm run build:server"
+  },  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TaroSchenker/OutageOutrage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TaroSchenker/OutageOutrage/issues"
+  },
+  "homepage": "https://github.com/TaroSchenker/OutageOutrage#readme"
+}

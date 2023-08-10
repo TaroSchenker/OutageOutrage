@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 // import backgroundImage0 from '../../assets/images/bg6.png';
 // import backgroundImage1 from '../../assets/images/bg4.png';
-import backgroundImage2 from '../../assets/images/bg5.png';
-import backgroundImage3 from '../../assets/images/bg9.png';
-import backgroundImage4 from '../../assets/images/bg10.png';
-import backgroundImage5 from '../../assets/images/bg11.png';
-import backgroundImage6 from '../../assets/images/bg12.png';
-import backgroundImage7 from '../../assets/images/bg13.png';
-import backgroundImage8 from '../../assets/images/bg14.png';
+import backgroundImage2 from '../../assets/images/background/bg5.png';
+import backgroundImage3 from '../../assets/images/background/bg9.png';
+import backgroundImage4 from '../../assets/images/background/bg10.png';
+import backgroundImage5 from '../../assets/images/background/bg11.png';
+import backgroundImage6 from '../../assets/images/background/bg12.png';
+import backgroundImage7 from '../../assets/images/background/bg13.png';
+import backgroundImage8 from '../../assets/images/background/bg14.png';
 
 import OutageOutrageLogo from '../../components/Logo/Logo';
 import { useNavigate } from 'react-router-dom';
