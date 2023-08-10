@@ -66,7 +66,7 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-region: us-west-2
+        aws-region: us-east-2
         role-to-assume: arn:aws:iam::924083598312:role/taro-admin # Make sure this ARN matches your specific role
         role-session-name: taro-admin-session # You can name this as you like
 
