@@ -81,7 +81,7 @@ jobs:
         cd ./server
 
         # Initialize Elastic Beanstalk CLI with your environment
-        eb init outage-outrage -r us-west-2 -p "64bit Amazon Linux 2018.03 v4.14.1 running Node.js"
+        eb init outage-outrage -r us-east-2 -p "64bit Amazon Linux 2018.03 v4.14.1 running Node.js"
 
         # Deploy to your specific environment
         eb deploy outage-outrage-staging
