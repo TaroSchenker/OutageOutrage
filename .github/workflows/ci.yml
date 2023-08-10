@@ -52,31 +52,31 @@ jobs:
       run: npm test
 
   deploy:
-  runs-on: ubuntu-latest
-  needs: [test]
+    runs-on: ubuntu-latest
+    needs: [test]
 
-  steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-  - name: Configure AWS Credentials
-    uses: aws-actions/configure-aws-credentials@v2
-    with:
-      aws-region: us-west-2
-      role-to-assume: arn:aws:iam::924083598312:role/taro-admin # Update with your specific role ARN
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: us-west-2
+        role-to-assume: arn:aws:iam::924083598312:role/taro-admin # Update with your specific role ARN
 
-  # Build and package your code if needed
+    # Build and package your code if needed
 
-  - name: Install Elastic Beanstalk CLI
-    run: pip install awsebcli
+    - name: Install Elastic Beanstalk CLI
+      run: pip install awsebcli
 
-  - name: Deploy to Elastic Beanstalk
-    run: |
-      # Navigate to your server directory, if applicable
-      cd ./server
+    - name: Deploy to Elastic Beanstalk
+      run: |
+        # Navigate to your server directory, if applicable
+        cd ./server
 
-      # Initialize Elastic Beanstalk CLI with your environment
-      eb init outage-outrage -r us-west-2 -p "64bit Amazon Linux 2018.03 v4.14.1 running Node.js"
+        # Initialize Elastic Beanstalk CLI with your environment
+        eb init outage-outrage -r us-west-2 -p "64bit Amazon Linux 2018.03 v4.14.1 running Node.js"
 
-      # Deploy to your specific environment
-      eb deploy outage-outrage-staging
+        # Deploy to your specific environment
+        eb deploy outage-outrage-staging
