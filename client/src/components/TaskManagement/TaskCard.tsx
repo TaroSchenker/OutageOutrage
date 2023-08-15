@@ -78,7 +78,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const updateTaskMutation = useMutation({
     mutationFn: (updatedTask: Partial<IClientTaskData>) => {
       return axios.put(
-        `http://localhost:3000/api/tasks/${task._id}/assignTask`,
+        `http://localhost:3001/api/tasks/${task._id}/assignTask`,
         updatedTask,
       );
     },
@@ -104,7 +104,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
   const removeStaffFromTaskMutation = useMutation({
     mutationFn: (updatedTask: Partial<IClientTaskData>) => {
       return axios.put(
-        `http://localhost:3000/api/tasks/${task._id}/removeStaff`,
+        `http://localhost:3001/api/tasks/${task._id}/removeStaff`,
       );
     },
     onError: (error, variables, context) => {
@@ -137,7 +137,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
       if (!updatedTask._id) throw new Error('no task');
 
       return axios.put(
-        `http://localhost:3000/api/staff/${selectedStaff._id}/assignTask`,
+        `http://localhost:3001/api/staff/${selectedStaff._id}/assignTask`,
         { taskId: String(updatedTask._id) },
       );
     },
@@ -162,7 +162,7 @@ const TaskCard = ({ task, staff, gameId, ...props }: TaskCardProps) => {
 
   const removeTaskFromStaffMutation = useMutation(
     (staffId: string) => {
-      return axios.put(`http://localhost:3000/api/staff/${staffId}/removeTask`);
+      return axios.put(`http://localhost:3001/api/staff/${staffId}/removeTask`);
     },
     {
       onSuccess: (data, variables, context) => {

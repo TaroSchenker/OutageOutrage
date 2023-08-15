@@ -6,9 +6,27 @@ import {
   IClientTaskData,
 } from '../types/types';
 import { QueryFunctionContext } from '@tanstack/react-query';
+
+// const instance = axios.create({
+//   baseURL: process.env.NODE_ENV === 'development' ? 'http://server:3001/api' : 'YOUR_PRODUCTION_URL',
+// });
+
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001/api'
+      : 'production-api-url',
 });
+
+// const instance = axios.create({
+//   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api'
+// });
+
+console.log('INSTANCE********', instance);
+console.log('NODE ENV', process.env.NODE_ENV);
+// const instance = axios.create({
+//   baseURL: 'http://localhost:3001/api',
+// });
 async function handleErrors<T>(
   promise: Promise<T>,
 ): Promise<{ error: Error | null; data: T | null }> {
