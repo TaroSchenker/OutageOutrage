@@ -14,7 +14,15 @@ import errorHandler from './middlewares/errorHandler'; //
 dotenvConfig();
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://client:3000'], // Include any other origins you need to support
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 connectDb();
