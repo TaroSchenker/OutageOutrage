@@ -1,17 +1,35 @@
 #Client Dockerfile
+
+# Use the official Node.js runtime as the base image
 FROM node:16
 
-WORKDIR /app
+# Set working directory
+WORKDIR /usr/src/app
 
-COPY package*.json ./
-
+# Install dependencies
+COPY ./client/package*.json ./
 RUN npm install
 
-COPY . .
+# Bundle app source
+COPY ./client ./
 
-EXPOSE 3000
+# Start the client
+CMD [ "npm", "run", "dev:host" ]
 
-CMD [ "npm", "run", "dev" ]
+
+# FROM node:17-alpine
+
+# WORKDIR /app
+
+# COPY package*.json ./
+
+# RUN npm install
+
+# COPY . .    
+
+# EXPOSE 3000
+
+# CMD [ "npm", "run", "dev" ]
 
 #Client Dockerfile
 # # Choose the base image
