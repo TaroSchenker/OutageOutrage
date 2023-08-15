@@ -12,15 +12,18 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 // });
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : 'production-api-url'
+  baseURL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001/api'
+      : 'production-api-url',
 });
 
 // const instance = axios.create({
 //   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api'
 // });
 
-console.log("INSTANCE********", instance)
-console.log("NODE ENV", process.env.NODE_ENV)
+console.log('INSTANCE********', instance);
+console.log('NODE ENV', process.env.NODE_ENV);
 // const instance = axios.create({
 //   baseURL: 'http://localhost:3001/api',
 // });
