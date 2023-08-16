@@ -18,7 +18,7 @@ const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
 
   const processTurnMutation = useMutation({
     mutationFn: (gameId: string) => {
-      return axios.post(`http://localhost:3000/api/gameState/${gameId}/turn`);
+      return axios.post(`http://localhost:3001/api/gameState/${gameId}/turn`);
     },
     onError: (error, variables, context) => {
       // An error happened!
