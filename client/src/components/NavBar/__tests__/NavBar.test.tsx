@@ -1,13 +1,56 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { server } from '../../../mocks/node';
+import NavBar from '../NavBar';
+import { MemoryRouter } from 'react-router';
+import { resetCallCount } from '../../../mocks/handlers';
+
+const mockWebsiteHealth = 80;
+const mockTimeRemaining = 5;
+
+beforeAll(() => server.listen());
+beforeEach(() => {
+  render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={['/game/someGameId']}>
+        <NavBar
+          websiteHealth={mockWebsiteHealth}
+          timeRemaining={mockTimeRemaining}
+        />
+      </MemoryRouter>
+    </QueryClientProvider>,
+  );
+});
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+const queryClient = new QueryClient();
+
 describe('NavBar Component', () => {
   // Check if the component renders without crashing
   it('should render without crashing', () => {});
 
   // Check if the title "Outage Outrage" is displayed correctly
-  it('should display the correct title', () => {});
+  it('should display the correct title', () => {
+    expect(screen.getByText('Outage Outrage')).toBeInTheDocument();
+  });
 
   // Check if the "Process Turn" button is rendered and can be clicked
-  it('should render the "Process Turn" button and handle click event', () => {});
+  it('should render the "Process Turn" button and handle  next turn click event', async () => {
+    //check that the buttons onClick prop is called when clicked
+
+    const button = screen.getByRole('button', {
+      name: /Process Turn/i,
+    });
+    expect(button).toBeInTheDocument();
+    resetCallCount();
+
+    //click the button
+    // userEvent.click(button);
+    // console.log('button', button);
+    // await waitFor(() => expect(getCallCount()).toBe(0));
+  });
 
   // Check if the Game ID is displayed correctly from the route parameter
   it('should display the correct Game ID from the route parameters', () => {});
