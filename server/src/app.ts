@@ -16,7 +16,11 @@ dotenvConfig();
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://client:3000'], // Include any other origins you need to support
+  origin: [
+    'http://localhost:3000',
+    'http://client:3000',
+    'http://localhost:5173',
+  ], // Include any other origins you need to support
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
