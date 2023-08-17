@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import backgroundImage0 from '../../assets/images/bg6.png';
-// import backgroundImage1 from '../../assets/images/bg4.png';
 import backgroundImage2 from '../../assets/images/bg5.png';
 import backgroundImage3 from '../../assets/images/bg9.png';
 import backgroundImage4 from '../../assets/images/bg10.png';
 import backgroundImage5 from '../../assets/images/bg11.png';
-import backgroundImage6 from '../../assets/images/bg12.png';
-import backgroundImage7 from '../../assets/images/bg13.png';
-import backgroundImage8 from '../../assets/images/bg14.png';
 
 import OutageOutrageLogo from '../../components/Logo/Logo';
 import { useNavigate } from 'react-router-dom';
@@ -16,20 +11,14 @@ import { IClientGameData } from '../../types/types';
 
 const LandingPage: React.FC = () => {
   const [gameId, setGameId] = useState('');
-  const [backgroundIndex, setBackgroundIndex] = useState(6);
+  const [backgroundIndex, setBackgroundIndex] = useState(3);
   const [direction, setDirection] = useState(-1);
   const backgrounds = [
-    // backgroundImage0,
-    // backgroundImage1,
     backgroundImage2,
     backgroundImage3,
     backgroundImage4,
     backgroundImage5,
-    backgroundImage6,
-    backgroundImage7,
-    backgroundImage8,
   ];
-  // const [background, setBackground] = useState(backgroundImage1);
   const navigate = useNavigate();
   const initiliseGameMutation = useGameStateInitilise();
 
@@ -41,7 +30,7 @@ const LandingPage: React.FC = () => {
         setDirection(1);
       }
       setBackgroundIndex(backgroundIndex + direction);
-    }, 4000); // Change background every 3 seconds
+    }, 1500);
 
     return () => clearTimeout(timer); // Clean up timer on component unmount
   }, [backgroundIndex, direction]);
