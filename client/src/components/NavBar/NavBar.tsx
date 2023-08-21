@@ -12,7 +12,7 @@ interface NavBarProps {
 import { useQueryClient } from '@tanstack/react-query';
 const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
   const { gameId } = useParams();
-
+  console.log('game id fmor use Params is:', gameId);
   // Get QueryClient from the context
   const queryClient = useQueryClient();
 
@@ -49,7 +49,7 @@ const NavBar: React.FC<NavBarProps> = ({ websiteHealth, timeRemaining }) => {
     <nav className="bg-background sticky top-0 z-50 text-primary-text p-4 flex justify-between items-center shadow-lg">
       <h1 className="text-2xl font-bold">Outage Outrage</h1>
       <StyledButton onClick={handleClick}> Process Turn</StyledButton>
-      <div className="text-xl font-semibold">Game ID: {gameId} </div>
+      <div className="text-xl font-semibold">Game ID: {gameId}</div>
       <div className="space-x-4">
         <div className="flex flex-col items-center">
           <div className="text-lg font-medium text-secondary-text">

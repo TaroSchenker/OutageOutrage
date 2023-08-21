@@ -1,24 +1,29 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { useParams } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { server } from '../../../mocks/node';
 import NavBar from '../NavBar';
-import { MemoryRouter } from 'react-router';
-import { resetCallCount } from '../../../mocks/handlers';
+import { getCallCount, resetCallCount } from '../../../mocks/handlers';
+import userEvent from '@testing-library/user-event';
 
 const mockWebsiteHealth = 80;
 const mockTimeRemaining = 5;
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useParams: jest.fn(),
+}));
+
 beforeAll(() => server.listen());
 beforeEach(() => {
+  (useParams as jest.Mock).mockReturnValue({ gameId: 'testId' });
   render(
     <QueryClientProvider client={queryClient}>
-      <MemoryRouter initialEntries={['/game/someGameId']}>
-        <NavBar
-          websiteHealth={mockWebsiteHealth}
-          timeRemaining={mockTimeRemaining}
-        />
-      </MemoryRouter>
+      <NavBar
+        websiteHealth={mockWebsiteHealth}
+        timeRemaining={mockTimeRemaining}
+      />
     </QueryClientProvider>,
   );
 });
@@ -47,13 +52,16 @@ describe('NavBar Component', () => {
     resetCallCount();
 
     //click the button
-    // userEvent.click(button);
+    userEvent.click(button);
     // console.log('button', button);
-    // await waitFor(() => expect(getCallCount()).toBe(0));
+    await waitFor(() => expect(getCallCount()).toBe(1));
   });
 
   // Check if the Game ID is displayed correctly from the route parameter
-  it('should display the correct Game ID from the route parameters', () => {});
+  it('should display the correct Game ID from the route parameters', () => {
+    const gameElement = screen.getByText(/Game ID:/i);
+    expect(gameElement.textContent).toBe("Game ID: testId")
+  });
 
   // Check if the "Time Remaining" and "Website Health" are displayed correctly with the given props
   it('should display the correct Time Remaining and Website Health information', () => {});

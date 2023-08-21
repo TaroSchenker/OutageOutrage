@@ -13,7 +13,7 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 
 const instance = axios.create({
   baseURL:
-    process.env.NODE_ENV === 'development'
+    process.env.NODE_ENV === 'development' || 'test'
       ? 'http://localhost:3001/api'
       : 'production-api-url',
 });

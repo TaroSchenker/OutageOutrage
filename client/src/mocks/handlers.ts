@@ -64,7 +64,14 @@ export const handlers = [
     },
   ),
   //get game by id
-  rest.get('http://localhost:3000/api/game/:gameId', (req, res, ctx) => {
+  rest.get('http://localhost:3001/api/game/:gameId', (req, res, ctx) => {
+    const { gameId } = req.params;
+    console.log('handlers for mws test', gameId);
     return res(ctx.status(200), ctx.json({ data: 'got the game by id' }));
   }),
+  // rest.all('*', (req, res, ctx) => {
+  //   // const { gameId } = req.params;
+  //   console.log('handlers for mws test');
+  //   return res(ctx.status(200), ctx.json({ data: 'got the game by id' }));
+  // }),
 ];
