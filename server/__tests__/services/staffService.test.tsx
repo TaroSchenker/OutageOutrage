@@ -1,10 +1,7 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { StaffService } from '../../src/services/staffService';
-import {
-  staff,
-  staff as staffTestData,
-} from '../../src/config/initialData/staff';
+import { staff as staffTestData } from '../../src/config/initialData/staff';
 import { Expertise, IStaff, IStaffData, Role } from '../../src/types/types';
 
 const singleStaffMember = {
@@ -20,7 +17,7 @@ const singleStaffMember = {
   adaptability: 20,
   morale: 20,
   currentTask: null,
-  availability: false,
+  availability: true,
   salary: 10000,
   satisfaction: 20,
 };
@@ -88,28 +85,57 @@ describe('StaffService', () => {
     expect(updatedStaff?.availability).toBe(staffUpdates.availability);
   });
 
-  test('deleteStaff should delete a staff member', () => {
-    // TODO: Implement the test logic here
+  test('deleteStaff should delete a staff member', async () => {
+    const staff = await staffService.createStaff(singleStaffMember);
+    const staffFromId = await staffService.getStaffById(staff._id);
+    expect(staffFromId).toBeDefined();
+    const deletedStaff = await staffService.deleteStaff(staff._id);
+    expect(String(deletedStaff?._id)).toBe(String(staff._id));
+    const allStaff = await staffService.getAllStaff();
+    expect(allStaff.length).toBe(staffTestData.length);
   });
 
-  test('assignTask should assign a task to a staff member', () => {
-    // TODO: Implement the test logic here
+  test('assignTask should assign a task to a staff member', async () => {
+    const staff = await staffService.createStaff(singleStaffMember);
+    const assignedStaff = await staffService.assignTask(staff._id, 'taskId');
+    expect(assignedStaff?.availability).toBe(false);
+    expect(assignedStaff?.currentTask).toBe('taskId');
   });
 
-  test('removeTask should remove a task from a staff member', () => {
-    // TODO: Implement the test logic here
+  test('removeTask should remove a task from a staff member', async () => {
+    const staff = await staffService.createStaff(singleStaffMember);
+    const assignedStaff = await staffService.assignTask(staff._id, 'taskId');
+    expect(assignedStaff?.availability).toBe(false);
+    expect(assignedStaff?.currentTask).toBe('taskId');
+    const removeTask = await staffService.removeTask(staff._id);
+    expect(removeTask?.availability).toBe(true);
+    expect(removeTask?.currentTask).toBe('');
   });
 
-  test('updateMorale should update staff morale', () => {
-    // TODO: Implement the test logic here
+  test('updateMorale should update staff morale', async () => {
+    const staff = await staffService.createStaff(singleStaffMember);
+    const updatedMoral = await staffService.updateMorale(staff._id, 50);
+    expect(updatedMoral?.morale).toBe(50);
   });
 
   test('calculateTotalStaffCost should calculate the total cost of given staff members', () => {
     // TODO: Implement the test logic here
   });
 
-  test('calculateTotalStaffMorale should calculate the average morale of given staff members', () => {
-    // TODO: Implement the test logic here
+  test('calculateTotalStaffMorale should calculate the average morale of given staff members', async () => {
+    const allStaffIds: string[] = (await staffService.getAllStaff()).map(
+      (staff) => staff._id.toString(),
+    );
+
+    const allStaffMorales: number = (await staffService.getAllStaff())
+      .map((staff) => staff.morale)
+      .reduce((acc, cv) => acc + cv, 0);
+
+    const totalMorale = await staffService.calculateTotalStaffMorale(
+      allStaffIds,
+    );
+
+    expect(totalMorale).toBeCloseTo(allStaffMorales); // Using toBeCloseTo if dealing with floating point numbers.
   });
 
   // TODO: Other tests for get, update, delete operations
