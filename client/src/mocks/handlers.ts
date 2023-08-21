@@ -52,21 +52,13 @@ export const handlers = [
     (req, res, ctx) => {
       // Assuming the response would be some kind of success message, adjust as needed
       // Log the actual URL that was called
-      console.log(
-        `Mock server received a POST request to: ${req.url.toString()}`,
-      );
-
       // Log the parameters
-      console.log('Request Params:', req.params);
       callCount += 1;
-      console.log('call count', callCount);
       return res(ctx.status(200), ctx.json({ data: 'Turn processed' }));
     },
   ),
   //get game by id
   rest.get('http://localhost:3001/api/game/:gameId', (req, res, ctx) => {
-    const { gameId } = req.params;
-    console.log('handlers for mws test', gameId);
     return res(ctx.status(200), ctx.json({ data: 'got the game by id' }));
   }),
   // rest.all('*', (req, res, ctx) => {

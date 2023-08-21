@@ -60,11 +60,17 @@ describe('NavBar Component', () => {
   // Check if the Game ID is displayed correctly from the route parameter
   it('should display the correct Game ID from the route parameters', () => {
     const gameElement = screen.getByText(/Game ID:/i);
-    expect(gameElement.textContent).toBe("Game ID: testId")
+    expect(gameElement.textContent).toBe('Game ID: testId');
   });
 
   // Check if the "Time Remaining" and "Website Health" are displayed correctly with the given props
-  it('should display the correct Time Remaining and Website Health information', () => {});
+  it('should display the correct Time Remaining and Website Health information', () => {
+    const timeRemainingText = screen.getByText('Time Remaining: 5 days');
+    expect(timeRemainingText).toBeInTheDocument();
+
+    const websiteHealth = screen.getByText('Website Health: 80%');
+    expect(websiteHealth).toBeInTheDocument();
+  });
 
   // Check if the useMutation hook is called with the correct parameters when "Process Turn" is clicked
   it('should call useMutation with correct parameters on "Process Turn" click', () => {});
