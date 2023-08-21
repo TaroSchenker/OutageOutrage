@@ -17,24 +17,53 @@ describe('StaffService', () => {
     staffService = new StaffService();
   });
 
+  beforeEach(async () => {
+    for (const staff of staffTestData) {
+      await staffService.createStaff(staff);
+    }
+  });
+
+  afterEach(async () => {
+    await mongoose.connection.dropDatabase();
+  });
+
   afterAll(async () => {
     await mongoose.disconnect();
     await mongoServer.stop();
   });
 
   it('should create a new staff member', async () => {
-    const staff = await staffService.createStaff(staffTestData[0]);
+    const newStaff = {
+      name: 'New Staff',
+      avatarUrl:
+        'https://raw.githubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
+      role: Role.BACKEND_DEV,
+      expertise: Expertise.JAVA,
+      ambition: 20,
+      loyalty: 20,
+      skillLevel: 20,
+      resilience: 20,
+      adaptability: 20,
+      morale: 20,
+      currentTask: null,
+      availability: false,
+      salary: 10000,
+      satisfaction: 20,
+    };
+    const staff = await staffService.createStaff(newStaff);
 
     for (const key in staff) {
       if (staff.hasOwnProperty(key)) {
         const typedKey = key as keyof IStaffData;
-        expect((staff as any)[key]).toBe(staff[typedKey]);
+        expect((staff as never)[key]).toBe(staff[typedKey]);
       }
     }
   });
 
-  test('getAllStaff should retrieve all staff members', () => {
-    // TODO: Implement the test logic here
+  test('getAllStaff should retrieve all staff members', async () => {
+    const allStaff = await staffService.getAllStaff();
+    console.log('allStaff', allStaff);
+    expect(allStaff.length).toBe(staffTestData.length);
   });
 
   test('getStaffById should retrieve a staff member by ID', () => {
