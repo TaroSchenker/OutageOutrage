@@ -50,9 +50,9 @@ export class StaffService {
   }
 
   // Update staff morale
-  updateMorale(id: string, newMorale: number): Promise<IStaff | null> {
+  updateMorale(staffId: string, newMorale: number): Promise<IStaff | null> {
     return StaffModel.findByIdAndUpdate(
-      id,
+      staffId,
       { morale: newMorale },
       { new: true },
     );
@@ -75,11 +75,11 @@ export class StaffService {
     const staffMembers = await StaffModel.find({
       _id: { $in: staffIds },
     });
+    if (staffMembers.length === 0) return 0;
     let totalMorale = 0;
     staffMembers.forEach((staff) => {
       totalMorale += staff.morale;
     });
-    console.log('totalMorale', totalMorale);
-    return totalMorale / staffMembers.length;
+    return totalMorale;
   }
 }
