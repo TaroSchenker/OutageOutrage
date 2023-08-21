@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { TaskService } from '../../src/services/taskService';
 import { tasks as tasksTestData } from '../../src/config/initialData/tasks';
-import { TaskModel } from '../../src/models/Task';
 import {
   BusinessImpact,
   Expertise,
@@ -11,8 +10,6 @@ import {
   TaskStatus,
   TaskType,
 } from '../../src/types/types';
-
-// TODO: You may need a taskTestData just like the staffTestData in the original example.
 
 const singleTaskData: ITaskData = {
   type: TaskType.BUG_FIX,
