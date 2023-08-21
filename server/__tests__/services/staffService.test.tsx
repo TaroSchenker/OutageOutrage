@@ -1,9 +1,29 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { StaffService } from '../../src/services/staffService';
-import { staff as staffTestData } from '../../src/config/initialData/staff';
-import { Expertise, IStaffData, Role } from '../../src/types/types';
+import {
+  staff,
+  staff as staffTestData,
+} from '../../src/config/initialData/staff';
+import { Expertise, IStaff, IStaffData, Role } from '../../src/types/types';
 
+const singleStaffMember = {
+  name: 'New Staff',
+  avatarUrl:
+    'https://raw.githubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
+  role: Role.BACKEND_DEV,
+  expertise: Expertise.JAVA,
+  ambition: 20,
+  loyalty: 20,
+  skillLevel: 20,
+  resilience: 20,
+  adaptability: 20,
+  morale: 20,
+  currentTask: null,
+  availability: false,
+  salary: 10000,
+  satisfaction: 20,
+};
 describe('StaffService', () => {
   // let con: MongoClient;
   let mongoServer: MongoMemoryServer;
@@ -33,24 +53,7 @@ describe('StaffService', () => {
   });
 
   it('should create a new staff member', async () => {
-    const newStaff = {
-      name: 'New Staff',
-      avatarUrl:
-        'https://raw.githubusercontent.com/TaroSchenker/OutageOutrage/main/client/src/assets/images/staff/BackendDev.png',
-      role: Role.BACKEND_DEV,
-      expertise: Expertise.JAVA,
-      ambition: 20,
-      loyalty: 20,
-      skillLevel: 20,
-      resilience: 20,
-      adaptability: 20,
-      morale: 20,
-      currentTask: null,
-      availability: false,
-      salary: 10000,
-      satisfaction: 20,
-    };
-    const staff = await staffService.createStaff(newStaff);
+    const staff = await staffService.createStaff(singleStaffMember);
 
     for (const key in staff) {
       if (staff.hasOwnProperty(key)) {
@@ -66,16 +69,23 @@ describe('StaffService', () => {
     expect(allStaff.length).toBe(staffTestData.length);
   });
 
-  test('getStaffById should retrieve a staff member by ID', () => {
-    // TODO: Implement the test logic here
+  test('getStaffById should retrieve a staff member by ID', async () => {
+    const staff = await staffService.createStaff(singleStaffMember);
+    const staffFromId = await staffService.getStaffById(staff._id);
+    expect(String(staffFromId?._id)).toBe(String(staff._id));
   });
 
-  test('createStaff should create a new staff member', () => {
-    // TODO: Implement the test logic here
-  });
+  test('updateStaff should update a staff member', async () => {
+    const staffUpdates: Partial<IStaff> = { availability: false };
+    const staff = await staffService.createStaff(singleStaffMember);
+    const updatedStaff = await staffService.updateStaff(
+      staff._id,
+      staffUpdates,
+    );
 
-  test('updateStaff should update a staff member', () => {
-    // TODO: Implement the test logic here
+    // Check if the update was successful.
+    expect(updatedStaff).toBeDefined();
+    expect(updatedStaff?.availability).toBe(staffUpdates.availability);
   });
 
   test('deleteStaff should delete a staff member', () => {
