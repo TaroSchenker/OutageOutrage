@@ -11,10 +11,29 @@ const mockStaffData = { name: 'John Doe', role: 'Developer' };
 
 const mockStaff = { _id: '12345', name: 'John Doe' };
 const updatedStaff = { _id: '12345', name: 'John Smith' };
+const mockStaffId = '12345';
+const mockTaskId = '98765';
+const mockStaffWithTask = {
+  _id: mockStaffId,
+  task: mockTaskId,
+  name: 'John',
+  role: 'Developer',
+};
+
 jest.mock('../../src/services/staffService', () => {
   return {
     StaffService: jest.fn().mockImplementation(() => {
       return {
+        assignTask: jest.fn((staffId, taskId) => {
+          if (staffId === mockStaffId) {
+            return Promise.resolve({
+              ...mockStaffWithTask,
+              currentTask: taskId,
+              availability: false,
+            });
+          }
+          return Promise.resolve(null);
+        }),
         updateStaff: jest.fn((id) => {
           if (id === mockStaff._id) {
             return Promise.resolve(updatedStaff);
@@ -84,6 +103,28 @@ describe('Staff Controller', () => {
     const res = await request(app)
       .put(`/api/staff/${faultyId}`)
       .send({ name: 'Does Not Matter' });
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({ message: 'Staff member not found' });
+  });
+
+  it('should successfully assign a task to a staff member', async () => {
+    const res = await request(app)
+      .put(`/api/staff/${mockStaffId}/assignTask`)
+      .send({ taskId: mockTaskId });
+    expect(res.status).toBe(201);
+    console.log('assign task to staff', res.body);
+    expect(res.body).toEqual({
+      ...mockStaffWithTask,
+      currentTask: mockTaskId,
+      availability: false,
+    });
+  });
+
+  it('should return 404 when assigning a task fails', async () => {
+    const faultyId = 'faultyId';
+    const res = await request(app)
+      .put(`/api/staff/${faultyId}/assignTask`)
+      .send({ taskId: mockTaskId });
     expect(res.status).toBe(404);
     expect(res.body).toEqual({ message: 'Staff member not found' });
   });
