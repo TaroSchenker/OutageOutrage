@@ -107,7 +107,7 @@ describe('Staff Controller', () => {
     expect(res.body).toEqual({ message: 'Staff member not found' });
   });
 
-  it('should successfully assign a task to a staff member', async () => {
+  test('should successfully assign a task to a staff member', async () => {
     const res = await request(app)
       .put(`/api/staff/${mockStaffId}/assignTask`)
       .send({ taskId: mockTaskId });
@@ -120,7 +120,7 @@ describe('Staff Controller', () => {
     });
   });
 
-  it('should return 404 when assigning a task fails', async () => {
+  test('should return 404 when assigning a task fails', async () => {
     const faultyId = 'faultyId';
     const res = await request(app)
       .put(`/api/staff/${faultyId}/assignTask`)
