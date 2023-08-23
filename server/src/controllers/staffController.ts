@@ -29,7 +29,7 @@ export const updateStaff = async (req: Request, res: Response) => {
   if (!staff) {
     return res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.json(staff);
+  return res.status(200).json(staff);
 };
 
 export const deleteStaff = async (req: Request, res: Response) => {

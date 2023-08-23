@@ -10,11 +10,17 @@ import app from '../../src/app';
 const mockStaffData = { name: 'John Doe', role: 'Developer' };
 
 const mockStaff = { _id: '12345', name: 'John Doe' };
-
+const updatedStaff = { _id: '12345', name: 'John Smith' };
 jest.mock('../../src/services/staffService', () => {
   return {
     StaffService: jest.fn().mockImplementation(() => {
       return {
+        updateStaff: jest.fn((id) => {
+          if (id === mockStaff._id) {
+            return Promise.resolve(updatedStaff);
+          }
+          return Promise.resolve(null);
+        }),
         getAllStaff: jest.fn().mockResolvedValue(staff),
         getStaffById: jest.fn((id) => {
           if (id === mockStaff._id) {
@@ -67,5 +73,18 @@ describe('Staff Controller', () => {
     const res = await request(app).post('/api/staff').send(faultyData);
     expect(res.status).toBe(422);
     expect(res.body).toEqual({ message: 'Staff member not created' });
+  });
+  test('should update staff member', async () => {
+    const res = await request(app).put(`/api/staff/${mockStaff._id}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual(updatedStaff);
+  });
+  test('should return 404 when staff update failed', async () => {
+    const faultyId = 'faultyId'; // This can be any ID you know your mock will not process
+    const res = await request(app)
+      .put(`/api/staff/${faultyId}`)
+      .send({ name: 'Does Not Matter' });
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({ message: 'Staff member not found' });
   });
 });
