@@ -18,6 +18,9 @@ export const getStaffById = async (req: Request, res: Response) => {
 
 export const createStaff = async (req: Request, res: Response) => {
   const staff = await staffService.createStaff(req.body);
+  if (!staff) {
+    return res.status(422).json({ message: 'Staff member not created' });
+  }
   return res.status(201).json(staff);
 };
 
