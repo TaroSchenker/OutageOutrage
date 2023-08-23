@@ -58,7 +58,7 @@ jest.mock('../../src/services/staffService', () => {
   };
 });
 describe('Staff Controller', () => {
-  afterEach(async () => {
+  afterEach(() => {
     jest.clearAllMocks();
   });
 

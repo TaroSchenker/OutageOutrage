@@ -165,33 +165,33 @@ export class GameStateService {
     return gameMorale;
   }
 
-  async handleStaffReduction(game: IGame): Promise<IGame> {
-    // 1. Update the staff list based on any reductions made by the player.
-    // 2. Adjust the budget based on the change in staff salaries.
-    // 3. Update any tasks that were assigned to the reduced staff.
-    // 4. Save these changes to the game state in the database or in-memory storage.
-    if (game.staff.length > 0) {
-      game.staff.pop();
-    }
+  // async handleStaffReduction(game: IGame): Promise<IGame> {
+  //   // 1. Update the staff list based on any reductions made by the player.
+  //   // 2. Adjust the budget based on the change in staff salaries.
+  //   // 3. Update any tasks that were assigned to the reduced staff.
+  //   // 4. Save these changes to the game state in the database or in-memory storage.
+  //   if (game.staff.length > 0) {
+  //     game.staff.pop();
+  //   }
 
-    return game;
-  }
+  //   return game;
+  // }
 
-  async updateStaffMorale(game: IGame): Promise<IGame> {
-    // 1. Update the morale of each staff member based on the events and decisions made during the game (e.g., staff reductions, successful task completion).
-    // 2. Apply any effects of changes in morale (e.g., staff productivity changes, staff might leave if morale gets too low).
-    // 3. Save these changes to the game state in the database
-    return game;
-  }
+  // async updateStaffMorale(game: IGame): Promise<IGame> {
+  //   // 1. Update the morale of each staff member based on the events and decisions made during the game (e.g., staff reductions, successful task completion).
+  //   // 2. Apply any effects of changes in morale (e.g., staff productivity changes, staff might leave if morale gets too low).
+  //   // 3. Save these changes to the game state in the database
+  //   return game;
+  // }
 
-  async handleEvents(game: IGame): Promise<IGame> {
-    // TODO: Add your code here
-    // TODO:
-    // 1. Process any events that are triggered in the current turn (could be random or based on specific conditions in the game state).
-    // 2. Update the game state based on the effects of these events (e.g., changes in budget, staff morale, new tasks).
-    // 3. Save these changes to the game state in the database or in-memory storage.
-    return game;
-  }
+  // async handleEvents(game: IGame): Promise<IGame> {
+  //   // TODO: Add your code here
+  //   // TODO:
+  //   // 1. Process any events that are triggered in the current turn (could be random or based on specific conditions in the game state).
+  //   // 2. Update the game state based on the effects of these events (e.g., changes in budget, staff morale, new tasks).
+  //   // 3. Save these changes to the game state in the database or in-memory storage.
+  //   return game;
+  // }
 
   checkWinLossConditions(game: IGame): 'WIN' | 'LOSS' | 'ONGOING' {
     if (game.budget <= 0) {

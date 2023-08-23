@@ -3,73 +3,97 @@ import { StaffService } from '../services/staffService';
 
 const staffService = new StaffService();
 
-export const getAllStaff = async (req: Request, res: Response) => {
+export const getAllStaff = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const allStaff = await staffService.getAllStaff();
   if (!allStaff) {
-    return res.status(404).json({ message: 'Error getting all staff' });
+    res.status(404).json({ message: 'Error getting all staff' });
   }
-  return res.json(allStaff);
+  res.json(allStaff);
 };
 
-export const getStaffById = async (req: Request, res: Response) => {
+export const getStaffById = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.getStaffById(req.params.staffId);
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.json(staff);
+  res.json(staff);
 };
 
-export const createStaff = async (req: Request, res: Response) => {
+export const createStaff = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.createStaff(req.body);
   if (!staff) {
-    return res.status(422).json({ message: 'Staff member not created' });
+    res.status(422).json({ message: 'Staff member not created' });
   }
-  return res.status(201).json(staff);
+  res.status(201).json(staff);
 };
 
-export const updateStaff = async (req: Request, res: Response) => {
+export const updateStaff = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.updateStaff(req.params.staffId, req.body);
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.status(200).json(staff);
+  res.status(200).json(staff);
 };
 
 //Delete Staff Not currently in use in UI
-export const deleteStaff = async (req: Request, res: Response) => {
+export const deleteStaff = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.deleteStaff(req.params.staffId);
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.json(staff);
+  res.json(staff);
 };
 
-export const assignTask = async (req: Request, res: Response) => {
+export const assignTask = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.assignTask(
     req.params.staffId,
     req.body.taskId,
   );
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.status(201).json(staff);
+  res.status(201).json(staff);
 };
 
-export const updateMorale = async (req: Request, res: Response) => {
+export const updateMorale = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.updateMorale(
     req.params.staffId,
     req.body.newMorale,
   );
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.status(201).json(staff);
+  res.status(201).json(staff);
 };
 
-export const removeTask = async (req: Request, res: Response) => {
+export const removeTask = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const staff = await staffService.removeTask(req.params.staffId);
   if (!staff) {
-    return res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' });
   }
-  return res.status(201).json(staff);
+  res.status(201).json(staff);
 };
