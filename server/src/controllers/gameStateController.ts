@@ -4,6 +4,7 @@ import { GameService } from '../services/gameService';
 
 const router = express.Router();
 const gameStateService = new GameStateService();
+const gameService = new GameService();
 
 export const initializeGame = async (
   req: Request,
@@ -28,15 +29,16 @@ export const newTurn = async (req: Request, res: Response): Promise<void> => {
 };
 
 // // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// export const processTaskAssignments = async (
-//   req: Request,
-//   res: Response,
-// ): Promise<void> => {
-//   console.log('process task assignments');
-// const game = await gameStateServic
-//    game = await gameStateService.processTaskAssignments(game)
-//   res.status(200).json(game).end();
-//   return;
-// };
+export const processTaskAssignments = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  console.log('process task assignments');
+  let game = await gameService.getGameById(req.params.gameId);
+  if (!game) throw new Error('Game not found');
+  game = await gameStateService.processTaskAssignments(game);
+  res.status(200).json(game).end();
+  return;
+};
 
 export { router as gameStateController };
