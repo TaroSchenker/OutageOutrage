@@ -8,7 +8,8 @@ export const getAllEvents = async (
   res: Response,
 ): Promise<void> => {
   const allEvents = await gameEventService.getAllEvents();
-  res.json(allEvents);
+  res.json(allEvents).end();
+  return;
 };
 
 export const getEventById = async (
@@ -17,9 +18,11 @@ export const getEventById = async (
 ): Promise<void> => {
   const event = await gameEventService.getEventById(req.params.id);
   if (!event) {
-    res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };
 
 export const createEvent = async (
@@ -27,7 +30,8 @@ export const createEvent = async (
   res: Response,
 ): Promise<void> => {
   const event = await gameEventService.createEvent(req.body);
-  res.status(201).json(event);
+  res.status(201).json(event).end();
+  return;
 };
 
 export const updateEvent = async (
@@ -39,9 +43,11 @@ export const updateEvent = async (
     req.body.eventData,
   );
   if (!event) {
-    res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };
 
 export const deleteEvent = async (
@@ -50,7 +56,9 @@ export const deleteEvent = async (
 ): Promise<void> => {
   const event = await gameEventService.deleteEvent(req.params.id);
   if (!event) {
-    res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };

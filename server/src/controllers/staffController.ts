@@ -9,9 +9,11 @@ export const getAllStaff = async (
 ): Promise<void> => {
   const allStaff = await staffService.getAllStaff();
   if (!allStaff) {
-    res.status(404).json({ message: 'Error getting all staff' });
+    res.status(404).json({ message: 'Error getting all staff' }).end();
+    return;
   }
-  res.json(allStaff);
+  res.json(allStaff).end();
+  return;
 };
 
 export const getStaffById = async (
@@ -20,9 +22,11 @@ export const getStaffById = async (
 ): Promise<void> => {
   const staff = await staffService.getStaffById(req.params.staffId);
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
-  res.json(staff);
+  res.json(staff).end();
+  return;
 };
 
 export const createStaff = async (
@@ -31,9 +35,11 @@ export const createStaff = async (
 ): Promise<void> => {
   const staff = await staffService.createStaff(req.body);
   if (!staff) {
-    res.status(422).json({ message: 'Staff member not created' });
+    res.status(422).json({ message: 'Staff member not created' }).end();
+    return;
   }
-  res.status(201).json(staff);
+  res.status(201).json(staff).end();
+  return;
 };
 
 export const updateStaff = async (
@@ -42,9 +48,11 @@ export const updateStaff = async (
 ): Promise<void> => {
   const staff = await staffService.updateStaff(req.params.staffId, req.body);
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
-  res.status(200).json(staff);
+  res.status(200).json(staff).end();
+  return;
 };
 
 //Delete Staff Not currently in use in UI
@@ -54,7 +62,8 @@ export const deleteStaff = async (
 ): Promise<void> => {
   const staff = await staffService.deleteStaff(req.params.staffId);
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
   res.json(staff);
 };
@@ -68,9 +77,11 @@ export const assignTask = async (
     req.body.taskId,
   );
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
-  res.status(201).json(staff);
+  res.status(201).json(staff).end();
+  return;
 };
 
 export const updateMorale = async (
@@ -82,9 +93,11 @@ export const updateMorale = async (
     req.body.newMorale,
   );
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
-  res.status(201).json(staff);
+  res.status(201).json(staff).end();
+  return;
 };
 
 export const removeTask = async (
@@ -93,7 +106,9 @@ export const removeTask = async (
 ): Promise<void> => {
   const staff = await staffService.removeTask(req.params.staffId);
   if (!staff) {
-    res.status(404).json({ message: 'Staff member not found' });
+    res.status(404).json({ message: 'Staff member not found' }).end();
+    return;
   }
-  res.status(201).json(staff);
+  res.status(201).json(staff).end();
+  return;
 };

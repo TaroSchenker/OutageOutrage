@@ -7,7 +7,8 @@ export const getAllGames = async (
   res: Response,
 ): Promise<void> => {
   const allGames = await gameService.getAllGames();
-  res.json(allGames);
+  res.json(allGames).end();
+  return;
 };
 
 export const getGameByIdPopulated = async (
@@ -16,9 +17,11 @@ export const getGameByIdPopulated = async (
 ): Promise<void> => {
   const game = await gameService.getGameByIdPopulated(req.params.gameId);
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.json(game);
+  res.json(game).end();
+  return;
 };
 
 export const createGame = async (
@@ -26,7 +29,8 @@ export const createGame = async (
   res: Response,
 ): Promise<void> => {
   const game = await gameService.createGame(req.body.gameData);
-  res.status(201).json(game);
+  res.status(201).json(game).end();
+  return;
 };
 
 export const updateGame = async (
@@ -38,9 +42,11 @@ export const updateGame = async (
     req.body.gameData,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json(game);
+  res.status(200).json(game).end();
+  return;
 };
 
 export const deleteGame = async (
@@ -49,9 +55,11 @@ export const deleteGame = async (
 ): Promise<void> => {
   const game = await gameService.deleteGame(req.params.gameId);
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json(game);
+  res.status(200).json(game).end();
+  return;
 };
 
 export const addStaffToGame = async (
@@ -63,9 +71,11 @@ export const addStaffToGame = async (
     req.params.staffId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json('game');
+  res.status(200).json('game').end();
+  return;
 };
 
 export const removeStaffFromGame = async (
@@ -77,9 +87,11 @@ export const removeStaffFromGame = async (
     req.params.staffId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json('game');
+  res.status(200).json('game').end();
+  return;
 };
 
 export const addTaskToGame = async (
@@ -91,9 +103,11 @@ export const addTaskToGame = async (
     req.params.taskId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json(game);
+  res.status(200).json(game).end();
+  return;
 };
 
 export const removeTaskFromGame = async (
@@ -105,9 +119,11 @@ export const removeTaskFromGame = async (
     req.params.taskId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json(game);
+  res.status(200).json(game).end();
+  return;
 };
 
 export const addEventToGame = async (
@@ -119,9 +135,11 @@ export const addEventToGame = async (
     req.params.eventId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json(game);
+  res.status(200).json(game).end();
+  return;
 };
 
 export const removeEventFromGame = async (
@@ -133,7 +151,9 @@ export const removeEventFromGame = async (
     req.params.eventId,
   );
   if (!game) {
-    res.status(404).json({ message: 'Game not found' });
+    res.status(404).json({ message: 'Game not found' }).end();
+    return;
   }
-  res.status(200).json('game');
+  res.status(200).json('game').end();
+  return;
 };

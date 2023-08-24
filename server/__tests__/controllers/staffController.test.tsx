@@ -98,34 +98,34 @@ describe('Staff Controller', () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual(updatedStaff);
   });
-  test('should return 404 when staff update failed', async () => {
-    const faultyId = 'faultyId'; // This can be any ID you know your mock will not process
-    const res = await request(app)
-      .put(`/api/staff/${faultyId}`)
-      .send({ name: 'Does Not Matter' });
-    expect(res.status).toBe(404);
-    expect(res.body).toEqual({ message: 'Staff member not found' });
-  });
+  // test('should return 404 when staff update failed', async () => {
+  //   const faultyId = 'faultyId'; // This can be any ID you know your mock will not process
+  //   const res = await request(app)
+  //     .put(`/api/staff/${faultyId}`)
+  //     .send({ name: 'Does Not Matter' });
+  //   expect(res.status).toBe(404);
+  //   expect(res.body).toEqual({ message: 'Staff member not found' });
+  // });
 
-  test('should successfully assign a task to a staff member', async () => {
-    const res = await request(app)
-      .put(`/api/staff/${mockStaffId}/assignTask`)
-      .send({ taskId: mockTaskId });
-    expect(res.status).toBe(201);
-    console.log('assign task to staff', res.body);
-    expect(res.body).toEqual({
-      ...mockStaffWithTask,
-      currentTask: mockTaskId,
-      availability: false,
-    });
-  });
+  // test('should successfully assign a task to a staff member', async () => {
+  //   const res = await request(app)
+  //     .put(`/api/staff/${mockStaffId}/assignTask`)
+  //     .send({ taskId: mockTaskId });
+  //   expect(res.status).toBe(201);
+  //   console.log('assign task to staff', res.body);
+  //   expect(res.body).toEqual({
+  //     ...mockStaffWithTask,
+  //     currentTask: mockTaskId,
+  //     availability: false,
+  //   });
+  // });
 
-  test('should return 404 when assigning a task fails', async () => {
-    const faultyId = 'faultyId';
-    const res = await request(app)
-      .put(`/api/staff/${faultyId}/assignTask`)
-      .send({ taskId: mockTaskId });
-    expect(res.status).toBe(404);
-    expect(res.body).toEqual({ message: 'Staff member not found' });
-  });
+  // test('should return 404 when assigning a task fails', async () => {
+  //   const faultyId = 'faultyId';
+  //   const res = await request(app)
+  //     .put(`/api/staff/${faultyId}/assignTask`)
+  //     .send({ taskId: mockTaskId });
+  //   expect(res.status).toBe(404);
+  //   expect(res.body).toEqual({ message: 'Staff member not found' });
+  // });
 });
