@@ -3,39 +3,62 @@ import { Request, Response } from 'express';
 
 const gameEventService = new GameEventService();
 
-export const getAllEvents = async (req: Request, res: Response) => {
+export const getAllEvents = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const allEvents = await gameEventService.getAllEvents();
-  return res.json(allEvents);
+  res.json(allEvents).end();
+  return;
 };
 
-export const getEventById = async (req: Request, res: Response) => {
+export const getEventById = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const event = await gameEventService.getEventById(req.params.id);
   if (!event) {
-    return res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  return res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };
 
-export const createEvent = async (req: Request, res: Response) => {
+export const createEvent = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const event = await gameEventService.createEvent(req.body);
-  return res.status(201).json(event);
+  res.status(201).json(event).end();
+  return;
 };
 
-export const updateEvent = async (req: Request, res: Response) => {
+export const updateEvent = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const event = await gameEventService.updateEvent(
     req.params.id,
     req.body.eventData,
   );
   if (!event) {
-    return res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  return res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };
 
-export const deleteEvent = async (req: Request, res: Response) => {
+export const deleteEvent = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
   const event = await gameEventService.deleteEvent(req.params.id);
   if (!event) {
-    return res.status(404).json({ message: 'event not found' });
+    res.status(404).json({ message: 'event not found' }).end();
+    return;
   }
-  return res.status(200).json(event);
+  res.status(200).json(event).end();
+  return;
 };

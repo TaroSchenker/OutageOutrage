@@ -8,10 +8,11 @@ export const getAllTasks = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const tasks = await taskService.getAllTasks();
-    return res.json(tasks);
+    res.json(tasks).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -21,14 +22,15 @@ export const getTaskById = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.getTaskById(req.params.taskId);
     if (!task) {
       throw new AppError('No task found with that ID', 404);
     }
 
-    return res.json(task);
+    res.json(task).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -38,10 +40,11 @@ export const createTask = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.createTask(req.body);
-    return res.status(201).json(task);
+    res.status(201).json(task).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -51,13 +54,14 @@ export const updateTask = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.updateTask(
       req.params.taskId,
       req.body.staffId,
     );
-    return res.status(201).json(task);
+    res.status(201).json(task).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -67,13 +71,14 @@ export const deleteTask = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.deleteTask(req.params.taskId);
     if (!task) {
       throw new AppError('Task not found.', 404);
     }
-    return res.json(task);
+    res.json(task).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -83,7 +88,7 @@ export const assignTaskToStaff = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.assignTaskToStaff(
       req.params.taskId,
@@ -92,7 +97,8 @@ export const assignTaskToStaff = async (
     if (!task) {
       throw new AppError('Task not found.', 404);
     }
-    return res.json(task);
+    res.json(task).end();
+    return;
   } catch (error) {
     next(error);
   }
@@ -102,13 +108,14 @@ export const removeStaffFromTask = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const task = await taskService.removeStaffFromTask(req.params.taskId);
     if (!task) {
       throw new AppError('Task not found.', 404);
     }
-    return res.status(201).json(task);
+    res.status(201).json(task).end();
+    return;
   } catch (error) {
     next(error);
   }

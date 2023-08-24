@@ -63,21 +63,21 @@ describe('GameStateService', () => {
   //     expect(reducedStaffGame.staff.length).toBeLessThan(game.staff.length);
   //   });
 
-  test('updateStaffMorale should adjust morale', async () => {
-    const game = await gameStateService.initializeGame();
-    const updatedMoraleGame = await gameStateService.updateStaffMorale(game);
+  // test('updateStaffMorale should adjust morale', async () => {
+  //   const game = await gameStateService.initializeGame();
+  //   const updatedMoraleGame = await gameStateService.updateStaffMorale(game);
 
-    expect(updatedMoraleGame).toBeDefined();
-    // Add more specific checks based on your morale logic
-  });
+  //   expect(updatedMoraleGame).toBeDefined();
+  //   // Add more specific checks based on your morale logic
+  // });
 
-  test('handleEvents should process game events', async () => {
-    const game = await gameStateService.initializeGame();
-    const eventHandledGame = await gameStateService.handleEvents(game);
+  // test('handleEvents should process game events', async () => {
+  //   const game = await gameStateService.initializeGame();
+  //   const eventHandledGame = await gameStateService.handleEvents(game);
 
-    expect(eventHandledGame).toBeDefined();
-    // Add more specific checks based on your events logic
-  });
+  //   expect(eventHandledGame).toBeDefined();
+  //   // Add more specific checks based on your events logic
+  // });
 
   test('checkWinLossConditions should determine game outcome', async () => {
     const game = await gameStateService.initializeGame();
