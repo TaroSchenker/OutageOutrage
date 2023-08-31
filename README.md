@@ -1,9 +1,11 @@
+**** WORK IN PROGRESS ******
+
 # To start the client & server run `./start-both.sh` 
 ## Before running this script, ensure all npm packages are installed by running
 ## 'npm install' within the 'client' and 'server' directories.
 ## then run `chmod +x start-both.sh` (from the root directory) the first time you run the project it to make the script executable
 
-George is here
+
 
 Project Title
 =============
@@ -113,7 +115,4 @@ The visual style of the game is flat and simple, with AI-generated assets. Staff
 Contributing
 ------------
 
-License
--------
 
-MIT License. See [LICENSE](https://chat.openai.com/LICENSE) for details.
