@@ -4,7 +4,7 @@
 
 ### Description 
 
-OutageOutrage is an interactive web application that simulates running a technoogy organsation. The client-side of the application is built using Vite, while the server-side is an Express application. The game revolves around managing tasks and coordinating with staff to ensure the smooth progress of projects.
+OutageOutrage is an interactive web application that simulates running a technoogy organisation. The client-side of the application is built using Vite, while the server-side is an Express application. The game revolves around managing tasks and coordinating with staff to ensure the smooth progress of projects.
 
 Key Features:
 
