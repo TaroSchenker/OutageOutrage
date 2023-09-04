@@ -122,9 +122,9 @@ export class GameStateService {
         staff.availability = false;
         //calcualte morale based on expterise match
         if (staff.expertise === task.expertiseRequired) {
-          staff.morale += 10;
+          staff.morale += 3;
         } else {
-          staff.morale -= 30;
+          staff.morale -= 3;
         }
         // calcualte task progress based on staff productivity. Minimum 0 value.
         const staffProductivity: number = Math.max(
